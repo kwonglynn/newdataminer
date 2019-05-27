@@ -9,4 +9,5 @@ urlpatterns = [
     path('postgres/', views.postgres, name='postgres'),
     path('user/', views.user, name='user'),
     path('background/', views.background, name='background'),
+    path('channels/', views.channels, name='channels'),
 ]

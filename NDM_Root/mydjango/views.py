@@ -12,3 +12,6 @@ def user(request):
 
 def background(request):
     return render(request, "mydjango/background_task.html")
+
+def channels(request):
+    return render(request, "mydjango/channels.py")
