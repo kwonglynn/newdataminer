@@ -20,7 +20,7 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="{% static 'ndm.css' %}">
     <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="{% static jquery.mCustomScrollbar.min.css %}">
+    <link rel="stylesheet" href="{% static 'jquery.mCustomScrollbar.min.css' %}">
     <!-- Don't change the sequnces of the css and js files, otherwise there would be unexpected problems! -->
 
     <!-- Font Awesome JS -->
@@ -31,37 +31,15 @@
 <body>
   <div class="wrapper">
 
-    <nav id="sidebar" style="padding-left:20px;"> <!-- Sidebar  -->
-      <ul class="list-unstyled components">
-        <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;padding-left:5px;"><b>Heading</b></p></li>
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li><a href="#">Home 1</a></li>
-            <li><a href="#">Home 2</a></li>
-            <li><a href="#">Home 3</a></li>
-          </ul>
-        </li>
-        <li><a href="#">About</a></li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li><a href="#">Page 1</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav> <!-- End of sidebar -->
+    {% block sidebar %}
+    {% endblock sidebar %}
 
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-light"> <!-- Menu bar -->
       <div class="container-fluid" > <!-- Put the menubar content in a fluid container for display issues -->
         <button type="button" id="sidebarCollapse" class="navbar-toggler">
             <i class="fas fa-align-left"></i>
         </button>
-        <div style="padding-left:50px;padding-right:70px;">
+        <div style="padding-left:60px;padding-right:73px;">
           <a class="navbar-brand" href="#"><img src="{% static 'images/brand_NDM.png' %}" class="rounded-circle" alt="brand_NDM.png" style="height:35px;"></a>
         </div>
 
@@ -87,7 +65,7 @@
               <a class="nav-link" style="padding-right:30px;" href="#">Deep Learning</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="padding-right:30px;" href="#">Learn Django</a>
+              <a class="nav-link" style="padding-right:30px;" href="{% url 'mydjango:index' %}">Learn Django</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="padding-right:30px;" href="#">Search</a>
@@ -124,18 +102,32 @@
   </script>
 
   <script type="text/javascript">
-      $(document).ready(function () {
-          $("#sidebar").mCustomScrollbar({
-              theme: "minimal"
-          });
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
 
-          $('#sidebarCollapse').on('click', function () {
-              $('#sidebar, #content').toggleClass('active');
-              $('.collapse.in').toggleClass('in');
-              $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-          });
-      });
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
   </script>
+
+  <!-- To hightlight the active tab, written by Guanglin Kuang -->
+  <script>
+    $(document).ready(function () {
+      var objs = document.getElementsByClassName("toactivate");
+      var i;
+      for (i = 0; i < objs.length; i++) {
+        if (objs[i].innerText.trim() == document.title.trim()) {
+          objs[i].className += " activated";
+        }
+      }
+    });
+  </script>
+
 </body>
 
 

@@ -1,0 +1,466 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  Background Task
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <h2 class="pagehead">Use celery for background task management.</h2>
+
+    <div class="panel"> <!-- Section 1 -->
+      <h4>Section 1: Installation of celery and brokers</h4>
+      <p>Reference: <a href="https://www.linode.com/docs/development/python/task-queue-celery-rabbitmq/">
+        How to Set Up a Task Queue with Celery and RabbitMQ</a></p>
+      <div class="panel">
+        <h6>1. Install celery.</h6> <!-- Install celery -->
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo apt update <br>
+          $ conda activate django2 <br>
+          $ pip install celery <br>
+          $ pip install django-celery-result <br>
+          $ # The django-celery-results extension provides result backends using either the Django ORM, or the Django Cache framework. <br><br>
+        </div>
+      </div>
+
+      <div class="panel"> <!-- Install RabbitMQ -->
+        <h6>2.1 Install RabbitMQ.</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ apt-get install -y erlang <br>
+          $ sudo apt-get install rabbitmq-server <br>
+          $ systemctl enable rabbitmq-server <br>
+          $ systemctl start rabbitmq-server <br>
+          $ systemctl status rabbitmq-server <br>
+        </div>
+        <p>Create a User, a virtual host and grant permissions for this user on the virtual host:</p>
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo rabbitmqctl add_user myuser mypassword <br>
+          $ sudo rabbitmqctl add_vhost myvhost <br>
+          $ sudo rabbitmqctl set_permissions -p myvhost myuser ".*" ".*" ".*" <br>
+        </div>
+      </div>
+
+      <div class="panel"> <!-- Install Redis -->
+        <h6>2.2 Install Redis.</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo apt-get install redis <br>
+        </div>
+        <p>Test if Redis is working properly by typing <code>redis-cli ping</code>
+          into your terminal. If Redis is successfully installed, it should reply with <mark>PONG</mark>.</p>
+      </div>
+    </div>
+    <div class="line"></div> <!-- End of Section 1 -->
+
+    <div class="panel"> <!-- Section 2 -->
+      <h4>Section 2: Configure an independent celery task</h4>
+      <p>Reference: <a href="https://docs.celeryproject.org/en/latest/getting-started/first-steps-with-celery.html#first-steps">
+        First Steps with Celery</a></p>
+      <div class="panel">
+        <h6>1. Create the task file (tasks.py).</h6>
+        <p>For RabbitMQ you can use amqp://localhost, or for Redis you can use redis://localhost.</p>
+        <pre class="w3-code pythonHigh notranslate">
+from celery import Celery
+
+app = Celery('tasks', backend='rpc://', broker='pyamqp://guest@localhost//')
+
+@app.task
+def add(x, y):
+    return x + y
+        </pre>
+      </div>
+
+      <div class="panel">
+        <h6>2. Run the Celery worker server.</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ celery -A tasks worker --loglevel=info <br>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h6>3. In the same directory as tasks.py, Call the task.</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ from tasks import add <br>
+          $ res = add.delay(1,2) <br>
+          $ res.ready() <br>
+          $ res.get() <br>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div> <!-- End of Section 2 -->
+
+    <div class="panel"> <!-- Section 3 -->
+      <h4>Section 3: Configure a celery task with django</h4>
+      <p>Reference 1: <a href="https://blog.csdn.net/Mr_Sunqq/article/details/85064391">
+        Use Celery with Django</a></p>
+      <p>Reference 2: <a href="https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html">
+        First steps with Django</a></p>
+      <div class="panel"> <!-- Create the project and application -->
+        <h6>1.Generate the project and the application holding the celery task.</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ django-admin startproject proj <br>
+          $ django-admin startapp demoapp <br>
+        </div>
+      </div>
+
+      <div class="panel"> <!-- proj/proj/settings.py -->
+        <h6>2. Change the proj/proj/settings.py. Add the application name, and
+          append the celery configuration at the end of the file.</h6>
+        <pre class="pre-scrollable w3-code">
+INSTALLED_APPS = [
+    # The name of the application.
+    'demoapp.apps.DemoappConfig',
+    # Used for periodic tasks.
+    'django_celery_beat',
+    # Store the results of the task in the django database.
+    'django_celery_results',
+    'django.contrib.admin',
+...
+]
+
+...
+STATIC_URL = '/static/'
+
+# Celery application definition
+CELERY_BROKER_URL = 'redis://localhost:6379'
+
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+# The broker_url format is as follows:
+# CELERY_BROKER_URL = ‘broker://[[user]:[password]@]host[:port[/resource]]’
+
+# Store the task result in redis.
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+# Store the task result in the database of djano.
+# CELERY_RESULT_BACKEND = 'django_db'
+# For the cache backend you can use:
+#CELERY_CACHE_BACKEND = 'django-cache'
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Nairobi'
+
+# For periodic beat schedules, we can also define periodic tasks in demoapp/tasks.py.y.
+# from celery.schedules import crontab
+# CELERY_IMPORTS = ("demoapp.tasks",)
+# CELERY_BEAT_SCHEDULE = {
+#    'task-number-one': {
+#        'task': 'print_hello',
+#        'schedule': 5.0,
+#        # 'args': (*args),
+#    },
+# }
+# Only add *args if your function contains arguments; otherwise remove 'args': (*args) line.
+# Use crontab() to customize the repeating period.
+        </pre>
+        <p>Reference for periodic tasks: <a href="https://medium.com/@yehandjoe/celery-4-periodic-task-in-django-9f6b5a8c21c7">
+          Celery 4 Periodic Task in Django</a></p>
+      </div>
+
+      <div class="panel"> <!-- proj/proj/celery.py -->
+        <h6>3. create the configuration file for celery: proj/proj/celery.py</h6>
+        <p>Change 'proj' to your own project name.</p>
+        <pre class="pre-scrollable w3-code pythonHigh notranslate">
+from __future__ import absolute_import, unicode_literals
+import os
+from celery import Celery
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proj.settings')
+# set the default Django settings module for the 'celery' program. <br>
+app = Celery('proj')
+
+app.config_from_object('django.conf:settings', namespace='CELERY')
+# Using a string here means the worker don't have to serialize
+# the configuration object to child processes.
+#   namespace='CELERY' means all celery-related configuration keys <br>
+app.autodiscover_tasks()
+# Load task modules from all registered Django app configs.
+# This is not required, but as you can have more than one app
+# with tasks it’s better to do the autoload than declaring all tasks
+# in this same file. <br>
+@app.task(bind=True)
+def debug_task(self):
+    print('Request: {0!r}'.format(self.request))
+      </div>
+
+      <div class="panel"> <!-- proj/proj/__init__.py -->
+        <h6>4. Edit the project initiation file, proj/proj/__init__.py</h6>
+        <pre class="w3-code pythonHigh notranslate">
+from __future__ import absolute_import, unicode_literals
+
+# This will make sure the app is always imported when Django starts so that shared_task will use this app. <br>
+from .celery import app as celery_app
+
+__all__ = ['celery_app']
+        </pre>
+      </div>
+
+      <div class="panel"> <!-- Quick testing -->
+        <h6>5. Quick testing.</h6>
+        <p class='nopadding'>Start the celery in the proj root folder where manage.py is located.</p>
+        <div class="w3-code pythonHigh notranslate">
+          $ celery -A proj worker -l info <br>
+        </div>
+        <p class='nopadding'>In a separate terminal but within the same folder, activate the virtual environment, and then run</p>
+        <div class="w3-code pythonHigh notranslate">
+          $ python manage.py shell <br>
+          $ from proj.celery import debug_task <br>
+          $ debug_task.delay()
+        </div>
+        <p class='nopadding'>Check the original terminal where the celery worker is running to see if everything is normal.</p>
+      </div>
+
+      <div class="panel"> <!-- proj/demoapp/tasks.py -->
+        <h6>6. Create the task file, proj/demoapp/tasks.py</h6>
+        <pre class="pre-scrollable w3-code pythonHigh notranslate">
+from __future__ import absolute_import, unicode_literals
+from celery.decorators import task
+from celery.task.schedules import crontab
+from celery.decorators import periodic_task
+
+# from proj.celery import app <br># Then use @app.task <br>
+# from celery import shared_task <br># Then use @shared_task <br>
+@task(name="sum_two_numbers")
+def add(x, y):
+    return x + y
+
+@task(name="print_hello")
+def print_hello():
+    print("Hello World!")
+
+# Periodic task will run automatically, without calling, in the background! <br>
+@periodic_task(
+    run_every=(crontab()),
+    name="periodic_print_hello",
+    ignore_result=True
+)
+def periodic_print_hello():
+    print("Hello World!")
+        </pre>
+      </div>
+
+      <div class="panel"> <!-- proj/demoapp/views.py -->
+        <h6>7. Edit the view file, proj/demoapp/views.py</h6>
+        <pre class="w3-code pythonHigh notranslate">
+from django.shortcuts import render,render_to_response
+from django.http import HttpResponse
+
+from .tasks import print_hello, add
+
+def index(request):
+    print_hello.delay()
+    res = add.delay(10, 20)
+    res = res.get()
+    return HttpResponse("The sum you get is:" + str(res))
+        </pre>
+      </div>
+
+      <div class="panel"> <!-- proj/proj/urls.py -->
+        <h6>8. Edit the project urls file, proj/proj/urls.py</h6>
+        <pre class="w3-code pythonHigh notranslate">
+from django.contrib import admin
+from django.conf import path
+from demoapp import views
+
+urlpatterns = [
+    path('', views.index),
+    path('admin/', admin.site.urls),
+]
+        </pre>
+      </div>
+
+      <div class="panel"> <!-- Run the task -->
+        <h6>9. Run the task asynchronously.</h6>
+        <p class='nopadding'>Start the celery in the proj root folder where
+          manage.py is located. By default, celery starts one worker per
+          available CPU. But you can change it using the concurrency parameter (-c)</p>
+        <div class="w3-code pythonHigh notranslate">
+          $ celery -A proj worker -l info <br>
+          $ celery -A proj beat -l info <br>
+        </div>
+        <p class='nopadding'>In a separate terminal but within the same folder, activate the virtual environment, and then run</p>
+        <div class="w3-code pythonHigh notranslate">
+          $ python manage.py makemigrations <br>
+          $ python manage.py migrate <br>
+          $ python manage.py runserver 127.0.0.1:8000 <br>
+        </div>
+        <p class='nopadding'>Check the original terminal where the celery worker is running to see if everything is normal.</p>
+      </div>
+    </div>
+    <div class="line"></div> <!-- End of Section 3 -->
+
+    <div class="panel"> <!-- Section 4 -->
+      <h4>Section 4: Run celery tasks in the background with supervisor</h4>
+      <p>Reference: <a href="https://simpleisbetterthancomplex.com/tutorial/2017/08/20/how-to-use-celery-with-django.html">
+        How to Use Celery and RabbitMQ with Django</a></p>
+      <div class="panel"> <!-- Install supervisor -->
+        <h6>1. Install Supervisord .</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo apt-get install supervisor <br>
+        </div>
+      </div>
+
+      <div class="panel"> <!-- background beat configuration -->
+        <h6>2. Create the configuration file.</h6>
+        <p class="nopadding">Create a file named celery_proj_worker.conf in the folder:
+          /etc/supervisor/conf.d/.</p>
+        <p class="nopadding">Change the project name and user name for your own project, change the path for
+          celery and the project, create the logs folder for celery.</p>
+        <pre class="pre-scrollable w3-code notranslate">
+; ==================================
+;  celery worker supervisor example
+; ==================================
+
+; the name of your supervisord program
+[program:celeryprojworker]
+
+; Set full path to celery program if using virtualenv
+command=/home/guanglin/software/miniconda3/envs/django2/bin/celery worker -A proj --loglevel=INFO
+
+; The directory to your Django project
+directory=/home/guanglin/Projects/TEMP/Django/celery/django2/newdataminer/django/proj
+
+; If supervisord is run as the root user, switch users to this UNIX user account
+; before doing any processing.
+user=guanglin
+
+; Supervisor will start as many instances of this program as named by numprocs
+numprocs=1
+
+; Put process stdout output in this file
+stdout_logfile=/var/log/celery/proj_worker.log
+
+; Put process stderr output in this file
+stderr_logfile=/var/log/celery/proj_worker.log
+
+; If true, this program will start automatically when supervisord is started
+autostart=true
+
+; May be one of false, unexpected, or true. If false, the process will never
+; be autorestarted. If unexpected, the process will be restart when the program
+; exits with an exit code that is not one of the exit codes associated with this
+; process’ configuration (see exitcodes). If true, the process will be
+; unconditionally restarted when it exits, without regard to its exit code.
+autorestart=true
+
+; The total number of seconds which the program needs to stay running after
+; a startup to consider the start successful.
+startsecs=10
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600
+
+; When resorting to send SIGKILL to the program to terminate it
+; send SIGKILL to its whole process group instead,
+; taking care of its children as well.
+killasgroup=true
+
+; if your broker is supervised, set its priority higher
+; so it starts first
+priority=998
+        </pre>
+        <p class="nopadding">Create celery_proj_beat.conf for periodic tasks.</p>
+        <pre class="pre-scrollable w3-code notranslate">
+; ================================
+;  celery beat supervisor example
+; ================================
+
+; the name of your supervisord program
+[program:celeryprojbeat]
+
+; Set full path to celery program if using virtualenv
+command=/home/guanglin/software/miniconda3/envs/django2/bin/celery beat -A proj --loglevel=INFO
+
+; The directory to your Django project
+directory=/home/guanglin/Projects/TEMP/Django/celery/django2/newdataminer/django/proj
+
+; If supervisord is run as the root user, switch users to this UNIX user account
+; before doing any processing.
+user=guanglin
+
+; Supervisor will start as many instances of this program as named by numprocs
+numprocs=1
+
+; Put process stdout output in this file
+stdout_logfile=/var/log/celery/proj_beat.log
+
+; Put process stderr output in this file
+stderr_logfile=/var/log/celery/proj_beat.log
+
+; If true, this program will start automatically when supervisord is started
+autostart=true
+
+; May be one of false, unexpected, or true. If false, the process will never
+; be autorestarted. If unexpected, the process will be restart when the program
+; exits with an exit code that is not one of the exit codes associated with this
+; process’ configuration (see exitcodes). If true, the process will be
+; unconditionally restarted when it exits, without regard to its exit code.
+autorestart=true
+
+; The total number of seconds which the program needs to stay running after
+; a startup to consider the start successful.
+startsecs=10
+
+; if your broker is supervised, set its priority higher
+; so it starts first
+priority=999
+        </pre>
+      </div>
+
+      <div class="panel"> <!-- create the log files for celery -->
+        <h6>3. Create empty log files first, so they are registered as valid
+          paths. Using touch commands:</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo touch /var/log/celery/proj_worker.log <br>
+          $ sudo touch /var/log/celery/proj_beat.log <br>
+        </div>
+      </div>
+
+      <div class="panel"> <!-- reread and update the configuration -->
+        <h6>4. Reread the configuration and add the new process:</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo supervisorctl reread <br>
+          $ sudo supervisorctl update <br>
+        </div>
+      </div>
+
+      <div class="panel"> <!-- start or stop the services -->
+        <h6>5. Finally we can start/stop/restart the services or even check the status:</h6>
+        <div class="w3-code pythonHigh notranslate">
+          $ sudo supervisorctl start celeryprojworker <br>
+          $ sudo supervisorctl stop celeryprojworker <br>
+          $ sudo supervisorctl restart celeryprojworker <br>
+          $ sudo supervisorctl status celeryprojworker <br><br>
+          $ sudo supervisorctl start celeryprojbeat <br>
+          $ sudo supervisorctl stop celeryprojbeat <br>
+          $ sudo supervisorctl restart celeryprojbeat <br>
+          $ sudo supervisorctl status celeryprojbeat <br>
+        </div>
+      </div>
+
+    </div>
+    <div class="line"></div>
+
+    <h5>Project Examples:</h5>
+    <p><a href="https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html">
+      First steps with Django</a></p>
+    <p><a href="https://www.linode.com/docs/development/python/task-queue-celery-rabbitmq/">
+      How to Set Up a Task Queue with Celery and RabbitMQ</a></p>
+    <p><a href="https://simpleisbetterthancomplex.com/tutorial/2017/08/20/how-to-use-celery-with-django.html">
+      How to Use Celery and RabbitMQ with Django</a></p>
+    <p><a href="https://realpython.com/asynchronous-tasks-with-django-and-celery/">
+      Asynchronous Tasks With Django and Celery</a></p>
+    <p><a href="https://code.tutsplus.com/tutorials/using-celery-with-django-for-background-task-processing--cms-28732">
+      Using Celery With Django for Background Task Processing</a></p>
+    <p><a href="https://hub.packtpub.com/background-jobs-django-celery/">
+      Background jobs on Django with Celery</a></p>
+    <p><a href="https://fernandofreitasalves.com/executing-time-consuming-tasks-asynchronously-with-django-and-celery/">
+      Executing time-consuming tasks asynchronously with Django and Celery</a></p>
+    <p><a href="https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django">
+      Finally, Real-Time Django Is Here: Get Started with Django Channels</a></p>
+    <p><a href="https://pinoylearnpython.com/django-celery-with-real-time-monitoring-tasks-using-flower/">
+      Django Celery with Real-time Monitoring Tasks Using Flower</a></p>
+
+  </div>
+{% endblock content %}

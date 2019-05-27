@@ -33,13 +33,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'mypython.apps.MypythonConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'myhome.apps.MyhomeConfig',
+    'mypython.apps.MypythonConfig',
+    'mydjango.apps.MydjangoConfig',
 ]
 
 MIDDLEWARE = [

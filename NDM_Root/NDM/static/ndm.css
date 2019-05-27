@@ -24,7 +24,7 @@ html {
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* background: #fafafa; */
+    background-color: white;
     position: relative;
     margin: 0;
     padding-bottom: 50px;
@@ -59,9 +59,19 @@ a:focus {
     transition: all 0.3s;
 }
 
+p a {
+  color: blue;
+}
+
+p a:hover {
+  color: green;
+  text-decoration: underline;
+}
+
+
 .navbar {
     /* padding: 15px 10px; */
-    background: #fff;
+    /* background: #fff; */
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
@@ -134,7 +144,7 @@ a:focus {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: black;
-    background: WhiteSmoke;
+    background:  #868e96;
 }
 
 a[data-toggle="collapse"] {
@@ -145,7 +155,7 @@ a[data-toggle="collapse"] {
     display: block;
     position: absolute;
     top: 50%;
-    right: 110px;
+    right: 20px;
     transform: translateY(-50%);
 }
 
@@ -223,3 +233,29 @@ a.article:hover {
 .w3-code,.w3-codespan{font-family:Consolas,"courier new";font-size:15px}
 .w3-code{width:auto;background-color:GhostWhite;padding:8px 12px;border-left:4px solid #4CAF50;word-wrap:break-word}
 .w3-codespan{color:crimson;background-color:#f1f1f1;padding-left:4px;padding-right:4px;font-size:100%}
+
+/* Defined by Guanglin Kuang */
+
+pre {
+  padding-bottom:0;
+  margin-bottom:0
+}
+
+.panel {
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+}
+
+.pagehead {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.activated {
+  background-color: lightgrey;
+}
+
+.nopadding {
+  padding-bottom:0;
+  margin-bottom:0;
+}

@@ -1,0 +1,75 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  Database
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <h2 class="pagehead">Use PostgreSQL with your Django Application on Ubuntu.</h2>
+    <p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-16-04">
+    Reference</a></p>
+
+    <div class="panel">
+      <h6>1. Install Postgresql.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo apt-get update <br>
+        $ sudo apt-get install libpq-dev postgresql postgresql-contrib <br>
+        $ update-rc.d postgresql enable # Configure PostgreSQL to start up upon server boot. <br>
+        $ service postgresql start # Start the PostgreSQL service. <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>2. Create a Database and Database User.</h6>
+      <div class="w3-code sqlHigh notranslate">
+        $ sudo -u postgres psql <br>
+        $ postgres=# CREATE DATABASE myproject; <br>
+        $ postgres=# CREATE USER myprojectuser WITH PASSWORD 'password'; <br>
+        $ postgres=# ALTER ROLE myprojectuser SET client_encoding TO 'utf8'; <br>
+        $ postgres=# ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed'; <br>
+        $ postgres=# ALTER ROLE myprojectuser SET timezone TO 'UTC'; <br>
+        $ postgres=# GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser; <br>
+        $ postgres=# \q <br>
+      </div>
+      <p>For PostgreSQL’s configuration, refere to <a href="https://docs.djangoproject.com/en/1.9/ref/databases/#optimizing-postgresql-s-configuration">
+        django's official document.</a></p>
+      <p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04#step-1-%E2%80%94-installing-postgresql">
+        More examples for PostgreSQL</a></p>
+    </div>
+
+    <div class="panel">
+      <h6>3. Install the psycopg2 package in the django environment.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ conda activate django2 <br>
+        $ conda install psycopg2 <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>4. Configure the django database settings (settings.py).</h6>
+      <pre class="w3-code sqlHigh notranslate">
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}     </pre>
+    </div>
+
+    <div class="panel">
+      <h6>5. Migrate the database and test the project.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ python manage.py makemigrations <br>
+        $ python manage.py migrate <br>
+        $ python manage.py createsuperuser <br>
+      </div>
+    </div>
+
+
+  </div>
+{% endblock content %}
