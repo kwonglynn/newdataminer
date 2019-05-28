@@ -64,6 +64,45 @@
     </div>
 
     <div class="panel">
+      <h6>Use utf8mb4 to fully support Unicode.</h6>
+      <ol>
+        <li><a href="https://medium.com/@haotangio/how-to-properly-setup-mysql-5-7-for-production-on-ubuntu-16-04-dd4088286016">
+         How to properly setup MySQL 5.7 for production on Ubuntu 16.04</a></li>
+        <li><a href="http://www.mysqltutorial.org/mysql-collation/">MySQL Collation</a></li>
+      </ol>
+
+     <p>First, update /etc/mysql/my.cnf to use utf8mb4 — MySQL’s REAL UTF-8.</p>
+     <pre class="w3-code pythonHigh notranslate">
+ [client]
+ default-character-set = utf8mb4
+ [mysql]
+ default-character-set = utf8mb4
+ [mysqld]
+ character-set-client-handshake = FALSE
+ character-set-server = utf8mb4
+ collation-server = utf8mb4_unicode_ci</pre>
+      <div class="w3-code pythonHigh notranslate">
+       $ SHOW CHARACTER SET; # Show all the character sets and default collation on the server. <br>
+       $ SHOW COLLATION LIKE 'utf8mb4%'; # Show all the collations for a specific character set.<br>
+       $ CREATE DATABASE demodb CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; # Specify the character set and collation of a database when it is created. <br>
+       $ ALTER DATABASE demodb CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; # Change the character set and collation of a database after it is created. <br>
+       $ SHOW CREATE DATABASE demodb; # Show the character set and collation of a database. <br>
+      </div>
+      <p> It is recommened to set the character set and collation for a specific database,
+          because different MySQL servers may have different settings for character set and collation. <br></p>
+      <p>
+        <strong>Note: </strong>On MySQL 8.0, the default character set is
+        <strong>utf8mb4</strong>, and the default collate is <strong>utf8mb4_0900_ai_ci</strong>,
+        but can also use <strong>utf8mb4_general_ci</strong>. For MySQL 5.7,
+        the default character set is <strong>utf8</strong>, but it can be changed to
+        <strong>utf8mb4</strong> as above. However, for MySQL 5.7, only
+        <strong>utf8mb4_general_ci</strong> is available for <strong>utf8mb4</strong>.
+        Therefore it is better to use <strong>utf8mb4_general_ci</strong> for
+        both MySQL 5.7 and MySQL 8.0 if you need to transfer data between different servers.
+      </p>
+    </div>
+
+    <div class="panel">
       <h6>3. Create a new user.</h6>
       <p>In the new version of MySQL, it is not required to input the password
         for the root when it is being installed. Therefore, we can start MySQL
@@ -72,8 +111,9 @@
       </p>
       <div class="w3-code pythonHigh notranslate">
         $ sudo mysql; <br>
-        $ use mysql; <br>
+        $ use mysql; # Open the default mysql database which store the user information. <br>
         $ update user set authentication_string=PASSWORD("New_Passwore_Here") where User='root'; <br>
+        $ ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password'; # Another way! <br>
         $ flush privileges; <br>
       </div>
     </div>
@@ -81,7 +121,7 @@
     <div class="panel">
       <h6>4. Common MySQL commands.</h6>
       <div class="w3-code pythonHigh notranslate">
-        $ CREATE DATABASE demodb;   # Create a database. <br>
+        $ CREATE DATABASE demodb CHARACTER SET UTF8;   # Create a database. <br>
         $ SHOW DATABASES;           # Show the databases. <br>
         $ # Create a database user: <br>
         $ INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES('demouser','localhost',PASSWORD('demopassword'),'','',''); <br>
@@ -90,7 +130,10 @@
         $ SELECT User, Host, authentication_string FROM mysql.user; # Verify the user was created. <br>
         $ GRANT ALL PRIVILEGES ON demodb.* to demouser@localhost; # Give the user full permissions on the database. <br>
         $ FLUSH PRIVILEGES; <br>
-        $ SHOW GRANTS FOR demouser@localhost; # Verify the privileges are set. <br>
+        $ SHOW GRANTS FOR demouser@localhost; # Verify the privileges are set. <br><br>
+        $ USE ndm_db; # Open a project database; <br>
+        $ show tables; # Show all the tables in the project database; <br>
+        $ SELECT * FROM ndm_db.auth_user; # Select all the content from a project table; <br>
       </div>
     </div>
 
@@ -157,6 +200,37 @@ default-character-set = utf8</pre>
       </div>
     </div>
 
+    <div class="panel">
+      <h6>8. Migrate a database from on computer to another.</h6>
+      <p><strong>Method 1:</strong> On computer A, excute:</p>
+      <p><strong>Note:</strong> Change the character set and collation of a
+         database to make it match those on Computer B.</p>
+      <div class="w3-code pythonHigh notranslate">
+        $ ALTER DATABASE ndm_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; <br>
+        $ mysqldump -u root -p --quick ndm_db | gzip > C:\Google\Work\MyWebsite\Transfer\MySQL\ndm_db.gz <br>
+      </div>
+      <p>Transfere the compressed database <em>ndm_db.gz</em> to computer B.
+        On Computer B, execute:</p>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo mysql; <br>
+        $ CREATE DATABASE ndm_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; # Specify the character set and collation of the new database to make it match those on Computer A. <br>
+        $ exit; <br>
+        $ gunzip < ndm_db.gz | sudo mysql ndm_db; <br>
+      </div>
+      <p><strong class>Warning!</strong></p>
+    </div>
+
+    <div class="panel">
+      <h6>Important notes for MySQL:</h6>
+      <ol>
+        <li>If you need a database, don’t use MySQL or MariaDB. Use <strong>PostgreSQL.</strong></li>
+        <li>If you need to use MySQL or MariaDB, never use “utf8”.
+          Always use “utf8mb4” when you want UTF-8. Convert your database
+          now to avoid headaches later.</li>
+      </ol>
+      <p><a href="https://medium.com/@adamhooper/in-mysql-never-use-utf8-use-utf8mb4-11761243e434">
+        In MySQL, never use “utf8”. Use “utf8mb4”.</a></p>
+    </div>
 
   </div>
 {% endblock content %}
