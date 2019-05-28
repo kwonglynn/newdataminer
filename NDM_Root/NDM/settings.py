@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'ndm_db',
         'USER': 'guanglin',
         'PASSWORD': 'KGL&lxm@1503',
-        'HOST': '',
+        'HOST': '127.0.0.1', # If failed to migrate, add 127.0.0.1 here.
         'PORT': '',
     }
 }
