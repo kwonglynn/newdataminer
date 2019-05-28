@@ -1,0 +1,162 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  Database
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <h2>Use MySQL with your Django Application on Ubuntu.</h2>
+    <h6>References:</h6>
+    <p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-the-latest-mysql-on-ubuntu-16-04#step-2-%E2%80%94-installing-mysql">
+      How To Install the Latest MySQL on Ubuntu 16.04</a></p>
+    <p><a href="https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/">
+      Install MySQL Server on Ubuntu</a></p>
+    <p><a href="https://www.digitalocean.com/community/tutorials/how-to-create-a-django-app-and-connect-it-to-a-database">
+      How To Create a Django App and Connect it to a Database</a></p>
+
+    <div class="panel">
+      <h6>1. Install MySQL on Ubuntu.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo apt-get install mysql-server <br>
+        $ sudo systemctl start mysql        # Start the MySQL service. <br>
+        $ sudo systemctl enable mysql       # Enable MySQL to launch at reboot. <br>
+        $ systemctl status mysql.service    # Check the status of MySQL. <br>
+        $ sudo mysqladmin -u root version   # Testing MySQL. <br>
+        $ sudo ufw allow mysql              # Optional. Allow remote access. <br>
+      </div>
+      <p><strong>Trouble-shooting:</strong> If somehow the installation failed, run the fllowing
+         to first un-install the old MySQL, remove everything related to MySQL,
+         and then install a fresh MySQL:</p>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo apt-get purge mysql-* <br>
+        $ sudo apt-get autoremove <br>
+        $ sudo apt-get autoclean <br>
+        $ sudo apt-get dist-upgrade <br>
+
+        $ sudo rm -rf /etc/mysql <br>
+        $ sudo rm -rf /var/lib/mysql* <br>
+      </div>
+      <p>And finally, most importantly, to <strong style="color:red;">Reboot</strong>. Otherwise the fresh MySQL
+         can not be re-installed!</p>
+      <h6>References:</h6>
+      <p>
+        <a href="https://askubuntu.com/questions/773287/how-to-repair-corrupt-package-installation-mysql/773441">
+         Trouble-shooting 1</a> <br>
+         <a href="https://www.digitalocean.com/community/questions/mysql-installation-error-dpkg-error-processing-package-mysql-server-5-5-configure">
+         Trouble-shooting 2</a>
+      </p>
+    </div>
+
+    <div class="panel">
+      <h6>2. Change the password of root.</h6>
+      <p>In the new version of MySQL, it is not required to input the password
+        for the root when it is being installed. Therefore, we can start MySQL
+        as root without inputing the password by <code>sudo mysql</code>.
+        We can specify the password for root in this way:
+      </p>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo mysql -u root; <br>
+        $ use mysql; <br>
+        $ update user set authentication_string=PASSWORD("New_Passwore_Here") where User='root'; <br>
+        $ flush privileges; <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>3. Create a new user.</h6>
+      <p>In the new version of MySQL, it is not required to input the password
+        for the root when it is being installed. Therefore, we can start MySQL
+        as root without inputing the password by <code>sudo mysql</code>.
+        We can specify the password for root in this way:
+      </p>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo mysql; <br>
+        $ use mysql; <br>
+        $ update user set authentication_string=PASSWORD("New_Passwore_Here") where User='root'; <br>
+        $ flush privileges; <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>4. Common MySQL commands.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ CREATE DATABASE demodb;   # Create a database. <br>
+        $ SHOW DATABASES;           # Show the databases. <br>
+        $ # Create a database user: <br>
+        $ INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES('demouser','localhost',PASSWORD('demopassword'),'','',''); <br>
+        $ CREATE USER yourdbuser@localhost IDENTIFIED BY 'password'; # We can also use this command to create a database user. <br>
+        $ FLUSH PRIVILEGES; # When you make changes to the user table in the mysql database, tell MySQL to read the changes by flushing the privileges. <br>
+        $ SELECT User, Host, authentication_string FROM mysql.user; # Verify the user was created. <br>
+        $ GRANT ALL PRIVILEGES ON demodb.* to demouser@localhost; # Give the user full permissions on the database. <br>
+        $ FLUSH PRIVILEGES; <br>
+        $ SHOW GRANTS FOR demouser@localhost; # Verify the privileges are set. <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>5. Install MySQL Database Connector for python.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ conda activate django2 <br>
+        $ sudo apt-get install python3-dev <br>
+        $ sudo apt-get install python3-dev libmysqlclient-dev <br>
+        $ pip install mysqlclient <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>6.1 Add the MySQL database connection to your django application (settings.py).</h6>
+      <pre class="w3-code sqlHigh notranslate">
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+        'NAME': 'myproject',                  # Or path to database file if using sqlite3.
+        'USER': 'myprojectuser',              # Not used with sqlite3.
+        'PASSWORD': 'password',               # Not used with sqlite3.
+        'HOST': 'localhost',                  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                           # Set to empty string for default. Not used with sqlite3.
+    }
+}     </pre>
+    </div>
+
+    <div class="panel">
+      <h6>6.2 Instead of inputing all the database information in setting.py,
+          we can specify a configuraton file for MySQL.</h6>
+      <pre class="w3-code sqlHigh notranslate">
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+          'read_default_file': '/etc/mysql/my.cnf'
+        }
+    }
+}     </pre>
+      <p>Edit the config file (my.conf) so that it has your MySQL credentials.</p>
+      <pre class="w3-code pythonHigh notranslate">
+...
+[client]
+database = db_name
+user = db_user
+password = db_password
+default-character-set = utf8</pre>
+      <p>Once the file has been edited, we need to restart MySQL for the changes to take effect.</p>
+      <div class="w3-code pythonHigh notranslate">
+        $ sudo systemctl daemon-reload <br>
+        $ sudo systemctl restart mysql <br>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h6>7. Migrate the database and test your project.</h6>
+      <div class="w3-code pythonHigh notranslate">
+        $ python manage.py makemigrations <br>
+        $ python manage.py migrate <br>
+        $ python manage.py createsuperuser <br>
+        $ sudo ufw allow 8000 # To open a specific port for django <br>
+        $ python manage.py runserver <br>
+      </div>
+    </div>
+
+
+  </div>
+{% endblock content %}

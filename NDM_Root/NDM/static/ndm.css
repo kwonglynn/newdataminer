@@ -103,7 +103,7 @@ p a:hover {
 #sidebar {
     width: 200px;
     position: fixed;
-    top: 55px;
+    top: 62px;
     left: 0;
     height: 100vh;
     z-index: 999;
@@ -194,11 +194,11 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    padding-top:80px;
+    padding-top:70px;
     padding-left:230px;
     padding-right:200px;
     min-height: 100vh;
-    transition: all 0.3s;
+    transition:  all 0.3s;
 }
 
 #content.active {
@@ -275,6 +275,12 @@ p {
 pre {
   margin-top:0.8em;
   margin-bottom:0.8em;
+}
+
+.img-margin {
+  margin-left:18px;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
 }
 
 .panel {

@@ -7,6 +7,7 @@ app_name = 'mydjango'
 urlpatterns = [
     path('', views.index, name='index'),
     path('postgres/', views.postgres, name='postgres'),
+    path('mysql/', views.mysql, name='mysql'),
     path('user/', views.user, name='user'),
     path('background/', views.background, name='background'),
     path('channels/', views.channels, name='channels'),

@@ -1,0 +1,51 @@
+{% extends "mypython/base.html" %}
+
+{% load static %}
+
+{% block title %}
+  Remote Access with DDNS
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <h2>Remote access to the computer at home with dynamics DNS (DDNS).</h2>
+
+    <h6>1. Apply for a free hostname.</h6>
+    <div class="panel">
+      <p>Go to <a href="https://www.noip.com/">www.noip.com</a>, and apply for an free domain</p>
+      <img src="{% static 'images/noip-1.png' %}" alt="noip-1.png" class="d-block img-margin img-thumbnail" style="padding-left:18px;max-width:600px;">
+      <div class="line"></div>
+      <p>Specify a user name, the user name will be used later for the router settings.</p>
+      <img src="{% static 'images/noip-2.png' %}" alt="noip-1.png" class="d-block img-margin img-thumbnail" style="padding-left:18px;max-width:600px;">
+      <div class="line"></div>
+    </div>
+
+    <h6>2. Configure the router for remote access.</h6>
+    <div class="panel">
+      <p>Log in to the admin page of the router via <a href="http://192.168.10.1">http://192.168.10.1</a></p>
+      <p>Enable the DynDNS service of the router, and fill in the information for no-ip.com.</p>
+      <img src="{% static 'images/no-ip-router-DynDNS.png' %}" alt="no-ip-router-DynDNS.png" class="d-block img-margin img-thumbnail" style="padding-left:18px;max-width:600px;">
+      <div class="line"></div>
+      <p>Set up Port forwarding on the router:</p>
+      <img src="{% static 'images/no-ip-router-port.png' %}" alt="no-ip-router-port.png" class="d-block img-margin img-thumbnail" style="padding-left:18px;max-width:600px;">
+      <p><strong>Home</strong> can be any name you like.</p>
+      <p>Leave the <strong>Protocal</strong> as <strong>TCP</strong></p>
+      <p><strong>WAN</strong> is the port from out side, you can specify any port for
+        this, normally it is good to specify a high port so that it is not easy
+        to be cracked.</p>
+      <p><strong>LAN</strong> is the local port to be mapped with <strong>WAN</strong>,
+        it should map the port of the actual server on the local computer.
+        For <strong>SSH</strong> the <strong>LAN</strong> is 22.</p>
+      <p>The <strong>Destination IP</strong> is the local IP what should be mapped.</p>
+      <p>You can also specify <strong>Source IP</strong> of the remote computer for security concern.</p>
+      <div class="line"></div>
+    </div>
+
+    <h6>3. Now it is time to log in from outside!</h6>
+    <div class="w3-code pythonHigh notranslate">
+      [x_guaku@tetralith2 ~]$ ssh -p 1022 guanglin@guanglin.ddns.net
+    </div>
+    <p>Cheers!</p>
+
+  </div>
+{% endblock content %}

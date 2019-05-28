@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  Django
+  Python
 {% endblock title %}
 
 {% block sidebar %}
@@ -25,9 +25,7 @@
           <li><a class="toactivate" href="#">Page 3</a></li>
         </ul>
       </li>
-      <li><a class="toactivate" href="{% url 'mydjango:user' %}">&emsp;User Management</a></li>
-      <li><a class="toactivate" href="{% url 'mydjango:background' %}">&emsp;Background Task</a></li>
-      <li><a class="toactivate" href="{% url 'mydjango:channels' %}">&emsp;Channels</a></li>
+      <li><a class="toactivate" href="{% url 'mypython:remote' %}">&emsp;DynDNS</a></li>
     </ul>
   </nav> <!-- End of sidebar -->
 {% endblock sidebar %}
