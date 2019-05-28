@@ -27,7 +27,7 @@ SECRET_KEY = ')6pif6hxj_5l8xubbwjb&7edu@ff&!v4n=eclu=brfsk*$j6h0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'guanglin.ddns.net']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.10.224', 'guanglin.ddns.net']
 
 
 # Application definition
