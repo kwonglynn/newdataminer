@@ -43,15 +43,6 @@ body {
   margin-bottom:0;
 }
 /* Above is for footer */
-
-p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: black;
-}
-
 a,
 a:hover,
 a:focus {
@@ -60,14 +51,10 @@ a:focus {
     transition: all 0.3s;
 }
 
-p a {
-  color: blue;
+#navbarSupportedContent a:hover {
+    color: blue;
 }
 
-p a:hover {
-  color: green;
-  text-decoration: underline;
-}
 
 
 .navbar {
@@ -178,17 +165,6 @@ ul.CTAs a {
     margin-bottom: 5px;
 }
 
-a.download {
-    background: WhiteSmoke;
-    color: #7386D5;
-}
-
-a.article,
-a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
-}
-
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -259,12 +235,25 @@ h6 {
   font-size: 1.1em;
   margin-top: 1.5em;
   margin-bottom: 0.8em;
+  font-weight: normal;
 }
 
 p {
-  padding-left: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: black;
   margin-top: 0em;
   margin-bottom:0.6em;
+}
+
+p a {
+  color: blue;
+}
+
+p a:hover {
+  text-decoration: underline;
 }
 
 .nomargin {
@@ -278,12 +267,19 @@ pre {
 }
 
 .img-margin {
-  margin-left:18px;
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
 
+/* panel class has no indentation */
+.container {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+
+/* container has indentation */
 .panel {
+  padding-left: 18px;
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
@@ -295,4 +291,120 @@ pre {
 
 .activated {
   background-color: lightgrey;
+}
+
+.referencelist {
+  padding-left: 0px;
+}
+
+.referencelist a {
+  color: blue;
+}
+
+.referencelist a:hover {
+  color: green;
+  text-decoration: underline;
+}
+
+/* CSS for the contact form */
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+.errorlist li {
+    border: 1px solid red;
+    color: red;
+    background: rgba(255, 0, 0, 0.15);
+    list-style-position: inside;
+    display: block;
+    font-size: 1.2em;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 5px!important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(169,169,169)
+}
+
+input {
+    height: 30px;
+}
+.success {
+    background-color: rgba(0, 128, 0, 0.15);
+    padding: 10px;
+    text-align: center;
+    color: green;
+    border: 1px solid green;
+    border-radius: 3px;
+}
+
+.jumbotron-narrow {
+  padding-top: 1em;
+}
+
+.jumbotron-narrow table {
+  width:100%;
+  max-width:600px;
+}
+
+/* CSS for the Modules form */
+.required label::after {
+  content: " *";
+  color: blue;
+  font-size: 0.8em;
+}
+
+/* CSS for module list */
+.quotehdr th {
+  background-color: #4c4c4c;
+  color: white;
+  text-align: center;
+  padding: 8px 5px;
+  border: none;
+}
+
+.quoterow td {
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.allrow {
+  background-color: #e0e0e0;
+}
+
+.module-list {
+  border-collapse:collapse;
+  width: 600px;
+}
+
+.module-list a {
+  color: blue;
+}
+
+.module-list a:hover {
+  text-decoration: underline;
+}
+
+/* CSS for module detail */
+.module-detail {
+  background-color: WhiteSmoke;
+  padding-top: 5px;
+  padding-left: 25px;
+}
+
+.module-detail .submitted {
+  width: 190px;
+  font-size: 0.9em;
+  border-top: 1px dashed grey;
+  margin-top: 1.5em;
 }

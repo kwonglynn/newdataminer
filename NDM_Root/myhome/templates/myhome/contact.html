@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Contact
+{% endblock title %}
+
+{% block content %}
+  <div class="jumbotron jumbotron-narrow">
+    <h2>Contact me</h2>
+    {% if submitted %}
+      <p class="success">You message was submitted successfully. Thank you!</p>
+    {% else %}
+      <form action="" method="post" novalidate>
+        <table>
+          {{ form.as_table }}
+          <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Submit"></td>
+          </tr>
+        </table>
+        {% csrf_token %}
+      </form>
+    {% endif %}
+  </div>
+
+{% endblock content %}

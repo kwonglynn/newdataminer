@@ -1,0 +1,24 @@
+{% extends "mypython/base.html" %}
+
+{% block title %}
+  Python Modules
+{% endblock title %}
+
+{% block content %}
+
+  {% if submitted %}
+    <p class="success">The module has been added successfully! Cheers!</p>
+  {% else %}
+    <form action='' enctype="multipart/form-data" method="post" novalidate>
+      <table>
+        {{ form.as_table }}
+        <tr>
+          <td>&nbsp;</td>
+          <td><input type="submit" value="Submit"></td>
+        </tr>
+      </table>
+      {% csrf_token %}
+    </form>
+  {% endif %}
+
+{% endblock content %}

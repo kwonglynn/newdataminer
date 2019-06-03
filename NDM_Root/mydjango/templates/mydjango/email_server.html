@@ -1,0 +1,106 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  Email Server
+{% endblock title %}
+
+{% block content %}
+  <h2>Set up an Django Email Server</h2>
+
+  <div class="container">
+    <h6>1. Configure django for Gmail SMTP serve.</h6>
+    <p>Let less secure apps access to the email account. Click
+      <a href="https://support.google.com/accounts/answer/6010255?hl=en">
+      here</a> for more information.</p>
+    <p>In <strong>setting.py</strong>, add the following lines:</p>
+    <div class="w3-code notranslate">
+      # Email Server <br>
+      EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' <br>
+      EMAIL_HOST = 'smtp.gmail.com' <br>
+      EMAIL_USE_TLS = True <br>
+      EMAIL_PORT = 587 <br>
+      EMAIL_HOST_USER = 'YourGmail@gmail.com' <br>
+      EMAIL_HOST_PASSWORD = 'YourPassWord' <br>
+    </div>
+  </div>
+
+  <div class="container">
+    <h6>2. Define a view function.</h6>
+    <p>Method 1: Use <strong>send_mail</strong>:
+    <pre class="pre-scrollable w3-code notranslate">
+...
+from django.core.mail import send_mail
+from django.template import loader
+import re
+from django.utils.html import strip_tags
+...
+def textify(html):
+    # Remove html tags and continuous whitespaces
+    text_only = re.sub('[ \t]+', ' ', strip_tags(html))
+    # Strip single spaces in the beginning of each line
+    return text_only.replace('\n ', '\n').strip()
+
+cd = form.cleaned_data
+
+subject = cd['subject']
+sender = cd['yourname']
+email = cd.get('email', '')
+message = cd['message']
+from_email = settings.EMAIL_HOST_USER
+recipient_list = ['guanglin@kth.se',]
+
+email_context = {
+                    'subject': subject,
+                    'sender': sender,
+                    'email': email,
+                    'message': message
+                }
+
+html_message = loader.render_to_string(
+                'myhome/email.html',
+                email_context)
+
+text_message = textify(html_message)
+send_mail(subject=subject,
+          message=text_message,
+          from_email=from_email,
+          recipient_list=recipient_list,
+          fail_silently=True,
+          html_message=html_message)
+...
+    </pre>
+    <p>An example for the email HTML template can be downloaded here.</p>
+
+    <p>Method 2: Use <strong>EmailMultiAlternatives</strong>:</p>
+    <pre class="pre-scrollable w3-code notranslate">
+  ...
+  from django.core.mail import EmailMultiAlternatives
+  ...
+  # The other section is the same as that for send_mail.
+  msg = EmailMultiAlternatives(subject=subject,
+                               body=text_message,
+                               from_email=from_email,
+                               to=recipient_list,
+                               )
+  msg.attach_alternative(html_message, "text/html")
+  msg.send()
+    </pre>
+    <p><strong>Note:</strong>The keywords for <strong>send_mail</strong> and
+      <strong>EmailMultiAlternatives</strong> are different.</p>
+    <p>It is more preferable to use <strong>EmailMultiAlternatives</strong>
+      because the formated content won't be displayed by itself.</p>
+  </div>
+
+  <h4>References</h4>
+  <div class="container referencelist">
+    <ul>
+      <li><a href="https://medium.com/@_christopher/how-to-send-emails-with-python-django-through-google-smtp-server-for-free-22ea6ea0fb8e/">
+        How to send emails with python django through google SMTP server for free</a></li>
+      <li><a href="https://stackoverflow.com/questions/45473948/django-generate-a-plain-text-version-of-an-html-email">
+        Django – generate a plain text version of an html email</a></li>
+      <li><a href="https://stackoverflow.com/questions/2809547/creating-email-templates-with-django">
+        Creating email templates with Django</a></li>
+    </ul>
+  </div>
+
+{% endblock content %}

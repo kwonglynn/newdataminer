@@ -1,0 +1,34 @@
+<!-- The default name is module name in lower case + "_list.html". -->
+<!-- In this case, the default name is module_list.html -->
+{% extends "mypython/base.html" %}
+
+{% block title %}
+  Python Modules
+{% endblock title %}
+
+{% block content %}
+
+<h4>Modules</h4>
+{% if user.is_authenticated %}
+  <p><a class="btn btn-info" href="{% url "mypython:module_form" %}">Add Module</a></p>
+{% endif %}
+
+<table class="module-list">
+  <tr class="quotehdr">
+    <th>Module</th>
+    <th>Type</th>
+    <th>Modified</th>
+  </tr>
+
+  {% for module in all_modules %}
+    <tr class="quoterow {% cycle '' 'altrow' %}">
+      <td><a href="{{ module.title }}">{{ module.title }}</a></td>
+      <td>{{ module.get_type_display }}</td>
+      <td>{{ module.submitted|date:"Y-m-d" }}</td>
+    </tr>
+  {% endfor %}
+
+</table>
+
+
+{% endblock content %}

@@ -11,4 +11,6 @@ urlpatterns = [
     path('user/', views.user, name='user'),
     path('background/', views.background, name='background'),
     path('channels/', views.channels, name='channels'),
+    path('email_server/', views.email_server, name='email_server'),
+    path('slug/', views.slug, name='slug'),
 ]

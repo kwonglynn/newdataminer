@@ -18,3 +18,9 @@ def background(request):
 
 def channels(request):
     return render(request, "mydjango/channels.html")
+
+def email_server(request):
+    return render(request, "mydjango/email_server.html")
+
+def slug(request):
+    return render(request, "mydjango/slug.html")

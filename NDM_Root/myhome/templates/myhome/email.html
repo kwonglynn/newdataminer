@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{% static 'ndm.css' %}">
+  </head>
+  <body>
+    <div class="jumbotron" style="padding: 1em 30px;">
+      <h4>Subject: {{ subject }}</h4>
+      <h5>From: {{ sender }}</h5>
+      <h5>Email: {{ email }}</h5>
+      <h5>Message: </h5>
+      <pre  style="max-width: 1000px;">
+{{ message }}
+      </pre>
+    </div>
+  </body>
+</html>

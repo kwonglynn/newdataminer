@@ -3,15 +3,15 @@
 {% load static %}
 
 {% block title %}
-  Remote Access with DDNS
+  DynDNS
 {% endblock title %}
 
 {% block content %}
-  <div class="container">
+  <div class="panel">
     <h2>Remote access to the computer at home with dynamics DNS (DDNS).</h2>
 
     <h6>1. Apply for a free hostname.</h6>
-    <div class="panel">
+    <div class="container">
       <p>Go to <a href="https://www.noip.com/">www.noip.com</a>, and apply for an free domain</p>
       <img src="{% static 'images/noip-1.png' %}" alt="noip-1.png" class="d-block img-margin img-thumbnail" style="padding-left:18px;max-width:600px;">
       <div class="line"></div>
@@ -21,7 +21,7 @@
     </div>
 
     <h6>2. Configure the router for remote access.</h6>
-    <div class="panel">
+    <div class="container">
       <p>Log in to the admin page of the router via <a href="http://192.168.10.1">http://192.168.10.1</a></p>
       <p>Enable the DynDNS service of the router, and fill in the information for no-ip.com.</p>
       <img src="{% static 'images/no-ip-router-DynDNS.png' %}" alt="no-ip-router-DynDNS.png" class="d-block img-margin img-thumbnail" style="padding-left:18px;max-width:600px;">
@@ -42,10 +42,12 @@
     </div>
 
     <h6>3. Now it is time to log in from outside!</h6>
-    <div class="w3-code pythonHigh notranslate">
-      [x_guaku@tetralith2 ~]$ ssh -p 1022 guanglin@guanglin.ddns.net
+    <div class="container">
+      <div class="w3-code pythonHigh notranslate">
+        [x_guaku@tetralith2 ~]$ ssh -p 1022 guanglin@guanglin.ddns.net
+      </div>
+      <p>Cheers!</p>
     </div>
-    <p>Cheers!</p>
 
   </div>
 {% endblock content %}

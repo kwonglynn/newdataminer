@@ -1,0 +1,19 @@
+<!-- The default name is module name in lower case + "_list.html". -->
+<!-- In this case, the default name is module_list.html -->
+{% extends "mypython/base.html" %}
+
+{% block title %}
+  Python Modules
+{% endblock title %}
+
+{% block content %}
+
+  <h4>{{ module.title }}</h4>
+  <div class="container module-detail">
+    <h6>{{ module.get_type_display }}</h6>
+    <p><a href="{{ module.reference }}">Reference</a></p>
+    <p>{{ module.description }}</p>
+    <p class="submitted">Last modified: {{ module.submitted }}</p>
+  </div>
+
+{% endblock content %}

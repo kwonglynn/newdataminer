@@ -7,9 +7,10 @@
 {% block sidebar %}
   <nav id="sidebar" > <!-- Sidebar  -->
     <ul class="list-unstyled components">
-      <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;Django</b></p></li>
-      <li><a class="toactivate" href="#">&emsp;Installation</a></li>
-      <li><a class="toactivate" href="#">&emsp;Quick Start</a></li>
+      <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;Python</b></p></li>
+      <li><a class="toactivate" href="{% url 'mypython:conda' %}">&emsp;Conda</a></li>
+      <li><a class="toactivate" href="{% url 'mypython:modules' %}">&emsp;Python Modules</a></li>
+      <li><a class="toactivate" href="#">&emsp;Git</a></li>
       <li>
         <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Database</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -25,7 +26,7 @@
           <li><a class="toactivate" href="#">Page 3</a></li>
         </ul>
       </li>
-      <li><a class="toactivate" href="{% url 'mypython:remote' %}">&emsp;DynDNS</a></li>
+      <li><a class="toactivate" href="{% url 'mypython:ddns' %}">&emsp;DynDNS</a></li>
     </ul>
   </nav> <!-- End of sidebar -->
 {% endblock sidebar %}
