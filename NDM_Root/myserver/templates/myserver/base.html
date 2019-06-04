@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Server
+{% endblock title %}
+
+{% block sidebar %}
+  <nav id="sidebar" > <!-- Sidebar  -->
+    <ul class="list-unstyled components">
+      {% if user.is_authenticated %}
+        <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;">&emsp;{{ user.username }}</p></li>
+      {% else %}
+        <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;<a style="text-decoration:none" href="{% url 'login' %}?next=/server/">&emsp;Log in</a></b></p></li>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <li><a class="toactivate" href="{% url 'mypython:conda' %}">&emsp;Joblist</a></li>
+        <li><a class="toactivate" href="#">&emsp;Git</a></li>
+        <li>
+          <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Database</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li><a class="toactivate" href="{% url 'mydjango:postgres' %}">PostgreSQL</a></li>
+            <li><a class="toactivate" href="#">MySQL</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="toactivate dropdown-toggle" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Pages</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li><a class="toactivate" href="#">Page 1</a></li>
+            <li><a class="toactivate" href="#">Page 2</a></li>
+            <li><a class="toactivate" href="#">Page 3</a></li>
+          </ul>
+        </li>
+      {% endif %}
+    </ul>
+  </nav> <!-- End of sidebar -->
+{% endblock sidebar %}

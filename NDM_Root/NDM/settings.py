@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'myhome.apps.MyhomeConfig',
     'mypython.apps.MypythonConfig',
     'mydjango.apps.MydjangoConfig',
+    'myserver.apps.MyserverConfig',
 ]
 
 MIDDLEWARE = [

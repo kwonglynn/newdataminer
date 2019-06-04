@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template import loader
@@ -7,6 +8,10 @@ from .forms import ContactForm
 import re
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
+
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
 
 # Create your views here.
 def index(request):
@@ -68,3 +73,18 @@ def contact(request):
             submitted = True
 
     return render(request, 'myhome/contact.html', {'form': form, 'submitted': submitted})
+
+# User registration
+def register_success(request):
+    return render(request, "registration/success.html")
+
+
+# Create your views here.
+class Register(CreateView):
+    template_name = 'registration/register.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('myhome:register-success')
+
+    def form_valid(self, form):
+        form.save()
+        return HttpResponseRedirect(self.success_url)

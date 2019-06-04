@@ -18,9 +18,10 @@ from django.urls import path, include
 from myhome import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('contact/', views.contact, name='contact'),
     path('admin/', admin.site.urls),
     path('python/', include('mypython.urls')),
     path('django/', include('mydjango.urls')),
+    path('server/', include("myserver.urls")),
+    path('', include('django.contrib.auth.urls')),
+    path('', include("myhome.urls")),
 ]
