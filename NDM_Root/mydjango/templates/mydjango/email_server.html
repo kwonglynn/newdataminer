@@ -7,7 +7,7 @@
 {% block content %}
   <h2>Set up an Django Email Server</h2>
 
-  <div class="container">
+  <div class="panel">
     <h6>1. Configure django for Gmail SMTP serve.</h6>
     <p>Let less secure apps access to the email account. Click
       <a href="https://support.google.com/accounts/answer/6010255?hl=en">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>2. Define a view function.</h6>
     <p>Method 1: Use <strong>send_mail</strong>:
     <pre class="pre-scrollable w3-code notranslate">
@@ -92,7 +92,7 @@ send_mail(subject=subject,
   </div>
 
   <h4>References</h4>
-  <div class="container referencelist">
+  <div class="panel referencelist">
     <ul>
       <li><a href="https://medium.com/@_christopher/how-to-send-emails-with-python-django-through-google-smtp-server-for-free-22ea6ea0fb8e/">
         How to send emails with python django through google SMTP server for free</a></li>

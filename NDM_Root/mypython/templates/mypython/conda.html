@@ -6,7 +6,7 @@
 
 {% block content %}
   <h4>What is a virtual environment?</h4>
-  <div class="container">
+  <div class="panel">
     A virtual environment is a named, isolated, working copy of
     <b>Python</b> that that maintains its own files, directories, and paths
     so that you can work with specific versions of libraries or Python
@@ -21,7 +21,7 @@
   </div>
 
   <h4>Conda channels</h4>
-  <div class="container">
+  <div class="panel">
     <p>Channels are locations where Navigator and conda look for packages.
     The easiest way to use and manage custom channels is to use a
     private or public repository on Anaconda.org.
@@ -43,28 +43,28 @@
   </div>
 
   <h4>Useful commands</h4>
-  <div class="container">
+  <div class="panel">
     <h6>1. Check the status of conda.</h6>
     <div class="w3-code pythonHigh notranslate">
       conda -V <br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>2. Check if conda is up to date.</h6>
     <div class="w3-code pythonHigh notranslate">
       conda update conda <br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>3. Create an environment with a specific version of Python.</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n yourenvname python=x.x<br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>4. To see a list of all your environments, use the command:</h6>
     <div class="w3-code pythonHigh notranslate">
       conda info -e <br>
@@ -72,7 +72,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>5. To activate or deactivate a virtual environment:</h6>
     <div class="w3-code pythonHigh notranslate">
       conda activate yourenvname <br>
@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>6. Delete a no longer needed virtual environment
         and associated packages:</h6>
     <div class="w3-code pythonHigh notranslate">
@@ -88,7 +88,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>7. Search for a specific package.</h6>
     <p>If you want to use a specific Python version, it is best to use
        an environment with that version. </p>
@@ -98,7 +98,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>8. To install a specific package such as SciPy into an
         existing environment "myenv".</h6>
     <p>If you do not specify the environment name, which in this example is
@@ -109,14 +109,14 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>9. To install a specific version of a package such as SciPy:</h6>
     <div class="w3-code pythonHigh notranslate">
       conda install scipy=0.15.0 <br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>10. To install multiple packages at once, such as SciPy and
       cURL::</h6>
     <div class="w3-code pythonHigh notranslate">
@@ -124,7 +124,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>11. To check the packages installed</h6>
     <div class="w3-code pythonHigh notranslate">
       conda list <br>
@@ -133,14 +133,14 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>12. To list all of the packages in a deactivated environment:</h6>
     <div class="w3-code pythonHigh notranslate">
       conda list -n myenv <br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>13. To remove a package such as SciPy in an environment
        such as myenv:</h6>
     <div class="w3-code pythonHigh notranslate">
@@ -149,7 +149,7 @@
     <p><em>Note:</em> On windows you may need to delete the environment folder manually.</p>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>14. Create an environment for the scrapy package from the conda-forge
         channel:</h6>
     <div class="w3-code pythonHigh notranslate">
@@ -158,7 +158,7 @@
   </div>
 
   <h4>Installing non-conda packages</h4>
-  <div class="container">
+  <div class="panel">
     <p>If a package is not available from conda or Anaconda.org, you
        may be able to find and install the package with another package
        manager like pip.</p>
@@ -184,7 +184,7 @@
   </div>
 
   <h4>Practical applications.</h4>
-  <div class="container">
+  <div class="panel">
     <h6>1. Install Django</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n django2 -c conda-forge django <br>
@@ -192,39 +192,42 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>2. Install scikit-learn</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n sklearn -c conda-forge scikit-learn  <br>
       conda install -n sklearn -c conda-forge ipython <br>
       conda install -n sklearn -c conda-forge pandas <br>
+      conda install -n sklearn -c conda-forge matplotlib <br>
       pip install jupyter # Note jupyter can only be installed properly with pip!<br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>3. Install keras</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n keras -c conda-forge keras <br>
       conda install -n keras -c conda-forge ipython <br>
       conda install -n keras -c conda-forge pandas <br>
+      conda install -n keras -c conda-forge matplotlib <br>
       pip install jupyter <br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>4. Install pytorch</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n pytorch -c pytorch pytorch <br>
       conda install -n pytorch -c pytorch ipython <br>
       conda install -n pytorch -c pytorch pandas <br>
+      conda install -n pytorch -c conda-forge matplotlib <br>
       pip install jupyter <br>
       # The supplementary packages should be installed from the channel as the<br>
       # main package for compatibility.<br>
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <h6>5. Install RDKit.</h6>
     <div class="w3-code pythonHigh notranslate">
       ### Main packages ### <br>
@@ -234,7 +237,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="panel">
     <p><strong>Note:</strong></p>
     <ol>
       <li>Different channels (anaconda, conda-forge or other) can
@@ -258,7 +261,7 @@
   </div>
 
   <h4>References</h4>
-  <div class="container referencelist">
+  <div class="panel referencelist">
     <ul>
       <li><a href="https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/20/conda/">
         Create virtual environments for python with conda</a></li>

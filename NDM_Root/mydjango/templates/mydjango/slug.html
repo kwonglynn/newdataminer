@@ -8,7 +8,7 @@
 
 <h2>Configuration of slug for ease of reference.</h2>
 
-<div class="container">
+<div class="panel">
   <h6>1. In views.py of the application.</h6>
   <pre class="w3-code notranslate">
 class ModuleDetailView(DetailView):
@@ -18,7 +18,7 @@ class ModuleDetailView(DetailView):
     slug_url_kwarg = 'title'
 </div>
 
-<div class="container">
+<div class="panel">
   <h6>2. In urls.py of the application.</h6>
   <pre class="w3-code notranslate">
 urlpatterns = [
@@ -26,7 +26,7 @@ urlpatterns = [
 ]  </pre>
 </div>
 
-<div class="container">
+<div class="panel">
   <h6>3. In template file refering to the detailed view, normally this is in the ListView template.</h6>
   <pre class="w3-code notranslate">
 ...
@@ -37,7 +37,7 @@ urlpatterns = [
 
 
   <h4>References</h4>
-  <div class="container referencelist">
+  <div class="panel referencelist">
     <ul>
       <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/">
         Generic display views</a></li>
