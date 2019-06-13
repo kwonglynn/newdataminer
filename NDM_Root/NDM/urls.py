@@ -19,9 +19,11 @@ from myhome import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('server/', include("myserver.urls")),
     path('python/', include('mypython.urls')),
     path('django/', include('mydjango.urls')),
-    path('server/', include("myserver.urls")),
-    path('', include('django.contrib.auth.urls')),
+    path('deep/', include('deep.urls')),
+    path('machine/', include('machine.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include("myhome.urls")),
 ]

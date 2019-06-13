@@ -58,6 +58,7 @@ a:focus {
 .navbar {
     /* padding: 15px 10px; */
     /* background: #fff; */
+    /* font-size: 1.1em; */
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
@@ -170,14 +171,14 @@ ul.CTAs a {
 #content {
     padding-top:70px;
     padding-left:235px;
-    padding-right:200px;
+    padding-right:35px;
     min-height: 100vh;
     /* transition:  all 0.3s; */
 }
 
 #content.active {
     padding-left:235px;
-    padding-right:200px;
+    padding-right:35px;
 }
 
 /* ---------------------------------------------------
@@ -220,18 +221,18 @@ ul.CTAs a {
 /* Defined by Guanglin Kuang */
 
 h2 {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
+  margin-top: 1.2em;
+  margin-bottom: 1.0em;
 }
 
 h4 {
-  margin-top: 1.5em;
+  margin-top: 1.2em;
   margin-bottom: 0.8em;
 }
 
 h6 {
   font-size: 1.1em;
-  margin-top: 1.5em;
+  margin-top: 1.0em;
   margin-bottom: 0.8em;
   font-weight: normal;
 }
@@ -246,12 +247,39 @@ p {
   margin-bottom:0.6em;
 }
 
+/* ol {
+    counter-reset: list;
+}
+ol > li {
+    list-style: none;
+}
+ol > li:before {
+    content: counter(list) ") ";
+    counter-increment: list;
+} */
+
+.pad-top-1em {
+  padding-top: 1em;
+}
+
 p a {
-  color: blue;
+  color:blue;
 }
 
 p a:hover {
   text-decoration: underline;
+}
+
+a.normal-link {
+  color: blue;
+}
+
+a.normal-link:hover {
+  text-decoration: underline;
+}
+
+input[type=checkbox] {
+    transform: scale(0.6);
 }
 
 .nomargin {
@@ -262,6 +290,20 @@ p a:hover {
 pre {
   margin-top:0.8em;
   margin-bottom:0.8em;
+}
+
+.pre-scrollable {
+  max-height: 530px;
+}
+
+.postcontent {
+  height:10em;
+  margin-top:0.5em;
+}
+
+.codecontent {
+  height:10em;
+  margin-top:0.5em;
 }
 
 .img-margin {
@@ -346,13 +388,33 @@ input {
     border-radius: 3px;
 }
 
-.jumbotron-narrow {
-  padding-top: 1em;
+.bg-lightgrey {
+  background-color: lightgrey;
 }
 
-.jumbotron-narrow table {
-  width:100%;
-  max-width:600px;
+.icon-pad {
+  margin-right: 10px;
+}
+
+.pagination li {
+  padding-left:10px;
+}
+
+.pagination .active {
+  font-weight: bold;
+  color: blue;
+}
+
+
+.jumbotron-narrow {
+  margin-left:0;
+  padding-top: 1em;
+  width:750px;
+  padding-bottom: 1em;
+}
+
+.jumbotron h2 {
+  margin-top:0.5em;
 }
 
 /* CSS for the Modules form */
@@ -360,6 +422,10 @@ input {
   content: " *";
   color: blue;
   font-size: 0.8em;
+}
+
+.btn-100 {
+  width:100px;
 }
 
 /* CSS for module list */
@@ -383,6 +449,7 @@ input {
 .module-list {
   border-collapse:collapse;
   width: 600px;
+  /* max-width: 750px; */
 }
 
 .module-list a {
@@ -395,9 +462,10 @@ input {
 
 /* CSS for module detail */
 .module-detail {
-  background-color: WhiteSmoke;
+  /* background-color: WhiteSmoke; */
   padding-top: 5px;
-  padding-left: 25px;
+  /* padding-left: 25px; */
+  padding-bottom: 1px;
 }
 
 .module-detail .submitted {

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template import loader
-from .forms import ContactForm
+from .forms import ContactForm, UserCreateForm
 import re
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
@@ -78,11 +78,10 @@ def contact(request):
 def register_success(request):
     return render(request, "registration/success.html")
 
-
-# Create your views here.
 class Register(CreateView):
     template_name = 'registration/register.html'
-    form_class = UserCreationForm
+    # form_class = UserCreationForm
+    form_class = UserCreateForm
     success_url = reverse_lazy('myhome:register-success')
 
     def form_valid(self, form):

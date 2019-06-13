@@ -25,6 +25,7 @@
     <!-- Don't change the sequnces of the css and js files, otherwise there would be unexpected problems! -->
 
     <!-- Font Awesome JS -->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   </head>
@@ -57,16 +58,16 @@
               <a class="nav-link" style="padding-right:15px;" href="{% url 'myserver:index' %}">Server</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="padding-right:15px;" href={% url 'mypython:index' %}>Python</a>
+              <a class="nav-link" style="padding-right:15px;" href={% url 'mypython:module_list' %}>Python</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="padding-right:15px;" href="{% url 'mydjango:index' %}">Django</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="padding-right:15px;" href="#">Machine Learning</a>
+              <a class="nav-link" style="padding-right:15px;" href="{% url 'machine:machine_list' %}">Machine Learning</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="padding-right:15px;" href="#">Deep Learning</a>
+              <a class="nav-link" style="padding-right:15px;" href="{% url 'deep:deep_list' %}">Deep Learning</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="padding-right:15px;" href="#">About Me</a>
@@ -75,16 +76,16 @@
               <a class="nav-link" style="padding-right:20px;" href="{% url 'myhome:contact' %}">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="padding-right:20px;" href="#"><i style="font-size:1.2em;" class="fas fa-search"></i></a>
+              <a class="nav-link" style="padding-right:20px;" href="/search/"><i style="font-size:1.2em;" class="fas fa-search"></i></a>
             </li>
           </ul>
 
           <ul class="navbar-nav">
             <li class="nav-item">
               {% if user.is_authenticated %}
-                <i style="font-size:1.2em;" class="fas fa-user"></i>&nbsp;&nbsp;{{ user.username }}&nbsp;&nbsp;<a  href="{% url 'logout' %}?next=/"><i style="font-size:1.2em;" class="fas fa-sign-out-alt text-success"></i></a>
+                <i style="font-size:1.2em;" class="fas fa-user"></i>&nbsp;&nbsp;{{ user.username }}&nbsp;&nbsp;<a  href="{% url 'logout' %}?next={{ request.path }}"><i style="font-size:1.2em;" class="fas fa-sign-out-alt text-success"></i></a>
               {% else %}
-              <a class="nav-link" href="{% url 'login' %}?next=/">Log in</a>
+              <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Log in</a>
               {% endif %}
             </li>
           </ul>
@@ -95,13 +96,14 @@
 
     <!-- Page Content  -->
     <div id="content">
-
       {% block content %}
       {% endblock content %}
-
-    <div class="line" id='section1'></div>
     </div>
   </div>
+
+  <!-- Individual javascript -->
+  {% block script %}
+  {% endblock %}
 
   <!-- jQuery CDN - Slim version (=without AJAX) -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -143,6 +145,14 @@
         }
       }
     });
+  </script>
+
+  <!-- Go back script  -->
+  <!-- <script src="{% static 'ndm.js' %}"></script> -->
+  <script>
+  function goBack() {
+    window.history.back();
+  }
   </script>
 
 </body>

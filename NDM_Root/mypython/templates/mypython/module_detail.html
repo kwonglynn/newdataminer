@@ -3,17 +3,29 @@
 {% extends "mypython/base.html" %}
 
 {% block title %}
-  Python Modules
+  Python Artistry
 {% endblock title %}
 
 {% block content %}
-
-  <h4>{{ module.title }}</h4>
-  <div class="panel module-detail">
-    <h6>{{ module.get_type_display }}</h6>
-    <p><a href="{{ module.reference }}">Reference</a></p>
-    <p>{{ module.description }}</p>
-    <p class="submitted">Last modified: {{ module.submitted }}</p>
+  <h4>{{ object.title }}</h4>
+  <h6>{{ object.get_type_display }}</h6>
+  {% if perms.mypython.can_publish_module and not object.published_date %}
+    <p><a class="normal-link" href="{% url 'mypython:module_publish' pk=object.pk %}"><strong><i class="fa fa-upload" aria-hidden="true"></i> Publish</strong></a></p>
+  {% endif %}
+  <div class="module-detail">
+    <p><a href="{{ object.reference }}">Reference</a></p>
+    <h6>Description:</h6>
+    <div>
+      {{ object.description }}
+    </div>
+    <h6>Example:</h6>
+    <pre class="w3-code notranslate">
+{{ object.code }}   </pre>
   </div>
-
+  <p>Added by <strong>{{ object.added_by }}</strong> on {{ object.created_date|date:"M d, Y" }}.</p>
+  {% if object.published_date %}
+    <p>Back to <a class="normal-link" href="{% url 'mypython:module_list' %}"><strong>List</strong></a></p>
+  {% else %}
+    <p>Back to <a class="normal-link" href="{% url 'mypython:module_draft_list' %}"><strong>Drafts</strong></a></p>
+  {% endif %}
 {% endblock content %}

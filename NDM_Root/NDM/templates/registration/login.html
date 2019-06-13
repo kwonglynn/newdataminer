@@ -1,24 +1,26 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 
 {% block title %}
 Login
 {% endblock title %}
 
 {% block content %}
-<div class="container">
-  <h1>Please login.</h1>
-  <p>You must be logged in to use the server for calculation.</p>
+<div class="jumbotron jumbotron-narrow">
+  <h2>Please login.</h2>
+  {% if form.errors %}
+  <p class="text-danger">Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
   <form action="{% url 'login' %}" method="post">
-    <table>
-      {{ form.as_table }}
-      <tr>
-        <td>&nbsp;</td>
-        <td><input type="submit" value="login"></td>
-      </tr>
-    </table>
-    <p>Not registered yet? <a href="{% url 'myhome:register' %}">Register here</a>.</p>
-    <input type="hidden" name="next" value="{{ next }}">
     {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">Login</button>
+    {% endbuttons %}
+    <input type="hidden" name="next" value="{{ next }}">
   </form>
+  <p>or <a class="normal-link" href="{% url 'password_reset'%}">Forgot Password</a></p>
+  <p>Don't have an account? <a class="normal-link text-center" href="{% url 'myhome:register' %}">Sign up</a></p>
 </div>
 {% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Machine Learning
+{% endblock title %}
+
+{% block sidebar %}
+  <nav id="sidebar" > <!-- Sidebar  -->
+    <ul class="list-unstyled components">
+      <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;Machine Learning</b></p></li>
+      <li><a class="activated" href="{% url 'machine:machine_list' %}">&emsp;Methods</a></li>
+      <li><a href="{% url 'myserver:index' %}">&emsp;Server</a></li>
+      <li>
+        <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Notes</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+          <li><a class="toactivate" href="{% url 'machine:pandas' %}">Pandas</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav> <!-- End of sidebar -->
+{% endblock sidebar %}

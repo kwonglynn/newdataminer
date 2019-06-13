@@ -1,0 +1,94 @@
+<!-- The default name is deep name in lower case + "_list.html". -->
+<!-- In this case, the default name is deep_list.html -->
+{% extends "deep/base.html" %}
+
+{% block title %}
+  Deep Learning
+{% endblock %}
+
+{% block content %}
+
+<!-- <h4>Python Basics</h4> -->
+<!-- <p>Modules, functions, classes, and methods.</p> -->
+<div style="width:750px;">
+  {% if user.is_authenticated %}
+    <div class="d-flex justify-content-between my-2">
+      <div class=""><a class="btn btn-info" href="{% url "deep:deep_create" %}"><i class="fa fa-plus" aria-hidden="true"></i> New</a></div>
+      <div class=""><a class="btn btn-info" href="{% url "deep:deep_draft_list" %}"><i class="far fa-copy"></i> Drafts</a></div>
+    </div>
+  {% else %}
+    <p><a class="normal-link" href="{% url 'login' %}?next={{ request.path }}">Log in</a> to edit table. </p>
+  {% endif %}
+
+  <form action="" class="form-inline" method='get'>
+    <input name='q3' class="form-control mr-sm-2 h-25 mb-2" style="width:650px;" type="text" placeholder="Search . . ." aria-label="Search">
+    <button class="btn btn-outline-success h-25 mb-2" style="width:91px;" type="submit">Search</button>
+  </form>
+
+  <table class="module-list w-100" id="myTable">
+  <tr class="quotehdr">
+    <th>Name</th>
+    <th>Added By</th>
+    <th>Created Time</th>
+    {% if user.is_authenticated %}
+      <th>Actions</th>
+    {% endif %}
+  </tr>
+
+  {% if not object_list %}
+    <tr><a style="padding-left:15px;" class="normal-link" href="{% url 'deep:deep_list' %}">Back to List</a></tr>
+  {% endif %}
+
+  {% with object_list|first as first_deep %}
+    {% if first_deep and not first_deep.published_date %}
+    <tr><a style="padding-left:15px;" class="normal-link" href="{% url 'deep:deep_list' %}">Back to List</a></tr>
+    {% endif %}
+  {% endwith %}
+
+  {% for object in object_list %}
+    <tr class="quoterow {% cycle '' 'altrow' %}">
+      <td><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></td>
+      <td>{{ object.added_by }}</td>
+      <td>{{ object.created_date|date:"Y-m-d" }}</td>
+      {% if user.is_authenticated %}
+        <td>
+          <!-- Note the syntax for checking the user authentication -->
+          {% if object.added_by  == user or user.username == 'guanglin' %}
+            <a href="{% url "deep:deep_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% endif %}
+          {% if perms.deep.can_publish_deep %}
+            <a href="{% url "deep:deep_delete" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
+            {% if not object.published_date %}
+              <a href="{% url "deep:deep_detail" pk=object.pk %}"><i class="fa fa-upload" aria-hidden="true"></i></a>
+            {% endif %}
+          {% endif %}
+        </td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+</table>
+
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+      {% else %}
+        <li class="page-item disabled"><i class="fa fa-angle-double-left"></i></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="page-item active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li class="page-item"><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item"><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+        <li class="page-item disabled"><i class="fa fa-angle-double-right"></i></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+</div> <!-- End of the table -->
+{% endblock %}

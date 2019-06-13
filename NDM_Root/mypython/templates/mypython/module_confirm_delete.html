@@ -1,0 +1,16 @@
+{% extends "mypython/base.html" %}
+
+{% block title %}
+  Python Artistry
+{% endblock title %}
+
+{% block content %}
+<div class="jumbotron jumbotron-narrow">
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete <strong class="text-primary">"{{ object }}"</strong>?</p>
+    <button type="submit" class="btn btn-danger" style="width:100px;">Confirm</button>
+  </form>
+  <div style="padding-top:0.8em;"><button class="btn btn-warning" style="width:100px;" onclick="goBack()">Cancel</button></div>
+</div>
+{% endblock content %}

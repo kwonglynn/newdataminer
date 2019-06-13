@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from myhome import views
 from myhome.views import Register
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('register-success/', views.register_success, name="register-success"),
     path('register/', Register.as_view(), name='register'),
     path('contact/', views.contact, name='contact'),
+    path('search/', include('haystack.urls')),
 ]

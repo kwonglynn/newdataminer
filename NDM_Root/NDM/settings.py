@@ -39,10 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
+    'haystack',
     'myhome.apps.MyhomeConfig',
+    'myserver.apps.MyserverConfig',
     'mypython.apps.MypythonConfig',
     'mydjango.apps.MydjangoConfig',
-    'myserver.apps.MyserverConfig',
+    'machine.apps.MachineConfig',
+    'deep.apps.DeepConfig',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +136,11 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
+LOGIN_URL = '/accounts/login/'
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRCT_URL = '/'
+
 # Email Server
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -139,3 +148,22 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'superdataminer.server@gmail.com'
 EMAIL_HOST_PASSWORD = 'KGL&lxm@1503'
+
+# haystack for whoosh
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
+
+# haystack for elasticsearch_backend
+# HAYSTACK_CONNECTIONS = {
+#               'default': {
+#                     'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+#                     'URL': 'http://127.0.0.1:9200/',
+#                     'INDEX_NAME': 'haystack',
+#               },
+#     }
+#
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

@@ -1,24 +1,19 @@
 {% extends "mypython/base.html" %}
+{% load bootstrap4 %}
 
 {% block title %}
-  Python Modules
+  Python Artistry
 {% endblock title %}
 
 {% block content %}
-
-  {% if submitted %}
-    <p class="success">The module has been added successfully! Cheers!</p>
-  {% else %}
-    <form action='' enctype="multipart/form-data" method="post" novalidate>
-      <table>
-        {{ form.as_table }}
-        <tr>
-          <td>&nbsp;</td>
-          <td><input type="submit" value="Submit"></td>
-        </tr>
-      </table>
-      {% csrf_token %}
-    </form>
-  {% endif %}
-
+<div class="jumbotron jumbotron-narrow">
+  <form action='' enctype="multipart/form-data" method="post" novalidate>
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary btn-100">Submit</button>
+    {% endbuttons %}
+  </form>
+  <button class="btn btn-warning btn-100" onclick="goBack()">Cancel</button>
+</div>
 {% endblock content %}

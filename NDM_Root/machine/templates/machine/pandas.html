@@ -1,0 +1,107 @@
+{% extends "machine/base.html" %}
+
+{% block title %}
+  Notes
+{% endblock title %}
+
+{% block content %}
+<div class="pannel">
+  <h4>Use pandas in data analysis.</h4>
+</div>
+
+<div class="panel">
+  <h6>1. Import packages and set visualization style.</h6>
+  <div class="w3-code pythonHigh notranslate">
+    import pandas as pd <br>
+    import matplotlib.pyplot as plt <br>
+    import seaborn as sns <br>
+    sns.set() <br>
+    %matplotlib inline <br>
+  </div>
+</div>
+
+<div class="panel">
+  <h6>2. Drop rows with missing values and drop duplicate.</h6>
+  <div class="w3-code pythonHigh notranslate">
+    df.dropna(inplace=True) <br>
+    df.drop_duplicates(inplace=True) <br>
+  </div>
+</div>
+
+<div class="panel">
+  <h6>3. Hierarchical indexes or multiple indexes.</h6>
+  <p><a href="https://www.datacamp.com/community/tutorials/pandas-multi-index">
+    Reference 1</a> </p>
+  <p><a href="https://riptutorial.com/pandas/example/13285/select-from-multiindex-by-level">
+    Reference 2</a> </p>
+  <pre class="pre-scrollable w3-code notranslate">
+df = pd.read_csv('data/user_ex.csv')
+df
+  date       language ex_complete
+----------------------------------
+0 2017-01-01 python   6
+1 2017-01-02 python   5
+2 2017-01-03 python   10
+3 2017-01-01 r        8
+4 2017-01-02 r        8
+5 2017-01-03 r        8
+
+df.set_index(['date', 'language'], inplace=True)
+df
+                     ex_complete
+date        language
+2017-01-01  python   6
+2017-01-02  python   5
+2017-01-03  python   10
+2017-01-01  r        8
+2017-01-02  r        8
+2017-01-03  r        8
+
+df.sort_index(inplace=True)
+df
+                      ex_complete
+date        language
+----------------------------------
+2017-01-01  python    6
+            r         8
+2017-01-02  python    5
+            r         8
+2017-01-03  python    10
+            r         8
+
+# Slice & dice your DataFrame
+df.loc[('2017-01-02', 'r')]
+df.query("date == '2017-01-02' and language == 'r'")
+df.loc[(df.index.get_level_values('date') > '2017-01-02') & (df.index.get_level_values('language') < 'r')]
+----------------------------------
+ex_complete    8
+Name: (2017-01-02, r), dtype: int64
+
+df.swaplevel()
+df
+                      ex_complete
+language  date
+----------------------------------
+python    2017-01-01  6
+          2017-01-02  5
+          2017-01-03  10
+r         2017-01-01  8
+          2017-01-02  8
+          2017-01-03  8
+  </pre>
+</div>
+
+<h4>References</h4>
+<div class="panel referencelist">
+  <ul>
+    <li><a href="https://www.datacamp.com/community/tutorials/pandas-split-apply-combine-groupby">
+      Groupby, split-apply-combine and pandas</a></li>
+    <li><a href="https://simpleisbetterthancomplex.com/tips/2018/02/10/django-tip-22-designing-better-models.html">
+      Django Tips #22 Designing Better Models</a></li>
+    <li><a href="https://steelkiwi.com/blog/best-practices-working-django-models-python/">
+      Best practices working with Django models in Python</a></li>
+    <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style">
+      Django Coding style</a></li>
+  </ul>
+</div>
+{% endblock content %}

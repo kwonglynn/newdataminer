@@ -9,7 +9,7 @@
     <ul class="list-unstyled components">
       <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;Django</b></p></li>
       <li><a class="toactivate" href="#">&emsp;Installation</a></li>
-      <li><a class="toactivate" href="#">&emsp;Quick Start</a></li>
+      <li><a class="toactivate" href="{% url 'mydjango:model' %}">&emsp;Models</a></li>
       <li>
         <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Database</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -18,14 +18,15 @@
         </ul>
       </li>
       <li>
-        <a class="toactivate dropdown-toggle" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Pages</a>
+        <a class="toactivate dropdown-toggle" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;How to search</a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li><a class="toactivate" href="#">Page 1</a></li>
-          <li><a class="toactivate" href="#">Page 2</a></li>
-          <li><a class="toactivate" href="#">Page 3</a></li>
+          <li><a class="toactivate" href="{% url 'mydjango:use_js' %}">Use javascript</a></li>
+          <li><a class="toactivate" href="{% url 'mydjango:use_Q' %}">Use Q</a></li>
+          <li><a class="toactivate" href="{% url 'mydjango:use_haystack' %}">Use haystack</a></li>
+          <li><a class="toactivate" href="{% url 'mydjango:use_GSE' %}">Use GSE</a></li>          
         </ul>
       </li>
-      <li><a class="toactivate" href="{% url 'mydjango:user' %}">&emsp;User Management</a></li>
+      <li><a class="toactivate" href="{% url 'mydjango:user' %}">&emsp;Authentication</a></li>
       <li><a class="toactivate" href="{% url 'mydjango:background' %}">&emsp;Background Task</a></li>
       <li><a class="toactivate" href="{% url 'mydjango:channels' %}">&emsp;Channels</a></li>
       <li><a class="toactivate" href="{% url 'mydjango:email_server' %}">&emsp;Email Server</a></li>

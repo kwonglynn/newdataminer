@@ -1,0 +1,56 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  How to search
+{% endblock %}
+
+{% block content %}
+<div class="pannel">
+  <h4>Use javascript to do simple filtering on a table.</h4>
+  <p><a href="https://www.w3schools.com/w3css/w3css_filters.asp">Reference</a></p>
+</div>
+
+<div class="panel">
+  <h6>1. Create an input box and define a onkeyup function for it.</h6>
+  <div class="w3-code notranslate">
+    &lt;input class="w3-input w3-border w3-padding" type="text" placeholder="Search for names.." id="myInput" onkeyup="myFunction()"&gt;
+  </div>
+</div>
+
+<div class="panel">
+  <h6>2. Create the table, note all the table content has to be on the same page, otherwise only the current page can be searched.</h6>
+  <pre class="w3-code notranslate">
+&lt;table id="myTable"&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Data&lt;/td&gt;
+    ...
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+</div>
+
+<div class="panel">
+  <h6>3. Create a javascript to handle the filtering on the tabel cells, using the trick of adding/removing a display class.</h6>
+  <pre class="w3-code jsHigh notranslate">
+&lt;script&gt;
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+&lt;/script&gt;</pre>
+</div>
+
+{% endblock %}

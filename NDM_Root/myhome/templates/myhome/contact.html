@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 
 {% block title %}
   Contact
@@ -11,16 +12,12 @@
       <p class="success">You message was submitted successfully. Thank you!</p>
     {% else %}
       <form action="" method="post" novalidate>
-        <table>
-          {{ form.as_table }}
-          <tr>
-            <td>&nbsp;</td>
-            <td><input type="submit" value="Submit"></td>
-          </tr>
-        </table>
         {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
       </form>
     {% endif %}
   </div>
-
 {% endblock content %}

@@ -1,0 +1,65 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  How to search
+{% endblock %}
+
+{% block content %}
+<div class="pannel">
+  <h4>Use Google Custom Search to search on a whole website, normally don't
+    search the database if there is access limitation.</h4>
+  <p><a href="https://developers.google.com/custom-search/docs/tutorial/introduction">Reference</a></p>
+</div>
+
+<div class="panel">
+  <h6>Creating a Custom Search Engine.</h6>
+  <div class="">
+    <ol style="list-style-type: parenthesized-lower-latin;">
+      <li>Sign into <a href="https://cse.google.com/create/new">Control Panel</a>
+         using your Google Account. Click <em>New Search</em>.</li>
+      <li>In the Sites to search section, add the pages you want to include in
+        your search engine. You can include any sites you want, not just the
+        sites you own. You can include whole site URLs or individual pages URLs.
+        You can also use URL patterns.</li>
+      <li>The name of your search engine will be automatically generated based
+        on the URLs you select. You can change this name at any time.</li>
+      <li>Select the language of your search engine. This defines the language
+        of the buttons and other design elements of your search engine, but
+        doesn't affect the actual search results.</li>
+      <li>Click Create.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="panel">
+  <h6>Implementing search box.</h6>
+  <ol>
+    <li>In the Control Panel click the search engine you want to use.</li>
+    <li>Click Setup in the sidebar, and then click the Basics tab.</li>
+    <li>In the Details section, click Get code. Copy the code and paste it into
+      your page's HTML source code where you want the Custom Search element to appear.</li>
+  </ol>
+  <p>For the search box:</p>
+  <pre class="w3-code notranslate">
+&lt;script&gt;
+  (function() {
+    var cx = '013027384718195722642:sz20jl-dhw8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+&lt;/script&gt;
+&lt;gcse:searchbox&gt;&lt;/gcse:searchbox&gt; </pre>
+  <p>For the search box:</p>
+  <div class="w3-code notranslate">
+    &lt;gcse:searchresults&gt;&lt;/gcse:searchresults&gt;
+  </div>
+  <p>You can define the layout of search box and search results in diffferent ways,
+    check <a href="https://developers.google.com/custom-search/docs/tutorial/implementingsearchbox">
+    this</a>.</p>
+</div>
+
+{% endblock %}

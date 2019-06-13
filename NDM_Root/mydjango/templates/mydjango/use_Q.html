@@ -1,0 +1,47 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  How to search
+{% endblock %}
+
+{% block content %}
+<div class="pannel">
+  <h4>Use the Q object to do simple filtering within List View.</h4>
+  <p><a href="https://wsvincent.com/django-search/">Reference</a></p>
+</div>
+
+<div class="panel">
+  <h6>1. Define List View.</h6>
+  <pre class="w3-code notranslate">
+from django.db.models import Q
+from django.views.generic.list import ListView
+from . model import City
+    
+class CityListView(ListView):
+    model = City
+    template_name = 'city_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+        object_list = City.objects.filter(
+            Q(name__icontains=query) | Q(state__icontains=query)
+        )
+        return object_list  </pre>
+</div>
+
+<div class="panel">
+  <h6>2. Define a search form for the List View, the search form must have the
+    name defined as "q", which matches the name in the List View.</h6>
+  <pre class="w3-code notranslate">
+&lt;form action="" class="form-inline" method='get'&gt;
+  &lt;input name='q' class="form-control mr-sm-2 h-25 mb-2" type="text" placeholder="Search . . ." aria-label="Search"&gt;
+  &lt;button class="btn btn-outline-success h-25 mb-2" type="submit"&gt;Search&lt;/button&gt;
+&lt;/form&gt;</pre>
+  <p>This example use the default _list.html as the template and do filtering directly on the same page.
+    You can also define a new template file and return the results in a new page, as show in reference.</p>
+  <p>To use function-based view and have more control on everything, refer to
+    <a href="http://www.learningaboutelectronics.com/Articles/How-to-add-search-functionality-to-a-website-in-Django.php">
+      this reference</a>.</p>
+</div>
+
+{% endblock %}

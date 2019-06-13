@@ -1,0 +1,181 @@
+{% extends "mydjango/base.html" %}
+
+{% block title %}
+  How to search
+{% endblock %}
+
+{% block content %}
+<div class="pannel">
+  <h4>Use haystack to do advanced seach on one or two databases of a site.</h4>
+  <p><a href="https://django-haystack.readthedocs.io/en/master/tutorial.html">Reference</a></p>
+</div>
+
+<div class="panel">
+  <h6>1. Install haystack.</h6>
+  <div class="w3-code pythonHigh notranslate">
+    pip install django-haystack
+  </div>
+</div>
+
+<div class="panel">
+  <h6>2. Install the search engine.</h6>
+  <p>There are many search engines available, however, many of them have version dependency problems.
+    The one which is simplest and most compatible with python/django is Whoosh, because
+    it is pure python. It’s a great option for getting started quickly and for development.
+    Check <a href="https://django-haystack.readthedocs.io/en/master/installing_search_engines.html">
+    this</a> for more information regarding different search engines.
+  </p>
+  <div class="w3-code pythonHigh notranslate">
+    pip install whoosh
+  </div>
+</div>
+
+<div class="panel">
+  <h6>3. Add <em>haystack</em> to INSTALLED_APPS.</h6>
+  <pre class="w3-code notranslate">
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'bootstrap4',
+    'haystack',
+    'machine.apps.MachineConfig',
+    'deep.apps.DeepConfig',
+...
+] </pre>
+</div>
+
+<div class="panel">
+  <h6>4. Modify settings.py to add the configurations for the search engine.</h6>
+  <p>This is the only section that is needed to be changed for different search engines.</p>
+  <pre class="w3-code notranslate">
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+} </pre>
+</div>
+
+<div class="panel">
+  <h6>5. Create search_indexes.py.</h6>
+  <p>You generally create a unique SearchIndex for each type of Model you wish
+    to index, though you can reuse the same SearchIndex between different models
+     if you take care in doing so and your field names are very standardized.
+    The models in different applications should have different names.</p>
+  <pre class="pre-scrollable w3-code notranslate">
+from haystack import indexes
+from mypython.models import Module
+from machine.models import Machine
+from deep.models import Deep
+
+class ModuleIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=True)
+    title = indexes.CharField(model_attr='title')
+    type = indexes.CharField(model_attr='type')
+
+    def get_model(self):
+        return Module
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all()
+
+class MachineIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=True)
+    title = indexes.CharField(model_attr='title')
+
+    def get_model(self):
+        return Machine
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all()
+
+class DeepIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=True)
+    title = indexes.CharField(model_attr='title')
+
+    def get_model(self):
+        return Deep
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all()
+          </pre>
+</div>
+
+<div class="panel">
+  <h6>6. Define a search index template for each model.</h6>
+  <p>The default folder and name convention for the search index template is
+    templates/search/indexes/app1/model1_text.txt</p>
+  <pre class="w3-code notranslate">
+&#123;&#123; object.title	&#125;&#125;
+&#123;&#123; object.type	&#125;&#125; </pre>
+</div>
+
+<div class="panel">
+  <h6>7. Set up the URLconf.</h6>
+  <pre class="w3-code notranslate">
+urlpatterns = [
+    path('search/', include('haystack.urls')),
+    path('', views.index, name='index'),
+    ...
+] </pre>
+</div>
+
+<div class="panel">
+  <h6>8. Set up the search template html file. The default folder and name for
+    this file is templates/search/search.html.</h6>
+  <pre class="pre-scrollable w3-code notranslate">
+&#123;% extends 'base.html' %&#125;
+
+&#123;% block content %&#125;
+    &lt;h2&gt;Search&lt;/h2&gt;
+
+    &lt;form method="get" action="."&gt;
+        &lt;table&gt;
+            &#123;&#123; form.as_table &#125;&#125;
+            &lt;tr&gt;
+                &lt;td&gt;&nbsp;&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input type="submit" value="Search"&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+
+        &#123;% if query %&#125;
+            &lt;h3&gt;Results&lt;/h3&gt;
+
+            &#123;% for result in page.object_list %&#125;
+                &lt;p&gt;
+                    &lt;a href="&#123;&#123; result.object.get_absolute_url &#125;&#125;"&gt;&#123;&#123; result.object.title &#125;&#125;&lt;/a&gt;
+                &lt;/p&gt;
+            &#123;% empty %&#125;
+                &lt;p&gt;No results found.&lt;/p&gt;
+            &#123;% endfor %&#125;
+
+            &#123;% if page.has_previous or page.has_next %&#125;
+                &lt;div&gt;
+                    &#123;% if page.has_previous %&#125;&lt;a href="?q=&#123;&#123; query &#125;&#125;&amp;page=&#123;&#123; page.previous_page_number &#125;&#125;"&gt;&#123;% endif %&#125;&laquo; Previous&#123;% if page.has_previous %&#125;&lt;/a&gt;&#123;% endif %&#125;
+                    |
+                    &#123;% if page.has_next %&#125;&lt;a href="?q=&#123;&#123; query &#125;&#125;&amp;page=&#123;&#123; page.next_page_number &#125;&#125;"&gt;&#123;% endif %&#125;Next &raquo;&#123;% if page.has_next %&#125;&lt;/a&gt;&#123;% endif %&#125;
+                &lt;/div&gt;
+            &#123;% endif %&#125;
+        &#123;% else %&#125;
+            &#123;# Show some example queries to run, maybe query syntax, something else? #&#125;
+        &#123;% endif %&#125;
+    &lt;/form&gt;
+&#123;% endblock %&#125;
+ </pre>
+</div>
+
+<div class="panel">
+  <h6>9. Reindex.</h6>
+  <div class="w3-code notranslate">
+    python managy.py update_index
+  </div>
+</div>
+
+
+{% endblock %}

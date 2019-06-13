@@ -4,6 +4,9 @@ from django.shortcuts import render
 def index(request):
     return render(request, "mydjango/index.html")
 
+def model(request):
+    return render(request, "mydjango/model.html")
+
 def postgres(request):
     return render(request, "mydjango/postgres.html")
 
@@ -24,3 +27,15 @@ def email_server(request):
 
 def slug(request):
     return render(request, "mydjango/slug.html")
+
+def use_js(request):
+    return render(request, "mydjango/use_js.html")
+
+def use_Q(request):
+    return render(request, "mydjango/use_Q.html")
+
+def use_haystack(request):
+    return render(request, "mydjango/use_haystack.html")
+
+def use_GSE(request):
+    return render(request, "mydjango/use_GSE.html")

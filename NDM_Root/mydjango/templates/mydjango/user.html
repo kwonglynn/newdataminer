@@ -5,18 +5,131 @@
 {% endblock title %}
 
 {% block content %}
-  <div class="panel">
-    <h2 class="pagehead">Django user management and authentication system.</h2>
-    <p><a href="https://blog.hlab.tech/lesson-2-a-step-by-step-guide-on-how-to-use-bootstrap-and-register-user-in-django-2-2-authentication-system-and-python-3-7/">
-    Reference</a></p>
 
-    <div class="panel">
-      <h6>1. User management.</h6>
-      <div class="w3-code pythonHigh notranslate">
-        $ Code <br>
-      </div>
-    </div>
+<h2 class="pagehead">Django user management and authentication system.</h2>
 
-
+<div class="panel">
+  <h6>1. /proj/proj/settings.py.</h6>
+  <div class="w3-code notranslate">
+    # The default URL for login.
+    LOGIN_URL = '/accounts/login/'
+    # Redirect to home URL after login (Default redirects to /accounts/profile/)
+    LOGIN_REDIRECT_URL = '/'
   </div>
+</div>
+
+<div class="panel">
+  <h6>3. Project URLs. /proj/proj/urls.py.</h6>
+  <pre class="w3-code notranslate">
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+] </pre>
+  <table class="table table-light" style="width:600px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>URL</th>
+        <th>name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>accounts/login/</td>
+        <td>login</td>
+      </tr>
+      <tr>
+        <td>accounts/logout/</td>
+        <td>logout</td>
+      </tr>
+      <tr>
+        <td>accounts/password_reset/</td>
+        <td>password_reset</td>
+      </tr>
+      <tr>
+        <td>accounts/password_reset/done/</td>
+        <td>password_reset_done</td>
+      </tr>
+      <tr>
+        <td>accounts/password_change</td>
+        <td>password_change</td>
+      </tr>
+      <tr>
+        <td>accounts/password_change/done</td>
+        <td>password_change_done</td>
+      </tr>
+      <tr>
+        <td>accounts/reset/&lt;uidb64>/&lt;token>/</td>
+        <td>password_reset_confirm</td>
+      </tr>
+      <tr>
+        <td>accounts/reset/done</td>
+        <td>password_reset_complete</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h6>2. Tempalte files for user authentication, including:</h6>
+  <p>/proj/proj/templates/registration/login.html</p>
+  <p>/proj/proj/templates/registration/logged_out.html</p>
+  <p>/proj/proj/templates/registration/password_reset_form.html</p>
+  <p>/proj/proj/templates/registration/password_reset_done.html</p>
+  <p>/proj/proj/templates/registration/password_reset_email.html</p>
+  <p>/proj/proj/templates/registration/password_reset_confirm.html</p>
+  <p>/proj/proj/templates/registration/password_reset_complete.html</p>
+  <p><a class="normal-link" href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication">Reference</a></p>
+</div>
+
+<div class="panel">
+  <h6>4. Testing in templates.</h6>
+  <pre class="w3-code notranslate">
+&#123;% if user.is_authenticated %}
+  &lt;li>User: &#123;&#123; user.get_username }}&lt;/li>
+  &lt;li>&lt;a href="&#123;% url 'logout'%}?next=&#123;&#123;request.path}}">Logout&lt;/a>&lt;/li>
+&#123;% else %}
+  &lt;li>&lt;a href="&#123;% url 'login'%}?next=&#123;&#123;request.path}}">Login&lt;/a>&lt;/li>
+&#123;% endif %}  </pre>
+</div>
+
+<div class="panel">
+  <h6>5. Testing in views.</h6>
+  <pre class="w3-code notranslate">
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+@login_required
+def my_view(request):
+    ...
+
+class MyView(LoginRequiredMixin, View):
+    login_url = '/login/'   # Override LOGIN_URL in settings.py
+    redirect_field_name = 'redirect_to'  # Override LOGIN_REDIRECT_URL in settings.py
+    ...</pre>
+  <p>An Example:</p>
+  <pre class="w3-code notranslate">
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')   </pre>
+</div>
+
+
+
+<h4>References</h4>
+<div class="panel referencelist">
+  <ul>
+    <li><a href="https://blog.hlab.tech/lesson-2-a-step-by-step-guide-on-how-to-use-bootstrap-and-register-user-in-django-2-2-authentication-system-and-python-3-7/">
+    Reference</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication">Django Tutorial Part 8: User authentication and permissions</a></li>
+    <li><a href="#"></a></li>
+  </ul>
+</div>
+
 {% endblock content %}
