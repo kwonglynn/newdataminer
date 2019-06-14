@@ -67,7 +67,7 @@ def dict_create(request):
     dict.added_by = request.user
     dict.save()
 
-    return redirect('dict:dict_draft_list' pk=dict.pk)
+    return redirect('dict:dict_list' pk=dict.pk)
 
 class DictListView(ListView):
     model = Dict
