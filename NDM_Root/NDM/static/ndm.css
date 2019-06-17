@@ -247,6 +247,7 @@ p {
   margin-bottom:0.6em;
 }
 
+/* brackets for list  */
 /* ol {
     counter-reset: list;
 }
@@ -257,6 +258,10 @@ ol > li:before {
     content: counter(list) ") ";
     counter-increment: list;
 } */
+
+.right-235 {
+  padding-right:235px;
+}
 
 .pad-top-1em {
   padding-top: 1em;

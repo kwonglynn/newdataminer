@@ -16,6 +16,7 @@ from django.db.models import Q
 
 # For searching and return the new word.
 import os
+import re
 import json
 import time
 # Configure settings for project
@@ -66,21 +67,20 @@ def dict_create(request):
                         result_dict = json.loads(result_json)
                         pron = result_dict['pron']
                         morf = result_dict['morf']
+                        forms = result_dict['form']
                         trans_list = json.loads(result_dict['trans'])
+                        trans_list = trans_list[0] # Only take the first translation for now.
                         trans = ''
                         for item in trans_list:
-                            trans += ' '.join(item) + '<br>'
-                        try:
-                            phrase = json.loads(result_dict['phrase'])[0][0]
-                        except:
-                            phrase = ''
+                            if not re.search('[0-9]', item):
+                                trans += item + ' '
                         break
                 else:
                     return HttpResponseRedirect(reverse('myserver:dict_list'))
             else:
                 time.sleep(1)
 
-        dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf, trans=trans, phrase=phrase)[0]
+        dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf, forms=forms, trans=trans)[0]
         dict.added_by = request.user
         dict.save()
 
@@ -94,8 +94,7 @@ class DictListView(LoginRequiredMixin, ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        query = self.request.GET.get('q4', '')
-        object_list = Dict.objects.filter(Q(word__icontains=query) & Q(added = True) & Q(added_by = self.request.user)
+        object_list = Dict.objects.filter(Q(label__icontains = self.request.user.username)
         ).order_by('word')
 
         return object_list
@@ -108,8 +107,22 @@ class DictDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "dict.can_publish_delete"
     success_url = reverse_lazy('myserver:dict_list')  # Remember to use the app name prefix.
 
+# Delete directly!
+# @login_required
+# def delete_word(request, pk):
+#     Dict.objects.filter(pk=pk).delete()
+#     return HttpResponseRedirect(reverse('myserver:dict_list'))
+
 @login_required
-def publish(request, pk):
+def remove_word(request, pk):
     object = get_object_or_404(Dict, pk=pk)
-    object.publish()
+    username = request.user.username
+    object.remove(username)
+    return redirect('myserver:dict_list')
+
+@login_required
+def add_to_dict(request, pk):
+    object = get_object_or_404(Dict, pk=pk)
+    username = request.user.username
+    object.add(username)
     return redirect('myserver:dict_list')

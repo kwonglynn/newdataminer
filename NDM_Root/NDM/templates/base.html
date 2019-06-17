@@ -52,13 +52,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-left:13px;"> <!-- Menubar items which are collapsible -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" style="padding-right:15px;" href="#">Home</a>
+              <a class="nav-link" style="padding-right:15px;" href="{% url 'myhome:index' %}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="padding-right:15px;" href="{% url 'myserver:index' %}">Server</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="padding-right:15px;" href={% url 'mypython:module_list' %}>Python</a>
+              <a class="nav-link" style="padding-right:15px;" href="{% url 'mypython:module_list' %}">Python</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="padding-right:15px;" href="{% url 'mydjango:index' %}">Django</a>

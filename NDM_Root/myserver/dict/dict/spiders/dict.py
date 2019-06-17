@@ -23,6 +23,7 @@ class QuotesSpider(scrapy.Spider):
         word_path = entry_path.xpath(".//span[@class='lex_ful_entr l1']/text()")
         pron_path = entry_path.xpath(".//span[@class='lex_ful_pron']/text()")
         morf_path = entry_path.xpath(".//span[@class='lex_ful_morf']/text()")[0]
+        form_path = entry_path.xpath(".//span[@class='lex_ful_form']/text()")
         
         trans_all = []
         trans = []
@@ -63,6 +64,7 @@ class QuotesSpider(scrapy.Spider):
             'word': word_path.get(),
             'pron': pron_path.get(),
             'morf': morf_path.get(),
+            'form': form_path.get(),
             'trans': json.dumps(trans_all),
             'phrase': json.dumps(phrase_all)
         }

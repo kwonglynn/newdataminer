@@ -14,22 +14,7 @@
       {% endif %}
       {% if user.is_authenticated %}
         <li><a class="toactivate" href="{% url 'myserver:dict_list' %}">&emsp;Swedish</a></li>
-        <li><a class="toactivate" href="#">&emsp;Git</a></li>
-        <li>
-          <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Database</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li><a class="toactivate" href="{% url 'mydjango:postgres' %}">PostgreSQL</a></li>
-            <li><a class="toactivate" href="#">MySQL</a></li>
-          </ul>
-        </li>
-        <li>
-          <a class="toactivate dropdown-toggle" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Pages</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li><a class="toactivate" href="#">Page 1</a></li>
-            <li><a class="toactivate" href="#">Page 2</a></li>
-            <li><a class="toactivate" href="#">Page 3</a></li>
-          </ul>
-        </li>
+        <li><a class="toactivate" href="#">&emsp;Joblist</a></li>
       {% endif %}
     </ul>
   </nav> <!-- End of sidebar -->

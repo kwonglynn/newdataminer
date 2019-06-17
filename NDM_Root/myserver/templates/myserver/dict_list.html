@@ -22,31 +22,23 @@
     <th>Word</th>
     <th>Pronunciation</th>
     <th>Type</th>
+    <th>Forms</th>
     <th>Translation</th>
-    <th>Phrase</th>
     <th>Delete</th>
   </tr>
-
-  {% if not object_list %}
-    <tr><a style="padding-left:15px;" class="normal-link" href="{% url 'myserver:dict_list' %}">Back to List</a></tr>
-  {% endif %}
 
   {% for object in object_list %}
     <tr class="quoterow {% cycle '' 'altrow' %}">
       <td><a href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></td>
       <td>{{ object.pron }}</td>
       <td>{{ object.morf }}</td>
+      <td>{{ object.forms }}</td>
       <td>
         {% autoescape off %}
           {{ object.trans }}
         {% endautoescape %}
       </td>
-      <td>
-        {% autoescape off %}
-          {{ object.phrase }}
-        {% endautoescape %}
-      </td>
-      <td><a href="{% url "myserver:dict_delete" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a></td>
+      <td><a href="{% url "myserver:remove_word" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a></td>
     </tr>
   {% endfor %}
 </table>

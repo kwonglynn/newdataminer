@@ -10,10 +10,11 @@ class Dict(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='dict')
     pron = models.CharField(max_length=100, blank=True, null=True)
     morf = models.CharField(max_length=100, blank=True, null=True)
+    forms = models.CharField(max_length=100, blank=True, null=True, default='')
     trans = models.TextField(blank=True, null=True)
-    phrase = models.TextField(blank=True, null=True)
+    # phrase = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
-    added = models.BooleanField(default=False)
+    label = models.TextField(blank=True, null=True, default='')
 
     def __str__(self):
         return str(object=self.word)
@@ -21,6 +22,10 @@ class Dict(models.Model):
     def get_absolute_url(self):
         return reverse("myserver:dict_detail", kwargs={'pk':self.pk}) # Remember to use the app name as prefix for reverse!
 
-    def publish(self):
-        self.added = True
+    def add(self, username):
+        self.label += username + ';'
+        self.save()
+
+    def remove(self, username):
+        self.label = self.label.replace(username + ';', '')
         self.save()
