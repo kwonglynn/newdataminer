@@ -171,14 +171,14 @@ ul.CTAs a {
 #content {
     padding-top:70px;
     padding-left:235px;
-    padding-right:35px;
+    padding-right:235px;
     min-height: 100vh;
     /* transition:  all 0.3s; */
 }
 
 #content.active {
     padding-left:235px;
-    padding-right:35px;
+    padding-right:235px;
 }
 
 /* ---------------------------------------------------
@@ -258,10 +258,6 @@ ol > li:before {
     content: counter(list) ") ";
     counter-increment: list;
 } */
-
-.right-235 {
-  padding-right:235px;
-}
 
 .pad-top-1em {
   padding-top: 1em;
