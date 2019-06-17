@@ -39,6 +39,7 @@ def dict_create(request):
     word = request.GET.get('q4')
     try:
         word = word.strip().split()[0]
+        word = word.lower()
     except:
         return HttpResponseRedirect(reverse('myserver:dict_list'))
     # Judge if the word has already been added:
