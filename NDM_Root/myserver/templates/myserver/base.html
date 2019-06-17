@@ -13,7 +13,7 @@
         <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;<a style="text-decoration:none" href="{% url 'login' %}?next=/server/">&emsp;Log in</a></b></p></li>
       {% endif %}
       {% if user.is_authenticated %}
-        <li><a class="toactivate" href="{% url 'mypython:conda' %}">&emsp;Joblist</a></li>
+        <li><a class="toactivate" href="{% url 'myserver:dict_list' %}">&emsp;Swedish</a></li>
         <li><a class="toactivate" href="#">&emsp;Git</a></li>
         <li>
           <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Database</a>

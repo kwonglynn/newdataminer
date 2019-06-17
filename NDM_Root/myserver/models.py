@@ -19,7 +19,7 @@ class Dict(models.Model):
         return str(object=self.word)
 
     def get_absolute_url(self):
-        return reverse("dict:dict_detail", kwargs={'pk':self.pk}) # Remember to use the app name as prefix for reverse!
+        return reverse("myserver:dict_detail", kwargs={'pk':self.pk}) # Remember to use the app name as prefix for reverse!
 
     def publish(self):
         self.added = True

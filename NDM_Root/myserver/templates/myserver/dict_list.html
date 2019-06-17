@@ -13,7 +13,7 @@
 <div style="width:750px;">
 
   <form action="{% url 'myserver:dict_create' %}" class="form-inline" method='get'>
-    <input name='q2' class="form-control mr-sm-2 h-25 mb-2" style="width:650px;" type="text" placeholder="Search . . ." aria-label="Search">
+    <input name='q4' class="form-control mr-sm-2 h-25 mb-2" style="width:650px;" type="text" placeholder="Search . . ." aria-label="Search">
     <button class="btn btn-outline-success h-25 mb-2" style="width:91px;" type="submit">Search</button>
   </form>
 
@@ -23,21 +23,30 @@
     <th>Pronunciation</th>
     <th>Type</th>
     <th>Translation</th>
-    <th>Added Date</th>
+    <th>Phrase</th>
+    <th>Delete</th>
   </tr>
 
   {% if not object_list %}
-    <tr><a style="padding-left:15px;" class="normal-link" href="{% url 'dict:dict_list' %}">Back to List</a></tr>
+    <tr><a style="padding-left:15px;" class="normal-link" href="{% url 'myserver:dict_list' %}">Back to List</a></tr>
   {% endif %}
 
   {% for object in object_list %}
     <tr class="quoterow {% cycle '' 'altrow' %}">
-      <td><a href="{{ object.get_absolute_url }}">{{ object.word }}</a></td>
+      <td><a href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></td>
       <td>{{ object.pron }}</td>
       <td>{{ object.morf }}</td>
-      <td>{{ object.trans }}</td>
-      <td>{{ object.phrase }}</td>
-      <td><a href="{% url "dict:dict_delete" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a></td>
+      <td>
+        {% autoescape off %}
+          {{ object.trans }}
+        {% endautoescape %}
+      </td>
+      <td>
+        {% autoescape off %}
+          {{ object.phrase }}
+        {% endautoescape %}
+      </td>
+      <td><a href="{% url "myserver:dict_delete" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a></td>
     </tr>
   {% endfor %}
 </table>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Dict
-from .forms import DictForm
+# from .forms import DictForm
 
 from django.db.models import Q
 
@@ -35,79 +35,81 @@ def index(request):
 
 @login_required
 def dict_create(request):
-    cwd = os.getcwd()
-    ## Work in the dict directory.
-    dict_dir = r'C:\Google\Work\MyWebsite\newdataminer\NDM_Root\myserver\dict'
-    username = request.user.username
-    result_file_name = username + '.json'
-    # Delete the file it already exists.
-    if os.path.isfile(result_file_name):
-        os.remove(result_file_name)
-    word = self.request.GET.get('q4')
-    word = word.strip().split()[0]
-    os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word))
-    ## Go back the original directory.
-    os.chdir(cwd)
-
-    while True:
+    word = request.GET.get('q4')
+    try:
+        word = word.strip().split()[0]
+    except:
+        return HttpResponseRedirect(reverse('myserver:dict_list'))
+    # Judge if the word has already been added:
+    if Dict.objects.filter(word=word).exists():
+        dict = Dict.objects.filter(word=word)[0]
+        return HttpResponseRedirect(reverse('myserver:dict_detail', kwargs={'pk': dict.pk}))
+    else:
+        cwd = os.getcwd()
+        ## Work in the dict directory.
+        dict_dir = r'C:\Google\Work\MyWebsite\newdataminer\NDM_Root\myserver\dict'
+        os.chdir(dict_dir)
+        username = request.user.username
+        result_file_name = username + '.json'
+        # Delete the result json file it already exists.
         if os.path.isfile(result_file_name):
-            with open(result_file_name, 'r') as fi:
-                lines = fi.readlines()
-                result_json = lines[1].strip()
-                result_dict = json.loads(result_json)
-                pron = result_dict['pron']
-                morf = result_dict['morf']
-                trans = result_dict['trans']
-                phrase = result_dict['phrase']
-                break
-        else:
-            time.sleep(1)
+            os.remove(result_file_name)
 
-    dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf, trans=trans, phrase=phrase)[0]
-    dict.added_by = request.user
-    dict.save()
+        os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word))
 
-    return redirect('dict:dict_list' pk=dict.pk)
+        while True:
+            if os.path.isfile(result_file_name):
+                if os.path.getsize(result_file_name) > 0:
+                    with open(result_file_name, 'r') as fi:
+                        lines = fi.readlines()
+                        result_json = lines[1].strip()
+                        result_dict = json.loads(result_json)
+                        pron = result_dict['pron']
+                        morf = result_dict['morf']
+                        trans_list = json.loads(result_dict['trans'])
+                        trans = ''
+                        for item in trans_list:
+                            trans += ' '.join(item) + '<br>'
+                        try:
+                            phrase = json.loads(result_dict['phrase'])[0][0]
+                        except:
+                            phrase = ''
+                        break
+                else:
+                    return HttpResponseRedirect(reverse('myserver:dict_list'))
+            else:
+                time.sleep(1)
 
-class DictListView(ListView):
+        dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf, trans=trans, phrase=phrase)[0]
+        dict.added_by = request.user
+        dict.save()
+
+        ## Go back the original directory.
+        os.chdir(cwd)
+        return HttpResponseRedirect(reverse('myserver:dict_detail', kwargs={'pk': dict.pk}))
+
+class DictListView(LoginRequiredMixin, ListView):
     model = Dict
-    template_name = 'dict/dict_list.html'
+    template_name = 'myserver/dict_list.html'
     paginate_by = 50
 
     def get_queryset(self):
         query = self.request.GET.get('q4', '')
-        object_list = Dict.objects.filter(
-            Q(published_date__lte=timezone.now()) & Q(title__icontains=query)
-        ).order_by('title')
+        object_list = Dict.objects.filter(Q(word__icontains=query) & Q(added = True) & Q(added_by = self.request.user)
+        ).order_by('word')
 
         return object_list
 
 class DictDetailView(DetailView):
     model = Dict
 
-class DictCreateView(PermissionRequiredMixin, CreateView):
-    model = Dict
-    form_class = DictForm
-    permission_required = "dict.can_publish_delete"
-
-class DictUpdateView(LoginRequiredMixin, UpdateView):
-    model = Dict
-    form_class = DictForm
-
-    # The post needs to be re-published if it is updated.
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.published_date = None
-        self.object.save()
-        return super().form_valid(form)
-
 class DictDeleteView(PermissionRequiredMixin, DeleteView):
     model = Dict
     permission_required = "dict.can_publish_delete"
-    success_url = reverse_lazy('dict:dict_list')  # Remember to use the app name prefix.
+    success_url = reverse_lazy('myserver:dict_list')  # Remember to use the app name prefix.
 
 @login_required
 def publish(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     object.publish()
-    return redirect('dict:dict_list')
+    return redirect('myserver:dict_list')

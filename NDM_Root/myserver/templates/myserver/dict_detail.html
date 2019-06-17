@@ -1,0 +1,36 @@
+<!-- The default name is dict name in lower case + "_list.html". -->
+<!-- In this case, the default name is dict_list.html -->
+{% extends "myserver/base.html" %}
+
+{% block title %}
+  Swedish
+{% endblock title %}
+
+{% block content %}
+  <h4>{{ object.word }}</h4>
+  {% if not object.added %}
+    <p><a class="normal-link" href="{% url 'myserver:publish' pk=object.pk %}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
+  {% endif %}
+  <div class="panel module-detail">
+    <h6>Pronunciation:</h6>
+    <div>
+      {{ object.pron }}
+    </div>
+    <h6>Type:</h6>
+    <div>
+      {{ object.morf }}
+    </div>
+    <h6>Translation:</h6>
+    <div>
+      {% autoescape off %}
+        {{ object.trans }}
+      {% endautoescape %}
+    </div>
+    <h6>Phrases:</h6>
+    <div>
+      {% autoescape off %}
+        {{ object.phrase }}
+      {% endautoescape %}
+    </div>
+    <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list' %}"><strong>List</strong></a></p>
+{% endblock content %}
