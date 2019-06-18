@@ -66,13 +66,14 @@ def dict_create(request):
                         lines = fi.readlines()
                         result_json = lines[1].strip()
                         result_dict = json.loads(result_json)
+                        word = result_dict['word']
                         pron = result_dict['pron']
                         morf = result_dict['morf']
                         forms = result_dict['form']
                         trans_list = json.loads(result_dict['trans'])
                         trans_list = trans_list[0] # Only take the first translation for now.
                         trans = ''
-                        for item in trans_list:
+                        for item in trans_list[:2]:
                             if not re.search('[0-9]', item):
                                 trans += item + ' '
                         break

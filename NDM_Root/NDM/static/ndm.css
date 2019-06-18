@@ -461,6 +461,20 @@ input {
   text-decoration: underline;
 }
 
+.dict-list {
+  border-collapse:collapse;
+  max-width: 600px;
+  /* max-width: 750px; */
+}
+
+.dict-list a {
+  color: blue;
+}
+
+.dict-list a:hover {
+  text-decoration: underline;
+}
+
 /* CSS for module detail */
 .module-detail {
   /* background-color: WhiteSmoke; */
