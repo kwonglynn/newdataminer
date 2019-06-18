@@ -67,6 +67,8 @@ def dict_create(request):
                         result_json = lines[1].strip()
                         result_dict = json.loads(result_json)
                         word = result_dict['word']
+                        if word.endswith('*'):
+                            word = word[:-1]
                         pron = result_dict['pron']
                         morf = result_dict['morf']
                         forms = result_dict['form']
