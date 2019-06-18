@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 class DeepForm(ModelForm):
     class Meta:
         model = Deep
-        fields = ['title', 'reference', 'description', 'parameters', 'code']
+        fields = ['title', 'usage', 'reference', 'description', 'parameters', 'code']
         widgets = {
             'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
             'parameters': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),

@@ -21,13 +21,14 @@
   {% endif %}
 
   <form action="" class="form-inline" method='get'>
-    <input name='q2' class="form-control mr-sm-2 h-25 mb-2" style="width:650px;" type="text" placeholder="Search . . ." aria-label="Search">
-    <button class="btn btn-outline-success h-25 mb-2" style="width:91px;" type="submit">Search</button>
+    <input name='q2' class="form-control mr-sm-2 h-25 mb-2" style="width:655px;" type="text" placeholder="Search . . ." aria-label="Search">
+    <button class="btn btn-outline-success h-25 mb-2" style="width:87px;" type="submit">Search</button>
   </form>
 
   <table class="module-list w-100" id="myTable">
   <tr class="quotehdr">
     <th>Name</th>
+    <th>Usage</th>
     <th>Added By</th>
     <th>Created Time</th>
     {% if user.is_authenticated %}
@@ -48,6 +49,7 @@
   {% for object in object_list %}
     <tr class="quoterow {% cycle '' 'altrow' %}">
       <td><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></td>
+      <td>{{ object.usage }}</td>
       <td>{{ object.added_by }}</td>
       <td>{{ object.created_date|date:"Y-m-d" }}</td>
       {% if user.is_authenticated %}

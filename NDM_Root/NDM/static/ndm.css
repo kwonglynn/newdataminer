@@ -434,12 +434,12 @@ input {
   background-color: #4c4c4c;
   color: white;
   text-align: center;
-  padding: 8px 5px;
+  padding: 5px 2px;
   border: none;
 }
 
 .quoterow td {
-  padding: 5px 10px;
+  padding: 5px 2px;
   text-align: center;
 }
 

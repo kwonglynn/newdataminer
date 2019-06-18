@@ -7,6 +7,7 @@ from django.utils import timezone
 
 class Machine(models.Model):
     title = models.CharField(max_length=100)
+    usage = models.CharField(max_length=300, blank=True, null=True)
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='machine')
     reference = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)

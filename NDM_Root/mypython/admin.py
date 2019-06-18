@@ -11,7 +11,7 @@ class ModuleAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('title', 'added_by', 'type', 'reference', 'description', 'code', 'created_date')
+            'fields': ('title', 'added_by', 'type', 'usage', 'reference', 'description', 'code', 'created_date')
         }),
         # ('Module Information', {
         #     'classes': ('collapse', ),

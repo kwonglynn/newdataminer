@@ -9,19 +9,20 @@
 {% block content %}
   <h4>{{ object.title }}</h4>
   <h6>{{ object.get_type_display }}</h6>
+  <p>{{ object.usage }}</p>
   {% if perms.machine.can_publish_delete and not object.published_date %}
     <p><a class="normal-link" href="{% url 'machine:publish' pk=object.pk %}"><strong><i class="fa fa-upload" aria-hidden="true"></i> Publish</strong></a></p>
   {% endif %}
   <div class="panel module-detail">
     <p><a href="{{ object.reference }}">Reference</a></p>
     <h6>Description:</h6>
-    <div>
-      {{ object.description }}
-    </div>
+    <pre>
+{{ object.description }}
+    </pre>
     <h6>Parameters:</h6>
-    <div>
-      {{ object.parameters }}
-    </div>
+    <pre>
+{{ object.parameters }}
+    </pre>
     <h6>Examples:</h6>
     <pre class="w3-code pythonHigh notranslate">
 {{ object.code }}  </pre>

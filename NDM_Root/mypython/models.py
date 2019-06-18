@@ -23,6 +23,7 @@ class Module(models.Model):
     title = models.CharField(max_length=100)
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Added by", related_name='python')
     type = models.CharField(max_length=10, choices=TYPE_CHOICE)
+    usage = models.CharField(max_length=300, blank=True, null=True)
     reference = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     code = models.TextField(blank=True, null=True)
