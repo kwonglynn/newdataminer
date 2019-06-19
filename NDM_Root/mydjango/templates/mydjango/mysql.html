@@ -202,20 +202,39 @@ default-character-set = utf8</pre>
 
     <div class="panel">
       <h6>8. Migrate a database from on computer to another.</h6>
-      <p><strong>Method 1:</strong> On computer A, excute:</p>
+      <p>On computer A, excute:</p>
       <p><strong>Note:</strong> Change the character set and collation of a
          database to make it match those on Computer B.</p>
       <div class="w3-code pythonHigh notranslate">
         $ ALTER DATABASE ndm_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; <br>
-        $ mysqldump -u root -p --quick ndm_db | gzip > C:\Google\Work\MyWebsite\Transfer\MySQL\ndm_db.gz <br>
+        $ mysqldump -u root -p --quick ndm_db | gzip > C:\Google\Work\MyWebsite\Transfer\MySQL\Backup\ndm_db_20190619.gz <br>
       </div>
       <p>Transfere the compressed database <em>ndm_db.gz</em> to computer B.
         On Computer B, execute:</p>
       <div class="w3-code pythonHigh notranslate">
         $ sudo mysql; <br>
         $ CREATE DATABASE ndm_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; # Specify the character set and collation of the new database to make it match those on Computer A. <br>
-        $ exit; <br>
         $ gunzip < ndm_db.gz | sudo mysql ndm_db; <br>
+        $ # Syntax: <br>
+        $ # mysql -u user -p dbname < backup-file.sql <br>
+      </div>
+      <p><strong class>Warning!</strong></p>
+    </div>
+
+    <div class="panel">
+      <h6>9. Exporting and importing a MySQL table.</h6>
+      <p>Exaporting a table:</p>
+      <div class="w3-code pythonHigh notranslate">
+        $ # syntax <br>
+        $ mysqldump -u user -p dbname tableName > tableName.sql <br>
+        $ # pythonanywhere.com <br>
+        $ mysqldump -u guanglin -h guanglin.mysql.pythonanywhere-services.com -p 'guanglin$NDM_db' myserver_dict > myserver_dict.sql <br>
+        $ # Note the quotes is mandatory! <br>
+      </div>
+      <p>Importing a table:</p>
+      <div class="w3-code pythonHigh notranslate">
+        $ mysql -u user -p -D dbname < tableName.sql <br>
+        $ mysql -u root -p -D ndm_db < myserver_dict.sql <br>
       </div>
       <p><strong class>Warning!</strong></p>
     </div>
