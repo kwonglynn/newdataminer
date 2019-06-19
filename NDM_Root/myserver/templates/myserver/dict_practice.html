@@ -1,0 +1,64 @@
+<!-- The default name is dict name in lower case + "_list.html". -->
+<!-- In this case, the default name is dict_list.html -->
+{% extends "myserver/base.html" %}
+
+{% block title %}
+  Swedish
+{% endblock %}
+
+{% block content %}
+
+<!-- <h4>Python Basics</h4> -->
+<!-- <p>Modules, functions, classes, and methods.</p> -->
+<div class="panel" style="padding-left:12px;">
+  {% for object in object_list %}
+    <h4><a href="https://www.dict.com/swedish-english/{{object.word}}" style="padding-left:20px;font-size:1.3em;">{{ object.word }}</a></h4>
+    <div id="accordion">
+      <div class="panel">
+        <div class="card-header" id="headingOne" style="background-color:GhostWhite;">
+          <h5 class="mb-0" style="margin-left:0;">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left:0;font-size:1.15em;text-decoration: none;color:orange;">
+              Show <i class="fas fa-book-open"></i>
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <h6>Pronunciation: {{ object.pron }}</h6>
+            <h6>Type: {{ object.morf }}</h6>
+            <h6>Forms: {{ object.forms }}</h6>
+            <h6>Translation: {{ object.trans }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p><a href="{% url "myserver:remember_word" pk=object.pk %}" class="btn btn-success">Remembered</a></p>
+  {% endfor %}
+</div>
+
+<div class="panel">
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-info btn-100">Previous</a></li>
+      {% else %}
+        <li class="page-item"><a href="#" class="disabled btn btn-info btn-100">Previous</a></li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+        <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="btn btn-info btn-100">Next</a></li>
+      {% else %}
+        <li class="page-item"><a href="#" class="disabled btn btn-info btn-100">Next</a></li>
+      {% endif %}
+    </ul>
+
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <p style="padding-left:10px;"><span style="font-size:1.15em;font-weight:bold;color:blue;">{{ i }}</span> of <span style="font-size:1.15em;">{{ total }}</span> words.</p>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  <p style="padding-left:10px;">Back to <a class="normal-link" href="{% url 'myserver:dict_list' %}"><strong>Notebook</strong></a></p>
+</div>
+{% endblock %}

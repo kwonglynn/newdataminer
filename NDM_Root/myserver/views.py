@@ -103,6 +103,27 @@ class DictListView(LoginRequiredMixin, ListView):
 
         return object_list
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total"] = self.get_queryset().count()
+        return context
+
+class DictPracticeListView(LoginRequiredMixin, ListView):
+    model = Dict
+    template_name = 'myserver/dict_practice.html'
+    paginate_by = 1
+
+    def get_queryset(self):
+        object_list = Dict.objects.filter(Q(label__icontains = self.request.user.username)
+        ).order_by('word')
+
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total"] = self.get_queryset().count()
+        return context        
+
 class DictDetailView(DetailView):
     model = Dict
 
@@ -123,6 +144,20 @@ def remove_word(request, pk):
     username = request.user.username
     object.remove(username)
     return redirect('myserver:dict_list')
+
+@login_required
+def remember_word(request, pk):
+    object = get_object_or_404(Dict, pk=pk)
+    username = request.user.username
+    object.remove(username)
+    path = request.META.get('HTTP_REFERER')
+    try:
+        if path.endswith('server/swedish/'):
+            return redirect('myserver:dict_practice')
+        else:
+            return redirect(path)
+    except:
+        return redirect('myserver:dict_practice')
 
 @login_required
 def add_to_dict(request, pk):
