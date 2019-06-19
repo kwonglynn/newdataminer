@@ -43,9 +43,9 @@ body {
   margin-bottom:0;
 }
 /* Above is for footer */
-a,
-a:hover,
-a:focus {
+nav a,
+nav a:hover,
+nav a:focus {
     color: inherit;
     text-decoration: none;
     /* transition: all 0.3s; */
@@ -129,12 +129,12 @@ a:focus {
 }
 
 #sidebar ul li.active>a,
-a[aria-expanded="true"] {
+nav a[aria-expanded="true"] {
     color: black;
     background:  #868e96;
 }
 
-a[data-toggle="collapse"] {
+nav a[data-toggle="collapse"] {
     position: relative;
 }
 
@@ -146,7 +146,7 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
+nav ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: WhiteSmoke;
@@ -156,7 +156,7 @@ ul.CTAs {
     padding: 5px;
 }
 
-ul.CTAs a {
+nav ul.CTAs a {
     text-align: center;
     font-size: 0.9em !important;
     display: block;
@@ -241,43 +241,31 @@ p {
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
   font-weight: 300;
-  line-height: 1.7em;
+  /* line-height: 1.7em; */
   color: black;
   margin-top: 0em;
   margin-bottom:0.6em;
 }
 
-/* brackets for list  */
-/* ol {
-    counter-reset: list;
-}
-ol > li {
-    list-style: none;
-}
-ol > li:before {
-    content: counter(list) ") ";
-    counter-increment: list;
-} */
-
 .pad-top-1em {
   padding-top: 1em;
 }
 
-p a {
+a {
   color:blue;
 }
 
-p a:hover {
+a:hover {
   text-decoration: underline;
 }
 
-a.normal-link {
+/* a.normal-link {
   color: blue;
 }
 
 a.normal-link:hover {
   text-decoration: underline;
-}
+} */
 
 input[type=checkbox] {
     transform: scale(0.6);
@@ -332,19 +320,6 @@ pre {
 
 .activated {
   background-color: lightgrey;
-}
-
-.referencelist {
-  padding-left: 0px;
-}
-
-.referencelist a {
-  color: blue;
-}
-
-.referencelist a:hover {
-  color: green;
-  text-decoration: underline;
 }
 
 /* CSS for the contact form */
@@ -488,4 +463,25 @@ input {
   font-size: 0.9em;
   border-top: 1px dashed grey;
   margin-top: 1.5em;
+}
+
+/* Customization for the python/deep/machine form. */
+input#script-clear_id {
+  right:-280px;
+  bottom: 58px;
+  position: absolute;
+  display: inline;
+}
+
+input#script-clear_id + label{
+  color: red;
+  float: right;
+}
+
+#id_script {
+  height: 40px;
+}
+
+td.td-action {
+  padding-left:15px;
 }

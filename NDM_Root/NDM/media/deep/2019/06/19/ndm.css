@@ -1,0 +1,491 @@
+/*
+    DEMO STYLE
+*/
+/* Reference: */
+/* https://bootstrapious.com/tutorial/sidebar/index.html */
+/* https://bootstrapious.com/p/bootstrap-sidebar */
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+/* Below is for fixed but not sticky footer */
+/* Reference: */
+/* https://cssreset.com/how-to-keep-footer-at-bottom-of-page-with-css/ */
+/* https://codepen.io/cbracco/pen/zekgx */
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    position: relative;
+    margin: 0;
+    padding-bottom: 50px;
+    min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: WhiteSmoke;
+  text-align: center;
+  z-index: 10000;
+  margin-bottom:0;
+}
+/* Above is for footer */
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    /* transition: all 0.3s; */
+}
+
+#navbarSupportedContent a:hover {
+    color: blue;
+}
+
+.navbar {
+    /* padding: 15px 10px; */
+    /* background: #fff; */
+    /* font-size: 1.1em; */
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 20px;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    width: 100%;
+}
+
+#sidebar {
+    width: 200px;
+    position: fixed;
+    top: 62px;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: WhiteSmoke;
+    color: black;
+    /* transition: all 0.3s; */
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 5px;
+    background: WhiteSmoke;
+}
+
+#sidebar ul.components {
+    padding: 5px 0;
+    border-bottom: 1px solid WhiteSmoke;
+}
+
+#sidebar ul p {
+    color: black;
+    padding: 5px;
+}
+
+#sidebar ul li a {
+    padding: 5px;
+    font-size: 1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: black;
+    background: lightgrey;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: black;
+    background:  #868e96;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: WhiteSmoke;
+}
+
+ul.CTAs {
+    padding: 5px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    padding-top:70px;
+    padding-left:235px;
+    padding-right:235px;
+    min-height: 100vh;
+    /* transition:  all 0.3s; */
+}
+
+#content.active {
+    padding-left:235px;
+    padding-right:235px;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 1200px) {
+    #sidebar {
+        margin-left: -200px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        padding-left:20px;
+        padding-right:20px;
+    }
+    #content.active {
+        padding-left:20px;
+        padding-right:20px;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+/* w3.code */
+.w3-code,.w3-codespan{font-family:Consolas,"courier new";font-size:15px}
+.w3-code {
+  width:auto;
+  background-color:GhostWhite;
+  padding:0.3em 0.8em;
+  margin-top: 0.5em;
+  margin-bottom: 0.8em;
+  border-left:4px solid #4CAF50;
+  word-wrap:break-word
+}
+.w3-codespan{color:crimson;background-color:#f1f1f1;padding-left:4px;padding-right:4px;font-size:100%}
+
+/* Defined by Guanglin Kuang */
+
+h2 {
+  margin-top: 1.2em;
+  margin-bottom: 1.0em;
+}
+
+h4 {
+  margin-top: 1.2em;
+  margin-bottom: 0.8em;
+}
+
+h6 {
+  font-size: 1.1em;
+  margin-top: 1.0em;
+  margin-bottom: 0.8em;
+  font-weight: normal;
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  /* line-height: 1.7em; */
+  color: black;
+  margin-top: 0em;
+  margin-bottom:0.6em;
+}
+
+/* brackets for list  */
+/* ol {
+    counter-reset: list;
+}
+ol > li {
+    list-style: none;
+}
+ol > li:before {
+    content: counter(list) ") ";
+    counter-increment: list;
+} */
+
+.pad-top-1em {
+  padding-top: 1em;
+}
+
+p a {
+  color:blue;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+a.normal-link {
+  color: blue;
+}
+
+a.normal-link:hover {
+  text-decoration: underline;
+}
+
+input[type=checkbox] {
+    transform: scale(0.6);
+}
+
+.nomargin {
+  margin-top: 0;
+  margin-bottom:0;
+}
+
+pre {
+  margin-top:0.8em;
+  margin-bottom:0.8em;
+}
+
+.pre-scrollable {
+  max-height: 530px;
+}
+
+.postcontent {
+  height:10em;
+  margin-top:0.5em;
+}
+
+.codecontent {
+  height:10em;
+  margin-top:0.5em;
+}
+
+.img-margin {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+
+/* panel class has no indentation */
+.container {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+
+/* container has indentation */
+.panel {
+  /* padding-left: 5px; */
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+
+.pagehead {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.activated {
+  background-color: lightgrey;
+}
+
+.referencelist {
+  padding-left: 0px;
+}
+
+.referencelist a {
+  color: blue;
+}
+
+.referencelist a:hover {
+  color: green;
+  text-decoration: underline;
+}
+
+/* CSS for the contact form */
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+.errorlist li {
+    border: 1px solid red;
+    color: red;
+    background: rgba(255, 0, 0, 0.15);
+    list-style-position: inside;
+    display: block;
+    font-size: 1.2em;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 5px!important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(169,169,169)
+}
+
+input {
+    height: 30px;
+}
+.success {
+    background-color: rgba(0, 128, 0, 0.15);
+    padding: 10px;
+    text-align: center;
+    color: green;
+    border: 1px solid green;
+    border-radius: 3px;
+}
+
+.bg-lightgrey {
+  background-color: lightgrey;
+}
+
+.icon-pad {
+  margin-right: 10px;
+}
+
+.pagination li {
+  padding-left:10px;
+}
+
+.pagination .active {
+  font-weight: bold;
+  color: blue;
+}
+
+
+.jumbotron-narrow {
+  margin-left:0;
+  padding-top: 1em;
+  width:750px;
+  padding-bottom: 1em;
+}
+
+.jumbotron h2 {
+  margin-top:0.5em;
+}
+
+/* CSS for the Modules form */
+.required label::after {
+  content: " *";
+  color: blue;
+  font-size: 0.8em;
+}
+
+.btn-100 {
+  width:100px;
+}
+
+/* CSS for module list */
+.quotehdr th {
+  background-color: #4c4c4c;
+  color: white;
+  text-align: center;
+  padding: 5px 2px;
+  border: none;
+}
+
+.quoterow td {
+  padding: 5px 2px;
+  text-align: center;
+}
+
+.allrow {
+  background-color: #e0e0e0;
+}
+
+.module-list {
+  border-collapse:collapse;
+  width: 600px;
+  /* max-width: 750px; */
+}
+
+.module-list a {
+  color: blue;
+}
+
+.module-list a:hover {
+  text-decoration: underline;
+}
+
+.dict-list {
+  border-collapse:collapse;
+  max-width: 600px;
+  /* max-width: 750px; */
+}
+
+.dict-list a {
+  color: blue;
+}
+
+.dict-list a:hover {
+  text-decoration: underline;
+}
+
+/* CSS for module detail */
+.module-detail {
+  /* background-color: WhiteSmoke; */
+  padding-top: 5px;
+  /* padding-left: 25px; */
+  padding-bottom: 1px;
+}
+
+.module-detail .submitted {
+  width: 190px;
+  font-size: 0.9em;
+  border-top: 1px dashed grey;
+  margin-top: 1.5em;
+}

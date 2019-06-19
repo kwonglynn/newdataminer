@@ -15,7 +15,7 @@ class MachineAdmin(admin.ModelAdmin):
         }),
         ('More details', {
              'classes': ('collapse', ),
-             'fields': ('description', 'parameters', 'code')
+             'fields': ('description', 'parameters', 'code', 'script')
         }),
     )
 

@@ -27,6 +27,7 @@ class Module(models.Model):
     reference = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     code = models.TextField(blank=True, null=True)
+    script = models.FileField(upload_to="mypython/%Y/%m/%d/", blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 

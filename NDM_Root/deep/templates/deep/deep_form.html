@@ -10,6 +10,7 @@
   <form action='' enctype="multipart/form-data" method="post" novalidate>
     {% csrf_token %}
     {% bootstrap_form form %}
+    <!-- Customize the form template from the source code.-->
     {% buttons %}
       <button type="submit" class="btn btn-primary btn-100">Submit</button>
     {% endbuttons %}

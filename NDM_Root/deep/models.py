@@ -13,6 +13,7 @@ class Deep(models.Model):
     description = models.TextField(blank=True, null=True)
     parameters = models.TextField(blank=True, null=True)
     code = models.TextField(blank=True, null=True)
+    script = models.FileField(upload_to="deep/%Y/%m/%d/", blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 

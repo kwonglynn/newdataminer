@@ -30,7 +30,7 @@
     <th>Name</th>
     <th>Type</th>
     <th>Usage</th>
-    <th>Added By</th>
+    <th>Script</th>
     {% if user.is_authenticated %}
       <th>Actions</th>
     {% endif %}
@@ -51,9 +51,13 @@
       <td><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></td>
       <td>{{ object.get_type_display }}</td>
       <td>{{ object.usage }}</td>
-      <td>{{ object.added_by }}</td>
+      <td>
+        {% if  object.script %}
+          <a href="{{ object.script.url }}."><i class="fa fa-download" aria-hidden="true"></i></a>
+        {% endif %}
+      </td>
       {% if user.is_authenticated %}
-        <td>
+        <td class="td-action">
           <!-- Note the syntax for checking the user authentication -->
           {% if object.added_by  == user or user.username == 'guanglin' %}
             <a href="{% url "mypython:module_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>

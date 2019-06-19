@@ -8,7 +8,7 @@ class ModuleForm(ModelForm):
     class Meta:
         model = Module
         # fields = '__all__'
-        fields = ['title', 'type', 'usage', 'reference', 'description', 'code']
+        fields = ['title', 'type', 'usage', 'reference', 'description', 'code', 'script']
         # labels = {'type': 'Module Type'}
         # help_texts = {'reference': _('Input the link for the module.')}
         widgets = {

@@ -72,7 +72,7 @@ class DraftListView(LoginRequiredMixin, ListView):
     template_name = 'deep/deep_list.html'
 
     def get_queryset(self):
-        query = self.request.GET.get('q3')
+        query = self.request.GET.get('q3', '')
         object_list = Deep.objects.filter(
             Q(published_date__isnull=True) & Q(title__icontains=query)
         ).order_by('title')
