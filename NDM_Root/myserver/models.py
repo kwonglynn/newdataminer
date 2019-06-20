@@ -17,6 +17,10 @@ class Dict(models.Model):
     last_date = models.DateTimeField(auto_now=True)
     name_label = models.TextField(blank=True, null=True, default='')
 
+    accordion_id = models.CharField(max_length=200, blank=True, null=True)
+    heading_id = models.CharField(max_length=200, blank=True, null=True)
+    collapse_id = models.CharField(max_length=200, blank=True, null=True)
+
     def __str__(self):
         return str(object=self.word)
 

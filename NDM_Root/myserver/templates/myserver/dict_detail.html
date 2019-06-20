@@ -20,6 +20,10 @@
     <h6>Forms: {{ object.forms }}</h6>
     <h6>Translation: {{ object.trans }}</h6>
   </div>
-  <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list' %}"><strong>Notebook</strong></a></p>
+  {% if 'table' in request.path %}
+    <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_table' %}"><strong>Notebook</strong></a></p>
+  {% elif 'card' in request.path %}
+    <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_card' %}"><strong>Notebook</strong></a></p>
+  {% endif %}
 </div>
 {% endblock content %}

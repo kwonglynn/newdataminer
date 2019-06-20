@@ -44,11 +44,14 @@ def dict_create(request):
         word = word.strip().split()[0]
         word = word.lower()
     except:
-        return HttpResponseRedirect(reverse('myserver:dict_list'))
+        if 'table' in request.path:
+            return redirect('myserver:dict_list_table')
+        elif 'card' in request.path:
+            return redirect('myserver:dict_list_card')
     # Judge if the word has already been added:
     if Dict.objects.filter(word=word).exists():
         dict = Dict.objects.filter(word=word)[0]
-        return HttpResponseRedirect(reverse('myserver:dict_detail', kwargs={'pk': dict.pk}))
+        return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
     else:
         cwd = os.getcwd()
         ## Work in the dict directory.
@@ -81,29 +84,52 @@ def dict_create(request):
                         for item in trans_list[:2]:
                             if not re.search('[0-9]', item):
                                 trans += item + ' '
+
+                        accordion_id = "accordion" + "_" + word
+                        heading_id = "heading" + "_" + word
+                        collapse_id = "collaspse" + "_" + word
+
                         break
                 else:
-                    return HttpResponseRedirect(reverse('myserver:dict_list'))
+                    if 'table' in request.path:
+                        return redirect('myserver:dict_list_table')
+                    elif 'card' in request.path:
+                        return redirect('myserver:dict_list_card')
             else:
                 time.sleep(1)
 
-        dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf, forms=forms, trans=trans)[0]
+        dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf,
+                                          forms=forms, trans=trans,
+                                          accordion_id=accordion_id,
+                                          heading_id=heading_id,
+                                          collapse_id=collapse_id,
+                                          )[0]
         dict.added_by = request.user
         dict.save()
 
         ## Go back the original directory.
         os.chdir(cwd)
-        return HttpResponseRedirect(reverse('myserver:dict_detail', kwargs={'pk': dict.pk}))
+        path = request.META.get('HTTP_REFERER')
+        if 'table' in path:
+            return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
+        elif 'card' in path:
+            return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+
 
 class DictListView(LoginRequiredMixin, ListView):
     model = Dict
-    template_name = 'myserver/dict_list.html'
-    paginate_by = 50
+    paginate_by = 20
 
     total = 0
     total_today = 0
 
     def get_queryset(self):
+
+        if 'table' in self.request.path:
+            self.template_name = 'myserver/dict_list_table.html'
+        elif 'card' in self.request.path:
+            self.template_name = 'myserver/dict_list_card.html'
+
         # The all the user's list:
         all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username)).order_by('word')
         self.total = all_list.count()
@@ -175,7 +201,7 @@ class DictDetailView(DetailView):
 class DictDeleteView(PermissionRequiredMixin, DeleteView):
     model = Dict
     permission_required = "dict.can_publish_delete"
-    success_url = reverse_lazy('myserver:dict_list')  # Remember to use the app name prefix.
+    success_url = reverse_lazy('myserver:dict_list_table')  # Remember to use the app name prefix.
 
 # Delete directly!
 # @login_required
@@ -188,7 +214,11 @@ def remove_word(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     username = request.user.username
     object.remove(username)
-    return redirect('myserver:dict_list')
+    path = request.META.get('HTTP_REFERER')
+    if 'table' in path:
+        return redirect('myserver:dict_list_table')
+    elif 'card' in path:
+        return redirect('myserver:dict_list_card')
 
 @login_required
 def remember_word(request, pk):
@@ -209,4 +239,8 @@ def add_to_dict(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     username = request.user.username
     object.add(username)
-    return redirect('myserver:dict_list')
+    path = request.META.get('HTTP_REFERER')
+    if 'table' in path:
+        return redirect('myserver:dict_list_table')
+    elif 'card' in path:
+        return redirect('myserver:dict_list_card')

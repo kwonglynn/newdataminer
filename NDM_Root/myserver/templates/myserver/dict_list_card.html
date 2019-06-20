@@ -1,0 +1,86 @@
+<!-- The default name is dict name in lower case + "_list.html". -->
+<!-- In this case, the default name is dict_list.html -->
+{% extends "myserver/base.html" %}
+
+{% block title %}
+  Swedish
+{% endblock %}
+
+{% block content %}
+
+<!-- <h4>Python Basics</h4> -->
+<!-- <p>Modules, functions, classes, and methods.</p> -->
+<div class="panel" style="max-width:576px">
+
+  <div class="d-flex justify-content-between my-2">
+    <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_card" %}"><i class="fa fa-mobile" aria-hidden="true"></i> Mobile</a></div>
+    <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_table" %}"><i class="fas fa-desktop"></i> PC</a></div>
+  </div>
+
+  <p>
+    <a href="{% url 'myserver:dict_practice_today' %}"><i class="fas fa-play-circle"></i></a>
+    <a href="{% url 'myserver:dict_list_table_today' %}" >Today</a>:
+       <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total_today }}</span> words.
+    <a href="{% url 'myserver:dict_practice' %}" style="margin-left:30px;"><i class="fas fa-play-circle"></i></a>
+    In total:
+    <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total }}</span> words.
+  </p>
+
+  <form action="{% url 'myserver:dict_create' %}?next=card" class="form-inline" method='get'>
+    <input name='q4' class="form-control  h-25 mb-2" style="width:70%;margin-right:5px;" type="text" placeholder="Search . . ." aria-label="Search">
+    <button class="btn btn-outline-success h-25 mb-2" type="submit">Search</button>
+  </form>
+
+  {% for object in object_list %}
+   <div id="{{ object.accordion_id }}">
+     <div>
+       <div class="card-header" id="{{ object.heading_id }}" style="background-color:GhostWhite;height:40px;">
+         <div class="d-flex justify-content-between">
+           <p>
+             <a  style="padding-top:0;padding-left:0;" class="btn btn-link" href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a>
+           </p>
+           <p>
+             <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#{{ object.collapse_id }}" aria-expanded="true" aria-controls="{{ object.collapse_id }}" style="padding-top:0;font-size:1.15em;text-decoration: none;color:orange;">
+              <i class="fas fa-book-open"></i>
+            </a>
+           </p>
+         </div>
+       </div>
+
+       <div id="{{ object.collapse_id }}" class="collapse" aria-labelledby="{{ object.heading_id }}" data-parent="#{{ object.accordion_id }}">
+         <div class="card-body">
+           <h6>Pronunciation: {{ object.pron }}</h6>
+           <h6>Type: {{ object.morf }}</h6>
+           <h6>Forms: {{ object.forms }}</h6>
+           <h6>Translation: {{ object.trans }}</h6>
+           <p><a href="{% url "myserver:remove_word" pk=object.pk %}" class="btn btn-success">Remembered</a></p>
+         </div>
+       </div>
+     </div>
+   </div>
+  {% endfor %}
+
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+      {% else %}
+        <li class="page-item disabled"><i class="fa fa-angle-double-left"></i></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="page-item active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li class="page-item"><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item"><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+        <li class="page-item disabled"><i class="fa fa-angle-double-right"></i></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+</div> <!-- End of the table -->
+{% endblock %}
