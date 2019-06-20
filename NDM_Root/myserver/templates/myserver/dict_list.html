@@ -12,14 +12,18 @@
 <!-- <p>Modules, functions, classes, and methods.</p> -->
 <div style="width:750px;">
 
-  <p><a href="{% url 'myserver:dict_practice' %}" class="btn btn-primary btn-100" style="margin-right:20px;">Practice</a>
-    <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total }}</span> words have been added.</p>
+  <p><a href="{% url 'myserver:dict_practice' %}" class="btn btn-primary btn-100" style="margin-right:10px;">Practice</a> all
+    <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total }}</span> words.</p>
   <form action="{% url 'myserver:dict_create' %}" class="form-inline" method='get'>
     <input name='q4' class="form-control mr-sm-2 h-25 mb-2" style="width:650px;" type="text" placeholder="Search . . ." aria-label="Search">
     <button class="btn btn-outline-success h-25 mb-2" style="width:91px;" type="submit">Search</button>
   </form>
 
-  <table class="dict-list" id="myTable">
+  <p><a href="{% url 'myserver:dict_list_today' %}" >Today:
+     <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total_today }}</span></a>
+     words. <a href="{% url 'myserver:dict_practice_today' %}" >Practice now</a>.</p>
+
+  <table class="module-list w-100" id="myTable">
     <tr class="quotehdr">
       <th>Word</th>
       <th class="w3-hide-small">Pronunciation</th>
@@ -31,7 +35,7 @@
 
     {% for object in object_list %}
       <tr class="quoterow {% cycle '' 'altrow' %}">
-        <td><a href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></td>
+        <td><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></td>
         <td class="w3-hide-small">{{ object.pron }}</td>
         <td>{{ object.morf }}</td>
         <td class="w3-hide-small">{{ object.forms }}</td>

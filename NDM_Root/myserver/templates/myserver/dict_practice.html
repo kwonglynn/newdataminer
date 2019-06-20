@@ -12,7 +12,7 @@
 <!-- <p>Modules, functions, classes, and methods.</p> -->
 <div class="panel" style="padding-left:12px;">
   {% for object in object_list %}
-    <h4><a href="https://www.dict.com/swedish-english/{{object.word}}" style="padding-left:20px;font-size:1.3em;">{{ object.word }}</a></h4>
+    <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
     <div id="accordion">
       <div class="panel">
         <div class="card-header" id="headingOne" style="background-color:GhostWhite;">
@@ -55,7 +55,16 @@
 
     {% for i in paginator.page_range %}
       {% if page_obj.number == i %}
-        <p style="padding-left:10px;"><span style="font-size:1.15em;font-weight:bold;color:blue;">{{ i }}</span> of <span style="font-size:1.15em;">{{ total }}</span> words.</p>
+        <p style="padding-left:10px;"><span style="font-size:1.15em;font-weight:bold;color:blue;">{{ i }}</span> of
+          <span style="font-size:1.15em;">
+            {% if 'today' in request.path %}
+              {{ total_today }}
+            {% else %}
+              {{ total }}
+            {% endif %}
+          </span>
+           words.
+        </p>
       {% endif %}
     {% endfor %}
   {% endif %}

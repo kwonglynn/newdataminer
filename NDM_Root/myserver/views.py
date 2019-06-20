@@ -12,13 +12,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from .models import Dict
 # from .forms import DictForm
 
+import operator
 from django.db.models import Q
+from functools import reduce
 
 # For searching and return the new word.
 import os
 import re
 import json
-import time
+import datetime, time
+
 # Configure settings for project
 # Need to run this before calling models from application!
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','NDM.settings')
@@ -97,15 +100,36 @@ class DictListView(LoginRequiredMixin, ListView):
     template_name = 'myserver/dict_list.html'
     paginate_by = 50
 
+    total = 0
+    total_today = 0
+
     def get_queryset(self):
-        object_list = Dict.objects.filter(Q(label__icontains = self.request.user.username)
-        ).order_by('word')
+        # The all the user's list:
+        all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username)).order_by('word')
+        self.total = all_list.count()
+
+        # For today's list of user:
+        now = datetime.datetime.now()
+        Q_list = [Q(name_label__icontains = self.request.user.username),
+                  Q(last_date__year = now.year),
+                  Q(last_date__month = now.month),
+                  Q(last_date__day = now.day)
+        ]
+        query = reduce(operator.and_, Q_list)
+        today_list = Dict.objects.filter(query).order_by('word')
+        self.total_today = today_list.count()
+
+        if 'today' in self.request.path:
+            object_list = today_list
+        else:
+            object_list = all_list
 
         return object_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["total"] = self.get_queryset().count()
+        context["total"] = self.total
+        context["total_today"] = self.total_today
         return context
 
 class DictPracticeListView(LoginRequiredMixin, ListView):
@@ -113,16 +137,37 @@ class DictPracticeListView(LoginRequiredMixin, ListView):
     template_name = 'myserver/dict_practice.html'
     paginate_by = 1
 
+    total = 0
+    total_today = 0
+
     def get_queryset(self):
-        object_list = Dict.objects.filter(Q(label__icontains = self.request.user.username)
-        ).order_by('word')
+        # The all the user's list:
+        all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username)).order_by('word')
+        self.total = all_list.count()
+
+        # For today's list of user:
+        now = datetime.datetime.now()
+        Q_list = [Q(name_label__icontains = self.request.user.username),
+                  Q(last_date__year = now.year),
+                  Q(last_date__month = now.month),
+                  Q(last_date__day = now.day)
+        ]
+        query = reduce(operator.and_, Q_list)
+        today_list = Dict.objects.filter(query).order_by('word')
+        self.total_today = today_list.count()
+
+        if 'today' in self.request.path:
+            object_list = today_list
+        else:
+            object_list = all_list
 
         return object_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["total"] = self.get_queryset().count()
-        return context        
+        context["total"] = self.total
+        context["total_today"] = self.total_today
+        return context
 
 class DictDetailView(DetailView):
     model = Dict

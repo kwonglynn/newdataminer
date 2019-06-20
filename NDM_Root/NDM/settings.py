@@ -125,8 +125,9 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+# USE_TZ = True
+USE_TZ = False # Required for filtering of month and day!
+# Reference: https://stackoverflow.com/questions/21918802/problems-filtering-django-datetime-field-by-month-and-day
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

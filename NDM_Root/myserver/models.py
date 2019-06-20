@@ -13,8 +13,9 @@ class Dict(models.Model):
     forms = models.CharField(max_length=100, blank=True, null=True, default='')
     trans = models.TextField(blank=True, null=True)
     # phrase = models.TextField(blank=True, null=True)
-    created_date = models.DateTimeField(default=timezone.now)
-    label = models.TextField(blank=True, null=True, default='')
+    created_date = models.DateTimeField(auto_now_add=True)
+    last_date = models.DateTimeField(auto_now=True)
+    name_label = models.TextField(blank=True, null=True, default='')
 
     def __str__(self):
         return str(object=self.word)
@@ -23,9 +24,9 @@ class Dict(models.Model):
         return reverse("myserver:dict_detail", kwargs={'pk':self.pk}) # Remember to use the app name as prefix for reverse!
 
     def add(self, username):
-        self.label += username + ';'
+        self.name_label += username + ';'
         self.save()
 
     def remove(self, username):
-        self.label = self.label.replace(username + ';', '')
+        self.name_label = self.name_label.replace(username + ';', '')
         self.save()

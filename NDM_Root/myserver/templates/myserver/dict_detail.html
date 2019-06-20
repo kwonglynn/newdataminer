@@ -7,8 +7,9 @@
 {% endblock title %}
 
 {% block content %}
-  <h4>{{ object.word }}</h4>
-  {% if user.username not in object.label %}
+<div class="panel" style="padding-left:20px;">
+  <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></h4>
+  {% if user.username not in object.name_label %}
     <p><a class="normal-link" href="{% url 'myserver:add_to_dict' pk=object.pk %}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
   {% else %}
     <p><strong><i class="fa fa-check" aria-hidden="true"></i> Added</strong></a></p>
@@ -18,5 +19,7 @@
     <h6>Type: {{ object.morf }}</h6>
     <h6>Forms: {{ object.forms }}</h6>
     <h6>Translation: {{ object.trans }}</h6>
-    <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list' %}"><strong>List</strong></a></p>
+  </div>
+  <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list' %}"><strong>Notebook</strong></a></p>
+</div>
 {% endblock content %}
