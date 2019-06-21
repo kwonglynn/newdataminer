@@ -48,7 +48,12 @@
 
     {% for object in object_list %}
       <tr class="quoterow {% cycle '' 'altrow' %}">
-        <td><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></td>
+        {% if user.username == 'xiaoyuer' %}
+          <td><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></td>
+        {% else %}
+          <td><a href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></td>
+        {% endif %}        
+
         <td class="w3-hide-small">{{ object.pron }}</td>
         <td>{{ object.morf }}</td>
         <td class="w3-hide-small">{{ object.forms }}</td>

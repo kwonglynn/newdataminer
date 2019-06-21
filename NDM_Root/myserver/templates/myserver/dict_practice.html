@@ -10,16 +10,26 @@
 
 <!-- <h4>Python Basics</h4> -->
 <!-- <p>Modules, functions, classes, and methods.</p> -->
-<div class="panel" style="padding-left:12px;">
+<div class="panel ml-3">
   {% for object in object_list %}
-    <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
+    {% if user.username == 'xiaoyuer' %}
+      <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
+    {% else %}
+      <h4><a href="https://www.dict.com/swedish-english/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
+    {% endif %}
+
     <div id="accordion">
       <div class="panel">
         <div class="card-header" id="headingOne" style="background-color:GhostWhite;">
           <h5 class="mb-0" style="margin-left:0;">
-            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left:0;font-size:1.15em;text-decoration: none;color:orange;">
-              Show <i class="fas fa-book-open"></i>
-            </button>
+            <div class="d-flex justify-content-between my-2">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left:0;font-size:1.15em;text-decoration: none;color:orange;">
+                <span>Show</span>
+              </button>
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left:0;font-size:1.15em;text-decoration: none;color:orange;">
+                <span class="padding-left:100px;"><i class="fas fa-book-open" ></i></span>
+              </button>
+            </div>
           </h5>
         </div>
 
@@ -37,25 +47,25 @@
   {% endfor %}
 </div>
 
-<div class="panel">
+<div class="panel ml-3">
   {% if is_paginated %}
-    <ul class="pagination">
+    <div class="d-flex justify-content-between my-2">
       {% if page_obj.has_previous %}
-        <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-info btn-100">Previous</a></li>
+        <p class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-info btn-100">Previous</a></p>
       {% else %}
-        <li class="page-item"><a href="#" class="disabled btn btn-info btn-100">Previous</a></li>
+        <p class="page-item"><a href="#" class="disabled btn btn-info btn-100">Previous</a></dpiv>
       {% endif %}
 
       {% if page_obj.has_next %}
-        <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="btn btn-info btn-100">Next</a></li>
+        <p class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="btn btn-info btn-100">Next</a></p>
       {% else %}
-        <li class="page-item"><a href="#" class="disabled btn btn-info btn-100">Next</a></li>
+        <p class="page-item"><a href="#" class="disabled btn btn-info btn-100">Next</a></p>
       {% endif %}
-    </ul>
+    </div>
 
     {% for i in paginator.page_range %}
       {% if page_obj.number == i %}
-        <p style="padding-left:10px;"><span style="font-size:1.15em;font-weight:bold;color:blue;">{{ i }}</span> of
+        <p><span style="font-size:1.15em;font-weight:bold;color:blue;">{{ i }}</span> of
           <span style="font-size:1.15em;">
             {% if 'today' in request.path %}
               {{ total_today }}
@@ -68,6 +78,6 @@
       {% endif %}
     {% endfor %}
   {% endif %}
-  <p style="padding-left:10px;">Back to <a class="normal-link" href="{% url 'myserver:dict_list_card' %}"><strong>Notebook</strong></a></p>
+  <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_card' %}"><strong>Notebook</strong></a></p>
 </div>
 {% endblock %}

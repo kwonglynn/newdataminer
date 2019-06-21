@@ -42,12 +42,17 @@
        <div class="card-header" id="{{ object.heading_id }}" style="padding-top:8px;background-color:GhostWhite;height:40px;">
          <div class="d-flex justify-content-between">
            <p>
-             <a  style="padding-top:0;padding-left:0;" class="btn btn-link" href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a>
+             {% if user.username == 'xiaoyuer' %}
+               <a  style="padding-top:0;padding-left:0;" class="btn btn-link" href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a>
+             {% else %}
+               <a  style="padding-top:0;padding-left:0;" class="btn btn-link" href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a>
+             {% endif %}
            </p>
+
            <p>
              <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#{{ object.collapse_id }}" aria-expanded="true" aria-controls="{{ object.collapse_id }}" style="background:none;padding-top:0;font-size:1.15em;text-decoration: none;color:orange;">
-              <i class="fas fa-book-open"></i>
-            </a>
+               <i class="fas fa-book-open"></i>
+             </a>
            </p>
          </div>
        </div>
