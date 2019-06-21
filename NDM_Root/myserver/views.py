@@ -44,14 +44,20 @@ def dict_create(request):
         word = word.strip().split()[0]
         word = word.lower()
     except:
-        if 'table' in request.path:
-            return redirect('myserver:dict_list_table')
-        elif 'card' in request.path:
-            return redirect('myserver:dict_list_card')
+        if 'table' in request.META.get('HTTP_REFERER'):
+            return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
+        elif 'card' in request.META.get('HTTP_REFERER'):
+            return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+
     # Judge if the word has already been added:
     if Dict.objects.filter(word=word).exists():
         dict = Dict.objects.filter(word=word)[0]
-        return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+
+        if 'table' in request.META.get('HTTP_REFERER'):
+            return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
+        elif 'card' in request.META.get('HTTP_REFERER'):
+            return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+
     else:
         cwd = os.getcwd()
         ## Work in the dict directory.
@@ -91,9 +97,9 @@ def dict_create(request):
 
                         break
                 else:
-                    if 'table' in request.path:
+                    if 'table' in request.META.get('HTTP_REFERER'):
                         return redirect('myserver:dict_list_table')
-                    elif 'card' in request.path:
+                    elif 'card' in request.META.get('HTTP_REFERER'):
                         return redirect('myserver:dict_list_card')
             else:
                 time.sleep(1)
@@ -109,16 +115,16 @@ def dict_create(request):
 
         ## Go back the original directory.
         os.chdir(cwd)
-        path = request.META.get('HTTP_REFERER')
-        if 'table' in path:
+
+        if 'table' in request.META.get('HTTP_REFERER'):
             return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
-        elif 'card' in path:
+        elif 'card' in request.META.get('HTTP_REFERER'):
             return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
 
 
 class DictListView(LoginRequiredMixin, ListView):
     model = Dict
-    paginate_by = 20
+    paginate_by = 15
 
     total = 0
     total_today = 0
@@ -142,7 +148,7 @@ class DictListView(LoginRequiredMixin, ListView):
                   Q(last_date__day = now.day)
         ]
         query = reduce(operator.and_, Q_list)
-        today_list = Dict.objects.filter(query).order_by('word')
+        today_list = Dict.objects.filter(query).order_by('-last_date')
         self.total_today = today_list.count()
 
         if 'today' in self.request.path:
@@ -215,10 +221,7 @@ def remove_word(request, pk):
     username = request.user.username
     object.remove(username)
     path = request.META.get('HTTP_REFERER')
-    if 'table' in path:
-        return redirect('myserver:dict_list_table')
-    elif 'card' in path:
-        return redirect('myserver:dict_list_card')
+    return redirect(path)
 
 @login_required
 def remember_word(request, pk):
@@ -241,6 +244,6 @@ def add_to_dict(request, pk):
     object.add(username)
     path = request.META.get('HTTP_REFERER')
     if 'table' in path:
-        return redirect('myserver:dict_list_table')
+        return redirect('myserver:dict_list_table_today')
     elif 'card' in path:
-        return redirect('myserver:dict_list_card')
+        return redirect('myserver:dict_list_card_today')

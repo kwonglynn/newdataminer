@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="panel" style="padding-left:20px;">
-  <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></h4>
+  <h4><a class="normal-link" href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></h4>
   {% if user.username not in object.name_label %}
     <p><a class="normal-link" href="{% url 'myserver:add_to_dict' pk=object.pk %}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
   {% else %}
