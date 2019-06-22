@@ -142,10 +142,8 @@ class DictListView(LoginRequiredMixin, ListView):
 
         # For today's list of user:
         now = datetime.datetime.now()
-        Q_list = [Q(name_label__icontains = self.request.user.username),
-                  Q(last_date__year = now.year),
-                  Q(last_date__month = now.month),
-                  Q(last_date__day = now.day)
+        name_date = self.request.user.username + "_" + now.strftime("%Y%m%d")
+        Q_list = [Q(last_name_date_label__icontains = name_date),
         ]
         query = reduce(operator.and_, Q_list)
         today_list = Dict.objects.filter(query).order_by('-last_date')
@@ -179,10 +177,8 @@ class DictPracticeListView(LoginRequiredMixin, ListView):
 
         # For today's list of user:
         now = datetime.datetime.now()
-        Q_list = [Q(name_label__icontains = self.request.user.username),
-                  Q(last_date__year = now.year),
-                  Q(last_date__month = now.month),
-                  Q(last_date__day = now.day)
+        name_date = self.request.user.username + "_" + now.strftime("%Y%m%d")
+        Q_list = [Q(last_name_date_label__icontains = name_date),
         ]
         query = reduce(operator.and_, Q_list)
         today_list = Dict.objects.filter(query).order_by('word')
