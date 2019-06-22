@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Dict
-# from .forms import DictForm
+from .forms import DictForm
 
 import operator
 from django.db.models import Q
@@ -30,8 +30,6 @@ import django
 # Import settings
 django.setup()
 
-from myserver.models import Dict
-
 #####
 @login_required
 def index(request):
@@ -39,15 +37,15 @@ def index(request):
 
 @login_required
 def dict_create(request):
-    word = request.GET.get('q4')
+    word = request.GET.get('q4', '')
     try:
         word = word.strip().split()[0]
         word = word.lower()
     except:
         if 'table' in request.META.get('HTTP_REFERER'):
-            return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
+            return redirect('myserver:dict_list_table_today')
         elif 'card' in request.META.get('HTTP_REFERER'):
-            return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+            return redirect('myserver:dict_list_card_today')
 
     # Judge if the word has already been added:
     if Dict.objects.filter(word=word).exists():
@@ -101,9 +99,9 @@ def dict_create(request):
                         break
                 else:
                     if 'table' in request.META.get('HTTP_REFERER'):
-                        return redirect('myserver:dict_list_table')
+                        return redirect('myserver:dict_list_table_today')
                     elif 'card' in request.META.get('HTTP_REFERER'):
-                        return redirect('myserver:dict_list_card')
+                        return redirect('myserver:dict_list_card_today')
             else:
                 time.sleep(1)
 
@@ -124,6 +122,43 @@ def dict_create(request):
         elif 'card' in request.META.get('HTTP_REFERER'):
             return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
 
+class DictCreateView(LoginRequiredMixin, CreateView):
+    model = Dict
+    form_class = DictForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        word = self.object.word
+        self.object.accordion_id = "accordion" + "_" + word
+        self.object.heading_id = "heading" + "_" + word
+        self.object.collapse_id = "collaspse" + "_" + word
+
+        self.object.save()
+        if 'table' in self.request.path:
+            self.success_url = reverse_lazy('myserver:dict_detail_table', kwargs={'pk': self.object.pk})
+        if 'card' in self.request.path:
+            self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': self.object.pk})
+        return super().form_valid(form)
+
+class DictUpdateView(LoginRequiredMixin, UpdateView):
+    model = Dict
+    form_class = DictForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        now = datetime.datetime.now()
+        self.object.last_name_date_label += self.request.user.username + '_' + now.strftime("%Y%m%d") + ';'
+
+        self.object.save()
+
+        if 'table' in self.request.path:
+            self.success_url = reverse_lazy('myserver:dict_detail_table', kwargs={'pk': self.object.pk})
+        if 'card' in self.request.path:
+            self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': self.object.pk})
+
+        return super().form_valid(form)
 
 class DictListView(LoginRequiredMixin, ListView):
     model = Dict

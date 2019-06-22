@@ -17,12 +17,13 @@ class Dict(models.Model):
     # phrase = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_date = models.DateTimeField(auto_now=True)
-    name_label = models.TextField(blank=True, null=True, default='')
-    last_name_date_label = models.TextField(blank=True, null=True, default='')
 
-    accordion_id = models.CharField(max_length=200, blank=True, null=True)
-    heading_id = models.CharField(max_length=200, blank=True, null=True)
-    collapse_id = models.CharField(max_length=200, blank=True, null=True)
+    name_label = models.TextField(blank=True, null=True, default='', help_text='Format: username1;username2; &nbsp;&nbsp;&nbsp;Example: testuser;')
+    last_name_date_label = models.TextField(blank=True, null=True, default='', help_text='Format: username1_date;username2_date; &nbsp;&nbsp;&nbsp;Example: testuser_20190622;')
+
+    accordion_id = models.CharField(max_length=200, blank=True, null=True, default='', help_text="Format: accordion_word &nbsp;&nbsp;&nbsp;Example: accordion_jag")
+    heading_id = models.CharField(max_length=200, blank=True, null=True, default='', help_text="Format: heading_word &nbsp;&nbsp;&nbsp;Example: heading_jag")
+    collapse_id = models.CharField(max_length=200, blank=True, null=True, default='', help_text="Format: collapse_word &nbsp;&nbsp;&nbsp;Example: collapse_jag")
 
     def __str__(self):
         return str(object=self.word)

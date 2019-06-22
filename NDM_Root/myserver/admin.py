@@ -7,6 +7,6 @@ class DictAdmin(admin.ModelAdmin):
     list_filter = ('added_by', 'last_date')
     ordering = ('word', 'accordion_id')
     search_fields = ('word', )
-    readonly_fields = ('created_date', 'last_date')
+    # readonly_fields = ('created_date', 'last_date')
 
 admin.site.register(Dict, DictAdmin)

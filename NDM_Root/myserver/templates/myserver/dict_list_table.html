@@ -19,13 +19,15 @@
 
   <div class="d-flex justify-content-between my-2">
     <p>
-    <a href="{% url 'myserver:dict_practice_today' %}"><i class="fas fa-play-circle"></i></a>
-    <a href="{% url 'myserver:dict_list_table_today' %}" >Today</a>:
-       <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total_today }}</span>
+      <a href="{% url 'myserver:dict_practice_today' %}"><i class="fas fa-play-circle"></i></a>
+      <a href="{% url 'myserver:dict_list_table_today' %}" >Today</a>:
+      <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total_today }}</span>
     </p>
 
-    <p><a href="{% url 'myserver:dict_practice' %}" style="margin-left:30px;"><i class="fas fa-play-circle"></i></a> In total:
-    <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total }}</span>
+    <p>
+      <a href="{% url 'myserver:dict_practice' %}" style="margin-left:30px;"><i class="fas fa-play-circle"></i></a>
+      <a href="{% url 'myserver:dict_list_table' %}" >In total</a>:
+      <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total }}</span>
     </p>
   </div>
 
@@ -35,7 +37,9 @@
       <button class="btn btn-outline-success h-25 mb-2" type="submit">Search</button>
     </div>
   </form>
-  <p>Word not found? <a href="{% url 'myhome:contact' %}">Contact me</a>.</p>
+  {% if 'today' in request.path %}
+    <p>Word not found? <a href="{% url 'myhome:contact' %}">Contact me</a>.</p>
+  {% endif %}
 
   <table class="module-list w-100" id="myTable">
     <tr class="quotehdr">
@@ -63,7 +67,10 @@
             {{ object.trans }}
           {% endautoescape %}
         </td>
-        <td><a href="{% url "myserver:remove_word" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a></td>
+        <td class="td-action">
+          <a href="{% url "myserver:dict_table_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          <a href="{% url "myserver:remove_word" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
+        </td>
       </tr>
     {% endfor %}
 </table>
