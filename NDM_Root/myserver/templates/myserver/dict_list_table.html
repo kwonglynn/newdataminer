@@ -38,7 +38,7 @@
     </div>
   </form>
   {% if 'today' in request.path %}
-    <p>Word not found? <a href="{% url 'myhome:contact' %}">Contact me</a>.</p>
+    <p>Word not found? <a href="{% url 'myserver:dict_table_add' %}">Add manually</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
   {% endif %}
 
   <table class="module-list w-100" id="myTable">

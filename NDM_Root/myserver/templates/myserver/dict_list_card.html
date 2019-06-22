@@ -39,7 +39,7 @@
   </form>
 
   {% if 'today' in request.path %}
-    <p>Word not found? <a href="{% url 'myhome:contact' %}">Contact me</a>.</p>
+    <p>Word not found? <a href="{% url 'myserver:dict_card_add' %}">Add manually</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
   {% endif %}
 
   {% for object in object_list %}
