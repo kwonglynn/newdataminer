@@ -61,7 +61,10 @@ def dict_create(request):
     else:
         cwd = os.getcwd()
         ## Work in the dict directory.
+        # Local
         dict_dir = r'C:\Google\Work\MyWebsite\newdataminer\NDM_Root\myserver\dict'
+        # PythonAnyWhere
+        # dict_dir = r'/home/guanglin/newdataminer/NDM_Root/myserver/dict'
         os.chdir(dict_dir)
         username = request.user.username
         result_file_name = username + '.json'
@@ -124,7 +127,7 @@ def dict_create(request):
 
 class DictListView(LoginRequiredMixin, ListView):
     model = Dict
-    paginate_by = 15
+    paginate_by = 50
 
     total = 0
     total_today = 0
