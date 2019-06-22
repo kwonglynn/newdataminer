@@ -6,10 +6,14 @@ app_name = 'myserver'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('swedish/card/add/', views.DictCreateView.as_view(), name='dict_card_add'),
     path('swedish/table/add/', views.DictCreateView.as_view(), name='dict_table_add'),
+    path('swedish/card/add/', views.DictCreateView.as_view(), name='dict_card_add'),
+    path('swedish/<int:pk>/table/create/', views.dict_update_create, name="dict_table_update_create"),
+    path('swedish/<int:pk>/card/create/', views.dict_update_create, name="dict_card_update_create"),
+    path('swedish/table/exist/', views.dict_exist, name="dict_table_exist"),
+    path('swedish/card/exist/', views.dict_exist, name="dict_card_exist"),
+    path('swedish/<int:pk>/table/update/', views.DictUpdateView.as_view(), name="dict_table_update"),
     path('swedish/<int:pk>/card/update/', views.DictUpdateView.as_view(), name="dict_card_update"),
-    path('swedish/<int:pk>/table/update/', views.DictUpdateView.as_view(), name="dict_table_update"),    
     path('swedish/table/', views.DictListView.as_view(), name='dict_list_table'),
     path('swedish/card/', views.DictListView.as_view(), name='dict_list_card'),
     path('swedish/table/today/', views.DictListView.as_view(), name='dict_list_table_today'),

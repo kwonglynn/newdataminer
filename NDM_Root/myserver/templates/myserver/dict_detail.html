@@ -14,10 +14,11 @@
     <h4><a class="normal-link" href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></h4>
   {% endif %}
 
-  {% if user.username not in object.name_label %}
-    <p><a class="normal-link" href="{% url 'myserver:add_to_dict' pk=object.pk %}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
-  {% else %}
+  <!-- name_label for common words, word_user for personally added words, they are mutually exclusive. -->
+  {% if user.username in object.name_label or user.username in object.word_user %}
     <p><strong><i class="fa fa-check" aria-hidden="true"></i> Added</strong></a></p>
+  {% else %}
+    <p><a class="normal-link" href="{% url 'myserver:add_to_dict' pk=object.pk %}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
   {% endif %}
   <div class="panel module-detail">
     <h6>Pronunciation: {{ object.pron }}</h6>

@@ -105,12 +105,12 @@ def dict_create(request):
             else:
                 time.sleep(1)
 
-        dict = Dict.objects.get_or_create(word=word, pron=pron, morf=morf,
-                                          forms=forms, trans=trans,
-                                          accordion_id=accordion_id,
-                                          heading_id=heading_id,
-                                          collapse_id=collapse_id,
-                                          )[0]
+        dict = Dict(word=word, pron=pron, morf=morf,
+                    forms=forms, trans=trans,
+                    accordion_id=accordion_id,
+                    heading_id=heading_id,
+                    collapse_id=collapse_id,
+                    )
         dict.added_by = request.user
         dict.save()
 
@@ -122,6 +122,26 @@ def dict_create(request):
         elif 'card' in request.META.get('HTTP_REFERER'):
             return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
 
+@login_required
+def dict_update_create(request, pk):
+    dict1 = Dict.objects.filter(pk=pk)[0]
+
+    # For the orginal word, remove the label so that it is not redundant with the new one.
+    dict1.name_label = dict1.name_label.replace(request.user.username + ';', '')
+    dict1.last_name_date_label = re.sub("%s_[0-9]*;" % request.user.username, "", dict1.last_name_date_label)
+    dict1.save()
+
+    # For the new word, it will replace the old word for the current user. However, it should not influence other users.
+    dict2 = Dict(word=dict1.word, added_by=dict1.added_by,
+                 pron=dict1.pron, morf=dict1.morf, forms=dict1.forms, trans=dict1.trans,
+                 )
+    dict2.save()
+
+    if 'table' in request.META.get('HTTP_REFERER'):
+        return HttpResponseRedirect(reverse('myserver:dict_table_update', kwargs={'pk': dict2.pk}))
+    elif 'card' in request.META.get('HTTP_REFERER'):
+        return HttpResponseRedirect(reverse('myserver:dict_card_update', kwargs={'pk': dict2.pk}))
+
 class DictCreateView(LoginRequiredMixin, CreateView):
     model = Dict
     form_class = DictForm
@@ -129,7 +149,15 @@ class DictCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
 
+        self.object.added_by = self.request.user
+
         word = self.object.word
+        if Dict.objects.filter(word=word).count() > 0:
+            if 'table' in self.request.META.get('HTTP_REFERER'):
+                return redirect('myserver:dict_table_exist')
+            elif 'card' in self.request.META.get('HTTP_REFERER'):
+                return redirect('myserver:dict_card_exist')
+
         self.object.accordion_id = "accordion" + "_" + word
         self.object.heading_id = "heading" + "_" + word
         self.object.collapse_id = "collaspse" + "_" + word
@@ -141,6 +169,10 @@ class DictCreateView(LoginRequiredMixin, CreateView):
             self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': self.object.pk})
         return super().form_valid(form)
 
+@login_required
+def dict_exist(request):
+    return render(request, "myserver/dict_exist.html")
+
 class DictUpdateView(LoginRequiredMixin, UpdateView):
     model = Dict
     form_class = DictForm
@@ -148,8 +180,14 @@ class DictUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
 
+        word = self.object.word
+        self.object.word_user = word + '_' + self.request.user.username
+        self.object.accordion_id = "accordion" + "_" + word
+        self.object.heading_id = "heading" + "_" + word
+        self.object.collapse_id = "collaspse" + "_" + word
+
         now = datetime.datetime.now()
-        self.object.last_name_date_label += self.request.user.username + '_' + now.strftime("%Y%m%d") + ';'
+        self.object.last_name_date_label = self.request.user.username + '_' + now.strftime("%Y%m%d") + ';'
 
         self.object.save()
 
@@ -175,7 +213,9 @@ class DictListView(LoginRequiredMixin, ListView):
             self.template_name = 'myserver/dict_list_card.html'
 
         # The all the user's list:
-        all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username)).order_by('word')
+        all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username) |
+                                       Q(word_user__icontains = self.request.user.username)
+        ).order_by('word')
         self.total = all_list.count()
 
         # For today's list of user:
@@ -210,7 +250,9 @@ class DictPracticeListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # The all the user's list:
-        all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username)).order_by('word')
+        all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username) |
+                                       Q(word_user__icontains = self.request.user.username)
+                                       ).order_by('word')
         self.total = all_list.count()
 
         # For today's list of user:
@@ -235,19 +277,8 @@ class DictPracticeListView(LoginRequiredMixin, ListView):
         context["total_today"] = self.total_today
         return context
 
-class DictDetailView(DetailView):
+class DictDetailView(LoginRequiredMixin, DetailView):
     model = Dict
-
-class DictDeleteView(PermissionRequiredMixin, DeleteView):
-    model = Dict
-    permission_required = "dict.can_publish_delete"
-    success_url = reverse_lazy('myserver:dict_list_table')  # Remember to use the app name prefix.
-
-# Delete directly!
-# @login_required
-# def delete_word(request, pk):
-#     Dict.objects.filter(pk=pk).delete()
-#     return HttpResponseRedirect(reverse('myserver:dict_list'))
 
 @login_required
 def remove_word(request, pk):

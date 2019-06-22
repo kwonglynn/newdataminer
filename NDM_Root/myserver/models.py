@@ -10,6 +10,8 @@ import re
 class Dict(models.Model):
     word = models.CharField(max_length=100)
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='dict')
+    word_user = models.CharField(max_length=100, blank=True, null=True, default='')
+    
     pron = models.CharField(max_length=100, blank=True, null=True)
     morf = models.CharField(max_length=100, blank=True, null=True)
     forms = models.CharField(max_length=100, blank=True, null=True, default='')

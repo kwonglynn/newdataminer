@@ -38,7 +38,7 @@
     </div>
   </form>
   {% if 'today' in request.path %}
-    <p>Word not found? <a href="{% url 'myserver:dict_table_add' %}">Add manually</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
+    <p>Word not found? <a href="{% url 'myserver:dict_table_add' %}">Add now</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
   {% endif %}
 
   <table class="module-list w-100" id="myTable">
@@ -68,7 +68,11 @@
           {% endautoescape %}
         </td>
         <td class="td-action">
-          <a href="{% url "myserver:dict_table_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% if request.user.username in object.word_user %}
+            <a href="{% url "myserver:dict_table_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% else %}
+            <a href="{% url "myserver:dict_table_update_create" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% endif %}
           <a href="{% url "myserver:remove_word" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
         </td>
       </tr>

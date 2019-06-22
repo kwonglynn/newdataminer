@@ -39,7 +39,7 @@
   </form>
 
   {% if 'today' in request.path %}
-    <p>Word not found? <a href="{% url 'myserver:dict_card_add' %}">Add manually</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
+    <p>Word not found? <a href="{% url 'myserver:dict_card_add' %}">Add now</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
   {% endif %}
 
   {% for object in object_list %}
@@ -70,7 +70,11 @@
            <h6>Forms: {{ object.forms }}</h6>
            <h6>Translation: {{ object.trans }}</h6>
            <div class="d-flex justify-content-between">
-             <a href="{% url "myserver:dict_card_update" pk=object.pk %}"  class="btn btn-warning text-light"><i class='icon-pad fas fa-edit' aria-hidden="true"></i> Edit</a>
+             {% if request.user.username in object.word_user %}
+               <a href="{% url "myserver:dict_card_update" pk=object.pk %}"  class="btn btn-warning text-light"><i class='icon-pad fas fa-edit' aria-hidden="true"></i> Edit</a>
+             {% else %}
+               <a href="{% url "myserver:dict_card_update_create" pk=object.pk %}"  class="btn btn-warning text-light"><i class='icon-pad fas fa-edit' aria-hidden="true"></i> Edit</a>
+             {% endif %}
              <a href="{% url "myserver:remove_word" pk=object.pk %}" class="btn btn-success ml-2">Remembered</a>
            </div>
          </div>

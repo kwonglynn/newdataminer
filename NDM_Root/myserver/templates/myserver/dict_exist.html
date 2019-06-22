@@ -1,0 +1,31 @@
+<!-- The default name is dict name in lower case + "_list.html". -->
+<!-- In this case, the default name is dict_list.html -->
+{% extends "myserver/base.html" %}
+
+{% block title %}
+  Swedish
+{% endblock %}
+
+{% block content %}
+
+<!-- <h4>Python Basics</h4> -->
+<!-- <p>Modules, functions, classes, and methods.</p> -->
+<div class="panel" style="max-width:576px">
+
+  <div class="d-flex justify-content-between my-2">
+    <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_card" %}"><i class="fa fa-mobile" aria-hidden="true"></i> Mobile</a></div>
+    <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_table" %}"><i class="fas fa-desktop"></i> PC</a></div>
+  </div>
+
+  <form action="{% url 'myserver:dict_create' %}?next=card" class="form-inline" method='get'>
+    <div class="d-flex justify-content-between">
+      <input name='q4' class="form-control mr-2 h-25 mb-2" type="text" placeholder="Search . . ." aria-label="Search">
+      <button class="btn btn-outline-success h-25 mb-2" type="submit">Search</button>
+    </div>
+  </form>
+
+  <p>Word already exists in the database, try to search first.</p>
+  <p>You can then edit it, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
+
+</div> <!-- End of the table -->
+{% endblock %}
