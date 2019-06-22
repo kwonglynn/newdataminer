@@ -35,6 +35,7 @@
       <button class="btn btn-outline-success h-25 mb-2" type="submit">Search</button>
     </div>
   </form>
+  <p>Word not found? <a href="{% url 'myhome:contact' %}">Contact me</a>.</p>
 
   <table class="module-list w-100" id="myTable">
     <tr class="quotehdr">
@@ -52,7 +53,7 @@
           <td><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></td>
         {% else %}
           <td><a href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></td>
-        {% endif %}        
+        {% endif %}
 
         <td class="w3-hide-small">{{ object.pron }}</td>
         <td>{{ object.morf }}</td>

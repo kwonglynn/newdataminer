@@ -35,6 +35,7 @@
       <button class="btn btn-outline-success h-25 mb-2" type="submit">Search</button>
     </div>
   </form>
+  <p>Word not found? <a href="{% url 'myhome:contact' %}">Contact me</a>.</p>
 
   {% for object in object_list %}
    <div id="{{ object.accordion_id }}">

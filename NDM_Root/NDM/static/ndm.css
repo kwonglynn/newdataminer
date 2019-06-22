@@ -385,7 +385,7 @@ input {
 .jumbotron-narrow {
   margin-left:0;
   padding-top: 1em;
-  width:750px;
+  /* width:750px; */
   padding-bottom: 1em;
 }
 

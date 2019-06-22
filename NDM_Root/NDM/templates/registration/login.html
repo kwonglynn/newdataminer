@@ -6,7 +6,7 @@ Login
 {% endblock title %}
 
 {% block content %}
-<div class="jumbotron jumbotron-narrow">
+<div class="panel">
   <h2>Please login.</h2>
   {% if form.errors %}
   <p class="text-danger">Your username and password didn't match. Please try again.</p>
@@ -22,5 +22,10 @@ Login
   </form>
   <p>or <a class="normal-link" href="{% url 'password_reset'%}">Forgot Password</a></p>
   <p>Don't have an account? <a class="normal-link text-center" href="{% url 'myhome:register' %}">Sign up</a></p>
+  <p>Have a try without signing up:</p>
+  <ul>
+    <li>Username: testuser</li>
+    <li>Password: superdataminer</li>
+  </ul>
 </div>
 {% endblock content %}
