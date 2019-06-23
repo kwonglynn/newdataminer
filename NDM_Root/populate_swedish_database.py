@@ -16,8 +16,8 @@ from myserver.models import Dict
 
 def dict_create(word):
     word = word.strip().lower()
-    dicts = Dict.objects.filter(word=word)
 
+    dicts = Dict.objects.filter(word=word)
     if dicts.exists():
         return
 
@@ -49,6 +49,12 @@ def dict_create(word):
                         word = result_dict['word']
                         if word.endswith('*'):
                             word = word[:-1]
+                            
+                        # Some words can have many forms.
+                        dicts = Dict.objects.filter(word=word)
+                        if dicts.exists():
+                            return
+
                         pron = result_dict['pron']
                         morf = result_dict['morf']
                         forms = result_dict['form']
