@@ -47,9 +47,16 @@ def dict_create(request):
         elif 'card' in request.META.get('HTTP_REFERER'):
             return redirect('myserver:dict_list_card_today')
 
-    # Judge if the word has already been added:
-    if Dict.objects.filter(word=word).exists():
-        dict = Dict.objects.filter(word=word)[0]
+    dicts = Dict.objects.filter(word=word)
+    if dicts.exists():
+        # Find the word edited by the user himself
+        user_dict = dicts.filter(Q(word_user__icontains=request.user.username))
+        common_dict = dicts.filter(word_user='')
+        if user_dict.exists():
+            dict = user_dict[0]
+        # Find the common word.
+        else:
+            dict = common_dict[0]
 
         if 'table' in request.META.get('HTTP_REFERER'):
             return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
@@ -152,6 +159,7 @@ class DictCreateView(LoginRequiredMixin, CreateView):
         self.object.added_by = self.request.user
 
         word = self.object.word
+        # Not allowed to add a new word, if it is already in the database.
         if Dict.objects.filter(word=word).count() > 0:
             if 'table' in self.request.META.get('HTTP_REFERER'):
                 return redirect('myserver:dict_table_exist')
@@ -284,7 +292,10 @@ class DictDetailView(LoginRequiredMixin, DetailView):
 def remove_word(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     username = request.user.username
-    object.remove(username)
+    if username in object.word_user:
+        object.delete()
+    else:
+        object.remove(username)
     path = request.META.get('HTTP_REFERER')
     return redirect(path)
 
@@ -292,7 +303,10 @@ def remove_word(request, pk):
 def remember_word(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     username = request.user.username
-    object.remove(username)
+    if username in object.word_user:
+        object.delete()
+    else:
+        object.remove(username)
     path = request.META.get('HTTP_REFERER')
     try:
         if path.endswith('server/swedish/'):
