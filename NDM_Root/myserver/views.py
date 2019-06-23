@@ -38,14 +38,7 @@ def index(request):
 @login_required
 def dict_create(request):
     word = request.GET.get('q4', '')
-    try:
-        word = word.strip().split()[0]
-        word = word.lower()
-    except:
-        if 'table' in request.META.get('HTTP_REFERER'):
-            return redirect('myserver:dict_list_table_today')
-        elif 'card' in request.META.get('HTTP_REFERER'):
-            return redirect('myserver:dict_list_card_today')
+    word = word.strip().lower()
 
     dicts = Dict.objects.filter(word=word)
     if dicts.exists():
@@ -64,6 +57,15 @@ def dict_create(request):
             return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
 
     else:
+        try:
+            word = word.split()[0] # With scrapy, only one single word can be searched.
+        except:
+            # Empty input or input error.
+            if 'table' in request.META.get('HTTP_REFERER'):
+                return redirect('myserver:dict_list_table_today')
+            elif 'card' in request.META.get('HTTP_REFERER'):
+                return redirect('myserver:dict_list_card_today')
+
         cwd = os.getcwd()
         ## Work in the dict directory.
         # Local
@@ -99,9 +101,10 @@ def dict_create(request):
                             if not re.search('[0-9]', item):
                                 trans += item + ' '
 
-                        accordion_id = "accordion" + "_" + word
-                        heading_id = "heading" + "_" + word
-                        collapse_id = "collaspse" + "_" + word
+                        id = re.sub(r'\s+', '_', word)
+                        accordion_id = "accordion" + "_" + id
+                        heading_id = "heading" + "_" + id
+                        collapse_id = "collaspse" + "_" + id
 
                         break
                 else:
@@ -158,7 +161,7 @@ class DictCreateView(LoginRequiredMixin, CreateView):
 
         self.object.added_by = self.request.user
 
-        word = self.object.word
+        word = self.object.word.strip().lower()
         # Not allowed to add a new word, if it is already in the database.
         if Dict.objects.filter(word=word).count() > 0:
             if 'table' in self.request.META.get('HTTP_REFERER'):
@@ -166,9 +169,11 @@ class DictCreateView(LoginRequiredMixin, CreateView):
             elif 'card' in self.request.META.get('HTTP_REFERER'):
                 return redirect('myserver:dict_card_exist')
 
-        self.object.accordion_id = "accordion" + "_" + word
-        self.object.heading_id = "heading" + "_" + word
-        self.object.collapse_id = "collaspse" + "_" + word
+        self.object.word = word
+        id = re.sub(r'\s+', '_', word)
+        self.object.accordion_id = "accordion" + "_" + id
+        self.object.heading_id = "heading" + "_" + id
+        self.object.collapse_id = "collaspse" + "_" + id
 
         self.object.save()
         if 'table' in self.request.path:
@@ -188,11 +193,14 @@ class DictUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
 
-        word = self.object.word
+        word = self.object.word.strip().lower()
+        self.object.word = word
         self.object.word_user = word + '_' + self.request.user.username
-        self.object.accordion_id = "accordion" + "_" + word
-        self.object.heading_id = "heading" + "_" + word
-        self.object.collapse_id = "collaspse" + "_" + word
+
+        id = re.sub(r'\s+', '_', word)
+        self.object.accordion_id = "accordion" + "_" + id
+        self.object.heading_id = "heading" + "_" + id
+        self.object.collapse_id = "collaspse" + "_" + id
 
         now = datetime.datetime.now()
         self.object.last_name_date_label = self.request.user.username + '_' + now.strftime("%Y%m%d") + ';'
