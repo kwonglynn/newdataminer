@@ -77,9 +77,10 @@ def dict_create(word_q):
 
                         break
                 else:
+                    time.sleep(60)
                     return
             else:
-                time.sleep(1)
+                time.sleep(60)
 
         dict = Dict(word=word, word_forms=word_form, pron=pron, morf=morf,
                     forms=forms, trans=trans,
