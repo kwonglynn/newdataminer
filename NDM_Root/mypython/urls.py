@@ -7,6 +7,7 @@ app_name = 'mypython'
 urlpatterns = [
     path('', views.index, name='index'),
     path("conda/", views.conda, name='conda'),
+    path("plotly/", views.plotly, name="plotly"),
     path('ddns/', views.ddns, name='ddns'),
     path('modules/', views.ModuleListView.as_view(), name='module_list'),
     path('modules/new/', views.module_create, name='module_create'),

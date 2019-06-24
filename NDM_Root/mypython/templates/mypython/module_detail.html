@@ -7,16 +7,21 @@
 {% endblock title %}
 
 {% block content %}
-  <h4>{{ object.title }}</h4>
-  <h6>{{ object.get_type_display }}</h6>
+<div class="panel">
   {% if perms.mypython.can_publish_module and not object.published_date %}
     <p><a class="normal-link" href="{% url 'mypython:module_publish' pk=object.pk %}"><strong><i class="fa fa-upload" aria-hidden="true"></i> Publish</strong></a></p>
   {% endif %}
+  <h4>{{ object.title }}</h4>
+  {% if  object.script %}
+    <h6>Script: <a class="normal-link" href="{{ object.script.url }}."><i class="fa fa-download" aria-hidden="true"></i></a></h6>
+  {% endif %}
+  <h6>{{ object.get_type_display }}</h6>
+  <p>{{ object.usage }}</p>
   <div class="module-detail">
     <p><a href="{{ object.reference }}">Reference</a></p>
     <h6>Description:</h6>
     <div>
-      {{ object.description }}
+{{ object.description|safe }}
     </div>
     <h6>Example:</h6>
     <pre class="w3-code notranslate">
@@ -28,4 +33,5 @@
   {% else %}
     <p>Back to <a class="normal-link" href="{% url 'mypython:module_draft_list' %}"><strong>Drafts</strong></a></p>
   {% endif %}
+</div>  
 {% endblock content %}

@@ -188,6 +188,7 @@
     <h6>1. Install Django</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n django2 -c conda-forge django <br>
+      conda activate django2 <br>
       pip install mysqlclient <br>
     </div>
   </div>
@@ -196,10 +197,11 @@
     <h6>2. Install scikit-learn</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n sklearn -c conda-forge scikit-learn  <br>
-      conda install -n sklearn -c conda-forge ipython <br>
-      conda install -n sklearn -c conda-forge pandas <br>
-      conda install -n sklearn -c conda-forge matplotlib <br>
+      conda activate sklearn <br>
+      conda install -c conda-forge ipython <br>
+      conda install -c conda-forge pandas <br>
       pip install jupyter # Note jupyter can only be installed properly with pip!<br>
+      pip install spyder # Spyder can also only be installed properly by pip!<br>
     </div>
   </div>
 
@@ -207,10 +209,11 @@
     <h6>3. Install keras</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n keras -c conda-forge keras <br>
-      conda install -n keras -c conda-forge ipython <br>
-      conda install -n keras -c conda-forge pandas <br>
-      conda install -n keras -c conda-forge matplotlib <br>
+      conda activate keras <br>
+      conda install -c conda-forge ipython <br>
+      conda install -c conda-forge pandas <br>
       pip install jupyter <br>
+      pip install spyder <br>
     </div>
   </div>
 
@@ -218,10 +221,11 @@
     <h6>4. Install pytorch</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n pytorch -c pytorch pytorch <br>
-      conda install -n pytorch -c pytorch ipython <br>
-      conda install -n pytorch -c pytorch pandas <br>
-      conda install -n pytorch -c conda-forge matplotlib <br>
+      conda activate pytorch <br>
+      conda install -c pytorch ipython <br>
+      conda install -c pytorch pandas <br>
       pip install jupyter <br>
+      pip install spyder <br>
       # The supplementary packages should be installed from the channel as the<br>
       # main package for compatibility.<br>
     </div>
@@ -230,24 +234,40 @@
   <div class="panel">
     <h6>5. Install RDKit.</h6>
     <div class="w3-code pythonHigh notranslate">
-      ### Main packages ### <br>
       conda create -n rdkit -c rdkit rdkit # Default <br>
       conda create -n rdkit -c conda-forge rdkit # On the OS when can't get the latest version <br>
+      conda activate rdkit <br>
       pip install jupyter <br>
     </div>
   </div>
 
   <div class="panel">
-    <p><strong>Note:</strong></p>
+    <h6>6. Install a plotting package.</h6>
+    <div class="w3-code pythonHigh notranslate" style="margin-bottom:100px;">
+      conda create -n plot -c conda-forge matplotlib <br>
+      conda activate plot <br>
+      conda install -c conda-forge seaborn <br>
+      conda install -c conda-forge ipython <br>
+      pip install jupyter <br>
+      pip install plotly <br>
+      pip install cufflinks <br>
+    </div>
+    <p style="margin-top:0;padding-top:0;">Notebooks:</p>
+    <ul>
+      <li><a class="normal-link" href="{% url 'mypython:plotly' %}">plotly</a></li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <p><strong>Important Notes:</strong></p>
     <ol>
       <li>Different channels (anaconda, conda-forge or other) can
           have different versions for the same package!</li>
       <li>Install the main package and supplementary from the same channel.</li>
-      <li>Search for the package at <a href="https://anaconda.org/">
+      <li>Search for the package at <a class="normal-link" href="https://anaconda.org/">
           ANACONDA CLOUD</a>. Conda-forge almost always has the latest
           version for the same package. However, it may have some in-compatibility
-          issues with other package. Many times, only install one conda-force package
-          in one environment.</li>
+          issues with other package.</li>
       <li>Different OS (Linux, Windows or MacOS) can have different
           default versions for the same package! You may need to
           switch the channel in order to install the latest verion of the
@@ -255,8 +275,9 @@
       <li>If there are version-dependencies for some packages like rdkit and pytorch, it is
           better to install these packages in independent environmets!</li>
       <li>Check the package list verisons before installing! Also check to see if some
-          package will be <em>removed</em> or <em>downgraded!</em>. If yes,
-          these packages need to be installed in separate environments.</li>
+          package will be <em>removed</em> or <em>downgraded!</em>. If yes, first
+          try to switch to different channels. If not possible, these packages
+          need to be installed in separate environments.</li>
     </ol>
   </div>
 

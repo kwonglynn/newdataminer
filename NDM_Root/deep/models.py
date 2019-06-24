@@ -7,11 +7,13 @@ from django.utils import timezone
 
 class Deep(models.Model):
     title = models.CharField(max_length=100)
+    usage = models.CharField(max_length=300, blank=True, null=True)
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='deep')
     reference = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     parameters = models.TextField(blank=True, null=True)
     code = models.TextField(blank=True, null=True)
+    script = models.FileField(upload_to="deep/%Y/%m/%d/", blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 

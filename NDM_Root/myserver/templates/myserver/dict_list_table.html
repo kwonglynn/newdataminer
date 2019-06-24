@@ -1,0 +1,105 @@
+<!-- The default name is dict name in lower case + "_list.html". -->
+<!-- In this case, the default name is dict_list.html -->
+{% extends "myserver/base.html" %}
+
+{% block title %}
+  Swedish
+{% endblock %}
+
+{% block content %}
+
+<!-- <h4>Python Basics</h4> -->
+<!-- <p>Modules, functions, classes, and methods.</p> -->
+<div style="width:750px;">
+
+  <div class="d-flex justify-content-between my-2">
+    <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_card" %}"><i class="fa fa-mobile" aria-hidden="true"></i> Mobile</a></div>
+    <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_table" %}"><i class="fas fa-desktop"></i> PC</a></div>
+  </div>
+
+  <div class="d-flex justify-content-between my-2">
+    <p>
+      <a href="{% url 'myserver:dict_practice_today' %}"><i class="fas fa-play-circle"></i></a>
+      <a href="{% url 'myserver:dict_list_table_today' %}" >Today</a>:
+      <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total_today }}</span>
+    </p>
+
+    <p>
+      <a href="{% url 'myserver:dict_practice' %}" style="margin-left:30px;"><i class="fas fa-play-circle"></i></a>
+      <a href="{% url 'myserver:dict_list_table' %}" >Total</a>:
+      <span style="font-size:1.15em;font-weight:bold;color:blue;">{{ total }}</span>
+    </p>
+  </div>
+
+  <form action="{% url 'myserver:dict_create' %}?next=card" class="form-inline" method='get'>
+    <div class="d-flex justify-content-between">
+      <input name='q4' class="form-control mr-2 h-25 mb-2" type="text" placeholder="Search . . ." aria-label="Search">
+      <button class="btn btn-outline-success h-25 mb-2" type="submit">Search</button>
+    </div>
+  </form>
+  {% if 'today' in request.path %}
+    <p>Word not found? <a href="{% url 'myserver:dict_table_add' %}">Add now</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
+  {% endif %}
+
+  <table class="module-list w-100" id="myTable">
+    <tr class="quotehdr">
+      <th>Word</th>
+      <th class="w3-hide-small">Pronunciation</th>
+      <th>Type</th>
+      <th class="w3-hide-small">Forms</th>
+      <th>Translation</th>
+      <th>Delete</th>
+    </tr>
+
+    {% for object in object_list %}
+      <tr class="quoterow {% cycle '' 'altrow' %}">
+        {% if user.username == 'xiaoyuer' %}
+          <td><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}">{{ object.word }}</a></td>
+        {% else %}
+          <td><a href="https://www.dict.com/swedish-english/{{object.word}}">{{ object.word }}</a></td>
+        {% endif %}
+
+        <td class="w3-hide-small">{{ object.pron }}</td>
+        <td>{{ object.morf }}</td>
+        <td class="w3-hide-small">{{ object.forms }}</td>
+        <td>
+          {% autoescape off %}
+            {{ object.trans }}
+          {% endautoescape %}
+        </td>
+        <td class="td-action">
+          {% if request.user.username in object.word_user %}
+            <a href="{% url "myserver:dict_table_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% else %}
+            <a href="{% url "myserver:dict_table_update_create" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% endif %}
+          <a href="{% url "myserver:remove_word" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
+        </td>
+      </tr>
+    {% endfor %}
+</table>
+
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+      {% else %}
+        <li class="page-item disabled"><i class="fa fa-angle-double-left"></i></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="page-item active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li class="page-item"><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item"><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+      {% else %}
+        <li class="page-item disabled"><i class="fa fa-angle-double-right"></i></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+</div> <!-- End of the table -->
+{% endblock %}

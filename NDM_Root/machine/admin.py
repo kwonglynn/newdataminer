@@ -11,11 +11,11 @@ class MachineAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('title', 'reference', 'added_by')
+            'fields': ('title', 'usage', 'reference', 'added_by')
         }),
         ('More details', {
              'classes': ('collapse', ),
-             'fields': ('description', 'parameters', 'code')
+             'fields': ('description', 'parameters', 'code', 'script')
         }),
     )
 

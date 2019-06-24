@@ -21,6 +21,9 @@ def index(request):
 def conda(request):
     return render(request, 'mypython/conda.html')
 
+def plotly(request):
+    return render(request, 'mypython/Plotly and Cufflinks.html')
+
 def ddns(request):
     return render(request, 'mypython/ddns.html')
 

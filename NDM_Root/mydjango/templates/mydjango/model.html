@@ -1,4 +1,5 @@
 {% extends "mydjango/base.html" %}
+{% load static %}
 
 {% block title %}
   Django Models
@@ -9,6 +10,7 @@
 <h2>Model examples in django.</h2>
 
 <div class="panel">
+  <p>Download the <a href="{% static 'files/model_example.py' %}">file</a>.</p>
   <pre class="pre-scrollable w3-code notranslate">
 # Coding style for models
 from django.db import models
@@ -88,7 +90,7 @@ class Student(models.Model):
         verbose_name = 'student'
         verbose_name_plural = 'students'
 
-        permissions = (("can_graduate", "Be qualified to graduate.")) # Permissions are defined in a nested tuple containing the permission name and permission display value. 
+        permissions = (("can_graduate", "Be qualified to graduate.")) # Permissions are defined in a nested tuple containing the permission name and permission display value.
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
