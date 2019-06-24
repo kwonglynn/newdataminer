@@ -90,7 +90,7 @@ def dict_create(word_q):
         dict.save()
         os.chdir(cwd)
 
-with open('test.txt', 'r') as fi:
+with open('Swedish_list.txt', 'r') as fi:
     word_list = fi.readlines()
 
 for word_q in word_list:
