@@ -8,10 +8,11 @@ import re
 # Create your models here.
 
 class Dict(models.Model):
-    word = models.CharField(max_length=100)
+    word = models.CharField(max_length=200)
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='dict')
-    word_user = models.CharField(max_length=100, blank=True, null=True, default='')
-    
+    word_user = models.CharField(max_length=200, blank=True, null=True, default='')
+    word_forms = models.CharField(max_length=200, blank=True, null=True, default='') # To store different forms of the word for search efficiency.
+
     pron = models.CharField(max_length=100, blank=True, null=True)
     morf = models.CharField(max_length=100, blank=True, null=True)
     forms = models.CharField(max_length=100, blank=True, null=True, default='')
@@ -42,4 +43,8 @@ class Dict(models.Model):
     def remove(self, username):
         self.name_label = self.name_label.replace(username + ';', '')
         self.last_name_date_label = re.sub("%s_[0-9]*;" % username, "", self.last_name_date_label)
+        self.save()
+
+    def add_form(self, word_q):
+        self.word_forms += word_q + ';'
         self.save()

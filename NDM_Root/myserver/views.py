@@ -35,12 +35,20 @@ django.setup()
 def index(request):
     return render(request, "myserver/index.html")
 
-@login_required
-def dict_create(request):
-    word = request.GET.get('q4', '')
-    word = word.strip().lower()
+def redirect_to_list_today(request):
+    if 'table' in request.META.get('HTTP_REFERER'):
+        return redirect('myserver:dict_list_table_today')
+    elif 'card' in request.META.get('HTTP_REFERER'):
+        return redirect('myserver:dict_list_card_today')
 
-    dicts = Dict.objects.filter(word=word)
+def redirect_to_detail(request, dict):
+    if 'table' in request.META.get('HTTP_REFERER'):
+        return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
+    elif 'card' in request.META.get('HTTP_REFERER'):
+        return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+
+def check_exist(request, word_q):
+    dicts = Dict.objects.filter(Q(word_forms__icontains=word_q))
     if dicts.exists():
         # Find the word edited by the user himself
         user_dict = dicts.filter(Q(word_user__icontains=request.user.username))
@@ -51,86 +59,104 @@ def dict_create(request):
         else:
             dict = common_dict[0]
 
-        if 'table' in request.META.get('HTTP_REFERER'):
-            return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
-        elif 'card' in request.META.get('HTTP_REFERER'):
-            return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+        return redirect_to_detail(request, dict)
 
-    else:
-        try:
-            word = word.split()[0] # With scrapy, only one single word can be searched.
-        except:
-            # Empty input or input error.
-            if 'table' in request.META.get('HTTP_REFERER'):
-                return redirect('myserver:dict_list_table_today')
-            elif 'card' in request.META.get('HTTP_REFERER'):
-                return redirect('myserver:dict_list_card_today')
+    return None
 
-        cwd = os.getcwd()
-        ## Work in the dict directory.
-        # Local
-        dict_dir = r'C:\Google\Work\MyWebsite\newdataminer\NDM_Root\myserver\dict'
-        # PythonAnyWhere
-        # dict_dir = r'/home/guanglin/newdataminer/NDM_Root/myserver/dict'
-        os.chdir(dict_dir)
-        username = request.user.username
-        result_file_name = username + '.json'
-        # Delete the result json file it already exists.
+@login_required
+def dict_create(request):
+    word_q = request.GET.get('q4', '')
+    word_q = word_q.strip().lower()
+
+    if word_q == '':
+        return redirect_to_list_today(request)
+
+    result = check_exist(request, word_q)
+    if result:
+        return result
+
+    # assert  False
+
+    try:
+        word_q = word_q.split()[0] # With scrapy, only one single word can be searched.
+    except:
+        # Input error.
+        return redirect_to_list_today(request)
+
+    cwd = os.getcwd()
+    ## Work in the dict directory.
+    # Local
+    dict_dir = r'C:\Google\Work\MyWebsite\newdataminer\NDM_Root\myserver\dict'
+    # PythonAnyWhere
+    # dict_dir = r'/home/guanglin/newdataminer/NDM_Root/myserver/dict'
+    os.chdir(dict_dir)
+    username = request.user.username
+    result_file_name = username + '.json'
+    # Delete the result json file it already exists.
+    if os.path.isfile(result_file_name):
+        os.remove(result_file_name)
+
+    os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word_q))
+
+    while True:
         if os.path.isfile(result_file_name):
-            os.remove(result_file_name)
+            if os.path.getsize(result_file_name) > 0:
+                with open(result_file_name, 'r') as fi:
+                    lines = fi.readlines()
+                    result_json = lines[1].strip()
+                    result_dict = json.loads(result_json)
+                    word = result_dict['word']
+                    if word.endswith('*'):
+                        word = word[:-1]
 
-        os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word))
+                    try:
+                        dict = Dict.objects.filter(word=word)[0]
+                        if dict:
+                            dict.add_form(word_q)
 
-        while True:
-            if os.path.isfile(result_file_name):
-                if os.path.getsize(result_file_name) > 0:
-                    with open(result_file_name, 'r') as fi:
-                        lines = fi.readlines()
-                        result_json = lines[1].strip()
-                        result_dict = json.loads(result_json)
-                        word = result_dict['word']
-                        if word.endswith('*'):
-                            word = word[:-1]
-                        pron = result_dict['pron']
-                        morf = result_dict['morf']
-                        forms = result_dict['form']
-                        trans_list = json.loads(result_dict['trans'])
-                        trans_list = trans_list[0] # Only take the first translation for now.
-                        trans = ''
-                        for item in trans_list[:2]:
-                            if not re.search('[0-9]', item):
-                                trans += item + ' '
+                            result = check_exist(request, word_q)
+                            if result:
+                                return result
+                    except IndexError:
+                        # For the first search!
+                        pass
 
-                        id = re.sub(r'\s+', '_', word)
-                        accordion_id = "accordion" + "_" + id
-                        heading_id = "heading" + "_" + id
-                        collapse_id = "collaspse" + "_" + id
+                    # assert False
+                    word_form = word + ';'
+                    pron = result_dict['pron']
+                    morf = result_dict['morf']
+                    forms = result_dict['form']
+                    trans_list = json.loads(result_dict['trans'])
+                    trans_list = trans_list[0] # Only take the first translation for now.
+                    trans = ''
+                    for item in trans_list[:2]:
+                        if not re.search('[0-9]', item):
+                            trans += item + ' '
 
-                        break
-                else:
-                    if 'table' in request.META.get('HTTP_REFERER'):
-                        return redirect('myserver:dict_list_table_today')
-                    elif 'card' in request.META.get('HTTP_REFERER'):
-                        return redirect('myserver:dict_list_card_today')
+                    id = re.sub(r'\s+', '_', word)
+                    accordion_id = "accordion" + "_" + id
+                    heading_id = "heading" + "_" + id
+                    collapse_id = "collaspse" + "_" + id
+
+                    break
             else:
-                time.sleep(1)
+                return redirect_to_list_today(request)
+        else:
+            time.sleep(1)
 
-        dict = Dict(word=word, pron=pron, morf=morf,
-                    forms=forms, trans=trans,
-                    accordion_id=accordion_id,
-                    heading_id=heading_id,
-                    collapse_id=collapse_id,
-                    )
-        dict.added_by = request.user
-        dict.save()
+    dict = Dict(word=word, word_forms=word_form, pron=pron, morf=morf,
+                forms=forms, trans=trans,
+                accordion_id=accordion_id,
+                heading_id=heading_id,
+                collapse_id=collapse_id,
+                )
+    dict.added_by = request.user
+    dict.save()
 
-        ## Go back the original directory.
-        os.chdir(cwd)
+    ## Go back the original directory.
+    os.chdir(cwd)
 
-        if 'table' in request.META.get('HTTP_REFERER'):
-            return HttpResponseRedirect(reverse('myserver:dict_detail_table', kwargs={'pk': dict.pk}))
-        elif 'card' in request.META.get('HTTP_REFERER'):
-            return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
+    return redirect_to_detail(request, dict)
 
 @login_required
 def dict_update_create(request, pk):
@@ -142,7 +168,7 @@ def dict_update_create(request, pk):
     dict1.save()
 
     # For the new word, it will replace the old word for the current user. However, it should not influence other users.
-    dict2 = Dict(word=dict1.word, added_by=dict1.added_by,
+    dict2 = Dict(word=dict1.word, added_by=dict1.added_by, word_forms=dict1.word_forms,
                  pron=dict1.pron, morf=dict1.morf, forms=dict1.forms, trans=dict1.trans,
                  )
     dict2.save()
@@ -170,6 +196,7 @@ class DictCreateView(LoginRequiredMixin, CreateView):
                 return redirect('myserver:dict_card_exist')
 
         self.object.word = word
+        self.object.word_forms = word
         id = re.sub(r'\s+', '_', word)
         self.object.accordion_id = "accordion" + "_" + id
         self.object.heading_id = "heading" + "_" + id
