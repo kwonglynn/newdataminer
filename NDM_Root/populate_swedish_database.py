@@ -8,21 +8,21 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','NDM.settings')
 
 import django
+from django.db.models import Q
 # Import settings
 django.setup()
 # from django.db.models import Q   # Can be used for filtering.
 
 from myserver.models import Dict
 
-def dict_create(word):
-    word = word.strip().lower()
+def dict_create(word_q):
+    word_q = word_q.strip().lower()
 
-    dicts = Dict.objects.filter(word=word)
+    dicts = Dict.objects.filter(Q(word_forms__icontains=word_q))
     if dicts.exists():
         return
-
     else:
-        word = word.split()[0] # With scrapy, only one single word can be searched.
+        word_q = word_q.split()[0] # With scrapy, only one single word can be searched.
 
         cwd = os.getcwd()
         ## Work in the dict directory.
@@ -37,7 +37,7 @@ def dict_create(word):
         if os.path.isfile(result_file_name):
             os.remove(result_file_name)
 
-        os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word))
+        os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word_q))
 
         while True:
             if os.path.isfile(result_file_name):
@@ -49,12 +49,17 @@ def dict_create(word):
                         word = result_dict['word']
                         if word.endswith('*'):
                             word = word[:-1]
-                            
-                        # Some words can have many forms.
-                        dicts = Dict.objects.filter(word=word)
-                        if dicts.exists():
-                            return
 
+                        try:
+                            dict = Dict.objects.filter(word=word)[0]
+                            if dict:
+                                dict.add_form(word_q)
+                                return
+                        except IndexError:
+                            # For the first search!
+                            pass
+
+                        word_form = word + ';'
                         pron = result_dict['pron']
                         morf = result_dict['morf']
                         forms = result_dict['form']
@@ -76,7 +81,7 @@ def dict_create(word):
             else:
                 time.sleep(1)
 
-        dict = Dict(word=word, pron=pron, morf=morf,
+        dict = Dict(word=word, word_forms=word_form, pron=pron, morf=morf,
                     forms=forms, trans=trans,
                     accordion_id=accordion_id,
                     heading_id=heading_id,
@@ -85,9 +90,9 @@ def dict_create(word):
         dict.save()
         os.chdir(cwd)
 
-with open('swedish_list.txt', 'r') as fi:
+with open('test.txt', 'r') as fi:
     word_list = fi.readlines()
 
-for word in word_list:
-    print(word)
-    dict_create(word)
+for word_q in word_list:
+    print(word_q)
+    dict_create(word_q)
