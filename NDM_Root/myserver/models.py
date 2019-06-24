@@ -18,6 +18,7 @@ class Dict(models.Model):
     forms = models.CharField(max_length=100, blank=True, null=True, default='')
     trans = models.TextField(blank=True, null=True)
     # phrase = models.TextField(blank=True, null=True)
+
     created_date = models.DateTimeField(auto_now_add=True)
     last_date = models.DateTimeField(auto_now=True)
 
