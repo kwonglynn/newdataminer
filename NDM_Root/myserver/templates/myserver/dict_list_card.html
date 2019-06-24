@@ -64,11 +64,16 @@
        </div>
 
        <div id="{{ object.collapse_id }}" class="collapse" aria-labelledby="{{ object.heading_id }}" data-parent="#{{ object.accordion_id }}">
-         <div class="card-body">
+         <div class="card-body" style="padding-top:0">
            <h6>Pronunciation: {{ object.pron }}</h6>
            <h6>Type: {{ object.morf }}</h6>
            <h6>Forms: {{ object.forms }}</h6>
-           <h6>Translation: {{ object.trans }}</h6>
+           <h6>Translation: </h6>
+           <div class="panel ml-3">
+             {% autoescape off %}
+               {{ object.trans_all }}
+             {% endautoescape %}
+           </div>
            <div class="d-flex justify-content-between">
              {% if request.user.username in object.word_user %}
                <a href="{% url "myserver:dict_card_update" pk=object.pk %}"  class="btn btn-warning text-light"><i class='icon-pad fas fa-edit' aria-hidden="true"></i> Edit</a>

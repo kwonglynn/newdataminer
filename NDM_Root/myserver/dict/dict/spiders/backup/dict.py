@@ -28,6 +28,7 @@ class QuotesSpider(scrapy.Spider):
         trans_all = []
         trans = []
         phrase_all = []
+        phrase = []
         for term in entry_path.xpath(".//td//span"):
             if term.attrib['class'] == 'lex_ful_labl':
                 # Start append from the second translation.
@@ -42,15 +43,22 @@ class QuotesSpider(scrapy.Spider):
                 trans.append(term.xpath("text()").get())
             elif term.attrib['class'] == 'lex_ful_d':
                 trans.append(term.xpath("text()").get())
+                
+            if term.attrib['class'] == 'lex_ful_coll2s w l1':
+            # Start append from the second phrase.
+                if phrase != []:
+                    phrase_all.append(phrase)
+                    phrase = []
+                               
+                phrase.append(term.xpath("text()").get())
+            elif term.attrib['class'] == 'lex_ful_coll2t w l2':
+                phrase.append(term.xpath("text()").get())
             
-            # Stop at the phrase!
-            elif term.xpath("text()").get().strip() == 'phr':
-                break
-            elif term.attrib['class'] == 'lex_ful_coll2':
-                break
-
         # For the last translation
         trans_all.append(trans)                                          
+        
+        # For the last phrase
+        phrase_all.append(phrase)
         
         yield {
             'word': word_path.get(),
@@ -58,4 +66,5 @@ class QuotesSpider(scrapy.Spider):
             'morf': morf_path.get(),
             'form': form_path.get(),
             'trans': json.dumps(trans_all),
+            'phrase': json.dumps(phrase_all)
         }

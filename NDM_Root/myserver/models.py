@@ -9,14 +9,15 @@ import re
 
 class Dict(models.Model):
     word = models.CharField(max_length=200)
+    word_forms = models.CharField(max_length=200, blank=True, null=True, default='') # To store different forms of the word for search efficiency.
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='dict')
     word_user = models.CharField(max_length=200, blank=True, null=True, default='')
-    word_forms = models.CharField(max_length=200, blank=True, null=True, default='') # To store different forms of the word for search efficiency.
 
     pron = models.CharField(max_length=100, blank=True, null=True)
     morf = models.CharField(max_length=100, blank=True, null=True)
     forms = models.CharField(max_length=100, blank=True, null=True, default='')
-    trans = models.TextField(blank=True, null=True)
+    trans = models.TextField(blank=True, null=True, help_text='For concise display in table view.')
+    trans_all = models.TextField(blank=True, null=True, default='', help_text='For more detailed display in card view and detail view.')
     # phrase = models.TextField(blank=True, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -47,5 +48,5 @@ class Dict(models.Model):
         self.save()
 
     def add_form(self, word_q):
-        self.word_forms += word_q + ';'
+        self.word_forms += word_q
         self.save()

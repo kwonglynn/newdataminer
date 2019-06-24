@@ -71,6 +71,7 @@ def dict_create(request):
     if word_q == '':
         return redirect_to_list_today(request)
 
+    word_q = ';' + word_q + ';'  # Add ';' to help filtering.
     result = check_exist(request, word_q)
     if result:
         return result
@@ -78,7 +79,7 @@ def dict_create(request):
     # assert  False
 
     try:
-        word_q = word_q.split()[0] # With scrapy, only one single word can be searched.
+        word_in = word_q.split(';')[1].split()[0] # With scrapy, only one single word can be searched.
     except:
         # Input error.
         return redirect_to_list_today(request)
@@ -96,7 +97,8 @@ def dict_create(request):
     if os.path.isfile(result_file_name):
         os.remove(result_file_name)
 
-    os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word_q))
+    os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word_in))
+    time.sleep(1)
 
     while True:
         if os.path.isfile(result_file_name):
@@ -122,16 +124,22 @@ def dict_create(request):
                         pass
 
                     # assert False
-                    word_form = word + ';'
+                    word_form = ';' + word + ';'  # The root word. Add ';' to help filtering.
                     pron = result_dict['pron']
                     morf = result_dict['morf']
                     forms = result_dict['form']
                     trans_list = json.loads(result_dict['trans'])
-                    trans_list = trans_list[0] # Only take the first translation for now.
+
+                    # For display in table view:
+                    trans_list0 = trans_list[0] # Only take the first translation for now.
                     trans = ''
-                    for item in trans_list[:2]:
+                    for item in trans_list0[:2]:
                         if not re.search('[0-9]', item):
                             trans += item + ' '
+                    # For display in card view and detail view:
+                    trans_all = ''
+                    for term in trans_list:
+                        trans_all += ' '.join(term) + '<br>'
 
                     id = re.sub(r'\s+', '_', word)
                     accordion_id = "accordion" + "_" + id
@@ -142,10 +150,10 @@ def dict_create(request):
             else:
                 return redirect_to_list_today(request)
         else:
-            time.sleep(1)
+            return redirect_to_list_today(request)
 
     dict = Dict(word=word, word_forms=word_form, pron=pron, morf=morf,
-                forms=forms, trans=trans,
+                forms=forms, trans=trans, trans_all=trans_all,
                 accordion_id=accordion_id,
                 heading_id=heading_id,
                 collapse_id=collapse_id,
@@ -169,7 +177,7 @@ def dict_update_create(request, pk):
 
     # For the new word, it will replace the old word for the current user. However, it should not influence other users.
     dict2 = Dict(word=dict1.word, added_by=dict1.added_by, word_forms=dict1.word_forms,
-                 pron=dict1.pron, morf=dict1.morf, forms=dict1.forms, trans=dict1.trans,
+                 pron=dict1.pron, morf=dict1.morf, forms=dict1.forms, trans=dict1.trans, trans_all=dict1.trans_all
                  )
     dict2.save()
 
@@ -196,7 +204,7 @@ class DictCreateView(LoginRequiredMixin, CreateView):
                 return redirect('myserver:dict_card_exist')
 
         self.object.word = word
-        self.object.word_forms = word
+        self.object.word_forms = ';' + word + ';'
         id = re.sub(r'\s+', '_', word)
         self.object.accordion_id = "accordion" + "_" + id
         self.object.heading_id = "heading" + "_" + id
@@ -222,6 +230,7 @@ class DictUpdateView(LoginRequiredMixin, UpdateView):
 
         word = self.object.word.strip().lower()
         self.object.word = word
+        self.object.word_forms += ';' + word + ';'
         self.object.word_user = word + '_' + self.request.user.username
 
         id = re.sub(r'\s+', '_', word)

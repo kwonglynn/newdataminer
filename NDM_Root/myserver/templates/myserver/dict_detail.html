@@ -24,7 +24,12 @@
     <h6>Pronunciation: {{ object.pron }}</h6>
     <h6>Type: {{ object.morf }}</h6>
     <h6>Forms: {{ object.forms }}</h6>
-    <h6>Translation: {{ object.trans }}</h6>
+    <h6>Translation: </h6>
+    <div class="panel ml-3">
+      {% autoescape off %}
+        {{ object.trans_all }}
+      {% endautoescape %}
+    </div>
   </div>
   {% if 'table' in request.path %}
     <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_table' %}"><strong>Notebook</strong></a></p>
