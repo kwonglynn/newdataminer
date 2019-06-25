@@ -50,10 +50,11 @@ def dict_create(word_q):
                         result_json = lines[1].strip()
                         result_dict = json.loads(result_json)
                         word = result_dict['word']
-                        if word.endswith('*'):
-                            word = word[:-1]
 
                         try:
+                            if word.endswith('*'):
+                                word = word[:-1]
+
                             # To see if the word has been added. Eg. tyckte --> tycka, only add the form now.
                             dict = Dict.objects.filter(word=word)[0]
                             if dict:
@@ -64,6 +65,9 @@ def dict_create(word_q):
                                 if word_q not in dict.word_forms:
                                     dict.add_form(word_q)
                                 return
+                        except AttributeError:
+                            # No word was found.
+                            return
                         except IndexError:
                             # For the first search!
                             pass
@@ -106,7 +110,7 @@ def dict_create(word_q):
         dict.save()
         os.chdir(cwd)
 
-with open('test.txt', 'r') as fi:
+with open('swedish_list.txt', 'r') as fi:
     word_list = fi.readlines()
 
 for word_q in word_list:
