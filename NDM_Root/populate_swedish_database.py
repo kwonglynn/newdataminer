@@ -18,11 +18,14 @@ from myserver.models import Dict
 def dict_create(word_q):
     word_q = word_q.strip().lower()
 
+    word_q = ';' + word_q + ';'  # Add ';' to help filtering.
+
     dicts = Dict.objects.filter(Q(word_forms__icontains=word_q))
+    # Eg. tycka --> tycka, if tycka has already been added.
     if dicts.exists():
         return
     else:
-        word_q = word_q.split()[0] # With scrapy, only one single word can be searched.
+        word_in = word_q.split(';')[1].split()[0] # With scrapy, only one single word can be searched.
 
         cwd = os.getcwd()
         ## Work in the dict directory.
@@ -37,7 +40,7 @@ def dict_create(word_q):
         if os.path.isfile(result_file_name):
             os.remove(result_file_name)
 
-        os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word_q))
+        os.system("conda activate django2 | scrapy crawl dict -o %s -a word=%s" % (result_file_name, word_in))
 
         while True:
             if os.path.isfile(result_file_name):
@@ -51,24 +54,36 @@ def dict_create(word_q):
                             word = word[:-1]
 
                         try:
+                            # To see if the word has been added. Eg. tyckte --> tycka, only add the form now.
                             dict = Dict.objects.filter(word=word)[0]
                             if dict:
-                                dict.add_form(word_q)
+                                # dict.com can only search single words, a pharse will be treated as single single.
+                                if ' ' in word_q:
+                                    word_q = word_q.split()[0] + ';'
+
+                                if word_q not in dict.word_forms:
+                                    dict.add_form(word_q)
                                 return
                         except IndexError:
                             # For the first search!
                             pass
 
-                        word_form = word + ';'
+                        word_form = ';' + word + ';'  # The root word, add ';' to help filtering.
                         pron = result_dict['pron']
                         morf = result_dict['morf']
                         forms = result_dict['form']
                         trans_list = json.loads(result_dict['trans'])
-                        trans_list = trans_list[0] # Only take the first translation for now.
+
+                        # For display in table view:
+                        trans_list0 = trans_list[0] # Only take the first translation for now.
                         trans = ''
-                        for item in trans_list[:2]:
+                        for item in trans_list0[:2]:
                             if not re.search('[0-9]', item):
                                 trans += item + ' '
+                        # For display in card view and detail view:
+                        trans_all = ''
+                        for term in trans_list:
+                            trans_all += ' '.join(term) + '<br>'
 
                         id = re.sub(r'\s+', '_', word)
                         accordion_id = "accordion" + "_" + id
@@ -83,7 +98,7 @@ def dict_create(word_q):
                 time.sleep(1)
 
         dict = Dict(word=word, word_forms=word_form, pron=pron, morf=morf,
-                    forms=forms, trans=trans,
+                    forms=forms, trans=trans, trans_all=trans_all,
                     accordion_id=accordion_id,
                     heading_id=heading_id,
                     collapse_id=collapse_id,
@@ -91,7 +106,7 @@ def dict_create(word_q):
         dict.save()
         os.chdir(cwd)
 
-with open('Swedish_list.txt', 'r') as fi:
+with open('test.txt', 'r') as fi:
     word_list = fi.readlines()
 
 for word_q in word_list:

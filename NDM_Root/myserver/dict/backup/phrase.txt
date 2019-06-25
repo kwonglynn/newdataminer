@@ -1,0 +1,1337 @@
+amortera ner	ner	
+andas in	in	
+andas ut	ut	
+ankra upp	upp	
+annonsera ut	ut	
+arbeta fram	fram	
+arbeta in	in	
+arbeta på	på	
+arbeta upp	upp	
+backa in	in	
+backa ner	ner	
+backa upp	upp	
+backa ut	ut	
+bajsa på sig	på	sig
+baka ut	ut	
+banta ner	ner	
+banta ner sig	ner	sig
+basunera ut	ut	
+baxa in	in	
+baxa upp	upp	
+baxa ut	ut	
+begära in	in	
+bena upp	upp	
+beställa in	in	
+betala av	av	
+betala in	in	
+betala tillbaka	tillbaka	
+betala ut	ut	
+bila ner	ner	
+binda in	in	
+binda upp	upp	
+bjuda hem	hem	
+bjuda in	in	
+bjuda upp	upp	
+bjuda ut	ut	
+bjuda ut sig	ut	sig
+blanda ihop	ihop	
+blanda in	in	
+blanda ner	ner	
+blanda samman	samman	
+blanda sig in	in	sig
+blanda till	till	
+blanda ut	ut	
+bli av	av	
+bli kvar	kvar	
+bli över	över	
+blicka in	in	
+blicka ut	ut	
+blinka tillbaka	tillbaka	
+blomma upp	upp	
+blomma ut	ut	
+blossa upp	upp	
+blåsa in	in	
+blåsa upp	upp	
+blåsa ut	ut	
+bogsera ut	ut	
+boka in	in	
+bolla ut	ut	
+borra in	in	
+borra sig in	in	sig
+breda ut	ut	
+breda ut sig	ut	sig
+brinna ned	ned	
+brinna ner	ner	
+brinna upp	upp	
+brinna ut	ut	
+brista ut	ut	
+bromsa in	in	
+bromsa upp	upp	
+bruka ner	ner	
+brusa upp	upp	
+bryta av	av	
+bryta in	in	
+bryta ner	ner	
+bryta sig in	in	sig
+bryta sig ut	ut	sig
+bryta upp	upp	
+bryta ut	ut	
+bränna ner	ner	
+bränna upp	upp	
+bränna ut	ut	
+bränna ut sig	ut	sig
+brösta upp	upp	
+bua ut	ut	
+bukta ut	ut	
+bulla upp	upp	
+bura in	in	
+bygga in	in	
+bygga om	om	
+bygga upp	upp	
+bygga ut	ut	
+bygga ut sig	ut	sig
+byta in	in	
+byta ner sig	ner	sig
+byta upp sig	upp	sig
+byta ut	ut	
+bädda in	in	
+bädda upp	upp	
+bända upp	upp	
+bära in	in	
+bära sig åt	åt	sig
+bära upp	upp	
+bära ut	ut	
+böja ner	ner	
+dansa ner	ner	
+dela in	in	
+dela upp	upp	
+dela ut	ut	
+dimpa ner	ner	
+dirigera in	in	
+dra av	av	
+dra fram	fram	
+dra ihop	ihop	
+dra in	in	
+dra in sig	in	sig
+dra ner	ner	
+dra på	på	
+dra sig för	för	sig
+dra sig in	in	sig
+dra sig ner	ner	sig
+dra sig undan	undan	sig
+dra till	till	
+dra till sig	till	sig
+dra undan	undan	
+dra upp	upp	
+dra ut	ut	
+dra åt	åt	
+dra åt sig	åt	sig
+dricka upp	upp	
+dricka ur	ur	
+driva in	in	
+driva upp	upp	
+driva ut	ut	
+dryga ut	ut	
+drömma sig in	in	sig
+duka in	in	
+duka upp	upp	
+duka ut	ut	
+dundra in	in	
+dunka in	in	
+dunsa ner	ner	
+dyka in	in	
+dyka ner	ner	
+dyka upp	upp	
+dyka ut	ut	
+dämma upp	upp	
+dåna in	in	
+dö ut	ut	
+döma ut	ut	
+ebba ut	ut	
+egga upp	upp	
+egga upp sig	upp	sig
+falla ihop	ihop	
+falla in	in	
+falla ner	ner	
+falla ut	ut	
+fara hem	hem	
+fara in	in	
+fara ner	ner	
+fara upp	upp	
+fara ut	ut	
+faxa in	in	
+fega sig		sig
+fega ur	ur	
+filma in	in	
+finna ut	ut	
+finnas kvar	kvar	
+finnas med	med	
+fiska upp	upp	
+fixa klart	klart	
+fixa till	till	
+fladdra in	in	
+flagga upp	upp	
+flamma upp	upp	
+fly in	in	
+fly ut	ut	
+flyga in	in	
+flyga iväg	iväg	
+flyga ner	ner	
+flyga på	på	
+flyga upp	upp	
+flyta in	in	
+flyta upp	upp	
+flyta ut	ut	
+flytta hit	hit	
+flytta in	in	
+flytta ner	ner	
+flytta upp	upp	
+flytta ut	ut	
+fläka upp	upp	
+fläta in	in	
+flöda in	in	
+flörta in	in	
+flörta in sig	in	sig
+forsa in	in	
+frakta ut	ut	
+frysa ner	ner	
+frysa ut	ut	
+fråga ut	ut	
+fräsa ut	ut	
+fräscha upp	upp	
+fundera ut	ut	
+fylla i	i	
+fylla upp	upp	
+fylla ut	ut	
+få bort	bort	
+få fart på	fart på	
+få fram	fram	
+få färdigt	färdigt	
+få för sig	för	sig
+få igång	igång	
+få in	in	
+få med	med	
+få ner	ner	
+få sig		sig
+få till	till	
+få tillbaka	tillbaka	
+få upp	upp	
+få ut	ut	
+fålla in	in	
+fånga in	in	
+fånga upp	upp	
+fälla in	in	
+fälla ner	ner	
+fälla upp	upp	
+fälla ut	ut	
+fästa upp	upp	
+föda in	in	
+föda upp	upp	
+följa med	med	
+följa upp	upp	
+följas åt	åt	
+föra fram	fram	
+föra in	in	
+föra med	med	
+föra ner	ner	
+föra sig		sig
+föra upp	upp	
+föra ut	ut	
+förstora upp	upp	
+fösa in	in	
+fösa ut	ut	
+gallra ut	ut	
+gaska upp sig	upp	sig
+ge in	in	
+ge sig av	av	sig
+ge sig hän	hän	sig
+ge sig in	in	sig
+ge sig in i	in i	sig
+ge sig iväg	iväg	sig
+ge sig på	på	sig
+ge sig ut	ut	sig
+ge sig över	över	sig
+ge upp	upp	
+ge ut	ut	
+gillra in	in	
+gjuta in	in	
+glesna ut	ut	
+glida in	in	
+glida ner	ner	
+glida upp	upp	
+glida ut	ut	
+glömma bort	bort	
+gnaga sig in	in	sig
+gnaga sig ut	ut	sig
+gnaga ut	ut	
+gnida in	in	
+gnida ut	ut	
+gripa in	in	
+gråta ut	ut	
+gräva ner	ner	
+gräva ner sig	ner	sig
+gräva sig ner	ner	sig
+gräva upp	upp	
+gräva ut	ut	
+gå av	av	
+gå bort	bort	
+gå fram	fram	
+gå före	före	
+gå hem	hem	
+gå in	in	
+gå isär	isär	
+gå iväg	iväg	
+gå med	med	
+gå med på	med på	
+gå ner	ner	
+gå ner sig	ner	sig
+gå omkring	omkring	
+gå runt	runt	
+gå sönder	sönder	
+gå till	till	
+gå upp	upp	
+gå ur	ur	
+gå ut	ut	
+gå åt	åt	
+gå över	över	
+göra av	av	
+göra av med	av med	
+göra bort sig	bort	sig
+göra om	om	
+göra på sig	på	sig
+göra sig illa	illa	sig
+göra sig till	till	sig
+göra skada på	skada på	
+göra upp	upp	
+göra upp om	upp om	
+göra åt	åt	
+ha för sig	för	sig
+ha kvar	kvar	
+ha med	med	
+ha på	på	
+hacka upp	upp	
+haka upp	upp	
+hala in	in	
+hala upp	upp	
+halka ner	ner	
+handla upp	upp	
+hasa sig in	in	sig
+hetsa upp	upp	
+hetta upp	upp	
+hinna in	in	
+hinna med	med	
+hinna ner	ner	
+hinna undan	undan	
+hinna upp	upp	
+hinna ut	ut	
+hissa ner	ner	
+hissa upp	upp	
+hitta in	in	
+hitta på	på	
+hitta tillbaka	tillbaka	
+hitta ut	ut	
+hiva upp	upp	
+hjälpa till	till	
+hjälpas åt	åt	
+hoppa av	av	
+hoppa i	i	
+hoppa in	in	
+hoppa ner	ner	
+hoppa upp	upp	
+hoppa ut	ut	
+hoppa över	över	
+hosta till	till	
+hosta upp	upp	
+hugga in	in	
+hugga ner	ner	
+hugga upp	upp	
+hugga ut	ut	
+huta åt	åt	
+hyra in	in	
+hyra in sig	in	sig
+hyra ut	ut	
+hyva in	in	
+hålla av	av	
+hålla ihop	ihop	
+hålla in	in	
+hålla inne	inne	
+hålla med	med	
+hålla ner	ner	
+hålla om	om	
+hålla på	på	
+hålla på med	på med	
+hålla sig för	för	sig
+hålla sig med	med	sig
+hålla till	till	
+hålla upp	upp	
+hålla ut	ut	
+håva in	in	
+hälla i	i	
+hälla upp	upp	
+hälla ut	ut	
+hälsa på	på	
+hämta in	in	
+hämta upp	upp	
+hämta ut	ut	
+hänga ihop	ihop	
+hänga in	in	
+hänga kvar	kvar	
+hänga med	med	
+hänga ner	ner	
+hänga tillbaka	tillbaka	
+hänga upp	upp	
+hänga upp sig	upp	sig
+hänga ut	ut	
+härma in	in	
+höra av	av	
+höra av sig	av	sig
+höra ihop	ihop	
+jaga upp	upp	
+jaga ut	ut	
+justera ner	ner	
+jämna ut	ut	
+jäsa upp	upp	
+kabla ut	ut	
+kalla in	in	
+kalla ut	ut	
+kapa till sig	till	sig
+kapa åt sig	åt	sig
+kapsla in	in	
+kapsla in sig	in	sig
+karda ut	ut	
+kasta ifrån sig	ifrån	sig
+kasta in	in	
+kasta ner	ner	
+kasta sig in	in	sig
+kasta sig ner	ner	sig
+kasta sig ut	ut	sig
+kasta upp	upp	
+kasta ut	ut	
+kavla ut	ut	
+kika in	in	
+kika ner	ner	
+kika ut	ut	
+kila in	in	
+kissa på sig	på	sig
+kladda ner	ner	
+klampa in	in	
+klappa in	in	
+klara av	av	
+klara upp	upp	
+klara ut	ut	
+kleta sig fast	fast	sig
+klicka sig in	in	sig
+klicka ut	ut	
+klinga ut	ut	
+klippa in	in	
+klippa ner	ner	
+klippa upp	upp	
+klippa ut	ut	
+klistra in	in	
+klistra upp	upp	
+kliva in	in	
+kliva ner	ner	
+kliva upp	upp	
+kliva ut	ut	
+klubba ner	ner	
+klura ut	ut	
+klå upp	upp	
+klä av sig	av	sig
+klä in	in	
+klä på sig	på	sig
+klä upp	upp	
+klä upp sig	upp	sig
+klä ut	ut	
+klä ut sig	ut	sig
+klämma in	in	
+klämma sig in	in	sig
+klämma sig ut	ut	sig
+klämma åt	åt	
+klänga upp	upp	
+klättra ner	ner	
+klättra upp	upp	
+klättra ut	ut	
+klösa åt sig	åt	sig
+knacka in	in	
+knacka ut	ut	
+knappa in	in	
+knuffa ner	ner	
+knuffa upp	upp	
+knuffa ut	ut	
+knyta in	in	
+knäcka ner	ner	
+knäppa till	till	
+knäppa upp	upp	
+knöla ner	ner	
+koka upp	upp	
+kolla in	in	
+kolla till	till	
+kolla upp	upp	
+komma av sig	av	sig
+komma bort	bort	
+komma emot	emot	
+komma fram	fram	
+komma ihåg	ihåg	
+komma in	in	
+komma med	med	
+komma ner	ner	
+komma på	på	
+komma sig för	för	sig
+komma sig iväg	iväg	sig
+komma sig upp	upp	sig
+komma till	till	
+komma tillbaka	tillbaka	
+komma upp	upp	
+komma ut	ut	
+komma åt	åt	
+komma över	över	
+komma överens	överens	
+kommendera ut	ut	
+konkurrera ut	ut	
+koppla in	in	
+koppla in sig	in	sig
+koppla upp	upp	
+koppla upp sig	upp	sig
+korta ner	ner	
+kratsa ut	ut	
+kratta upp	upp	
+kratta ut	ut	
+kravla sig upp	upp	sig
+krita upp	upp	
+krypa in	in	
+krypa ner	ner	
+krypa upp	upp	
+krypa ut	ut	
+krysta ut	ut	
+kränga ut	ut	
+kvala in	in	
+kvittera ut	ut	
+kyla ner	ner	
+kämpa ner	ner	
+känna av	av	
+känna igen	igen	
+känna på	på	
+känna på sig	på	sig
+känna till	till	
+köpa in	in	
+köpa in sig	in	sig
+köpa upp	upp	
+köpa ut	ut	
+köra av	av	
+köra in	in	
+köra ner	ner	
+köra upp	upp	
+köra ut	ut	
+köra över	över	
+ladda ner	ner	
+ladda upp	upp	
+laka ut	ut	
+lasta av	av	
+leda in	in	
+leda ner	ner	
+leda upp	upp	
+leta sig in	in	sig
+leta upp	upp	
+leva sig in	in	sig
+leva upp	upp	
+leva ut	ut	
+leverera in	in	
+ligga i	i	
+linda in	in	
+lirka upp	upp	
+lista ut	ut	
+liva upp	upp	
+locka in	in	
+locka ut	ut	
+logga in	in	
+logga ut	ut	
+lotsa ut	ut	
+lotta ut	ut	
+luckra upp	upp	
+lugna ner	ner	
+lugna ner sig	ner	sig
+luska fram	fram	
+luska ut	ut	
+luta sig ut	ut	sig
+lyfta fram	fram	
+lyfta ner	ner	
+lyfta upp	upp	
+lyfta upp sig	upp	sig
+lyfta ut	ut	
+lysa upp	upp	
+låna in	in	
+låna ut	ut	
+låsa in	in	
+låsa in sig	in	sig
+låsa om sig	om	sig
+låsa upp	upp	
+läcka in	in	
+läcka ut	ut	
+lägga av	av	
+lägga fram	fram	
+lägga i	i	
+lägga in	in	
+lägga ner	ner	
+lägga på	på	
+lägga på sig	på	sig
+lägga sig i	i	sig
+lägga till	till	
+lägga upp	upp	
+lägga ut	ut	
+läggas ut	ut	
+lämna igen	igen	
+lämna in	in	
+lämna tillbaka	tillbaka	
+lämna ut	ut	
+lämna över	över	
+lämnas in	in	
+länka in	in	
+lära in	in	
+lära upp	upp	
+lära ut	ut	
+läsa igenom	igenom	
+läsa in	in	
+läsa upp	upp	
+läsa ut	ut	
+lätta upp	upp	
+löddra in	in	
+löddra in sig	in	sig
+löpa ut	ut	
+lösa in	in	
+lösa sig		sig
+lösa upp	upp	
+lösa upp sig	upp	sig
+lösa ut	ut	
+lösas upp	upp	
+maka åt sig	åt	sig
+mala ner	ner	
+mala på	på	
+mangla ner	ner	
+manövrera ut	ut	
+marschera in	in	
+marschera ut	ut	
+mata in	in	
+meja ner	ner	
+mejsla ut	ut	
+mjuka upp	upp	
+montera upp	upp	
+mota upp	upp	
+multna ner	ner	
+muntra upp	upp	
+muntra upp sig	upp	sig
+mylla ner	ner	
+mynna ut	ut	
+måla in	in	
+måla ner	ner	
+måla upp	upp	
+måla ut	ut	
+måste in	in	
+måste ner	ner	
+måste upp	upp	
+måste ut	ut	
+märka upp	upp	
+märka ut	ut	
+mäta upp	upp	
+mäta ut	ut	
+nafsa åt sig	åt	sig
+nappa upp	upp	
+navigera sig ut	ut	sig
+nå fram	fram	
+nå in	in	
+nå upp	upp	
+nå ut	ut	
+nöta in	in	
+nöta ner	ner	
+nöta ut	ut	
+odla upp	upp	
+ordna upp	upp	
+ordna upp sig	upp	sig
+packa in	in	
+packa ner	ner	
+packa upp	upp	
+palla upp	upp	
+passa in	in	
+passa på	på	
+passa sig		sig
+passa upp	upp	
+passera ut	ut	
+peka ut	ut	
+peta ner	ner	
+pigga upp	upp	
+pigga upp sig	upp	sig
+piska upp	upp	
+placera in	in	
+placera ut	ut	
+plana ut	ut	
+planera in	in	
+plantera in	in	
+plocka fram	fram	
+plocka in	in	
+plocka ner	ner	
+plocka till sig	till	sig
+plocka upp	upp	
+plocka ut	ut	
+plocka åt sig	åt	sig
+plöja igenom	igenom	
+plöja upp	upp	
+poppa upp	upp	
+portionera ut	ut	
+prata på	på	
+pressa in	in	
+pressa ner	ner	
+pressa upp	upp	
+pressa ut	ut	
+pricka in	in	
+programmera in	in	
+prångla ut	ut	
+pumpa in	in	
+pumpa ner	ner	
+pumpa upp	upp	
+punga ut	ut	
+pussla in	in	
+pusta ut	ut	
+putsa upp	upp	
+pysa upp	upp	
+rada upp	upp	
+rada upp sig	upp	sig
+rama in	in	
+ramla i	i	
+ramla in	in	
+ramla ner	ner	
+rangera in	in	
+rangera in sig	in	sig
+rapa upp	upp	
+rasa ner	ner	
+rassla ner	ner	
+reda upp	upp	
+reda ut	ut	
+regna in	in	
+renovera upp	upp	
+rensa upp	upp	
+rensa ut	ut	
+resa in	in	
+resa iväg	iväg	
+resa ner	ner	
+resa upp	upp	
+resa ut	ut	
+reta sig		sig
+reta upp	upp	
+rida in	in	
+rida upp	upp	
+rida ut	ut	
+rigga upp	upp	
+rikta in	in	
+rikta in sig	in	sig
+rikta sig		sig
+ringa in	in	
+ringa ner	ner	
+ringa upp	upp	
+ringla in	in	
+ringla in sig	in	sig
+ringla sig		sig
+rinna av	av	
+rinna iväg	iväg	
+rinna ner	ner	
+rinna upp	upp	
+rinna ut	ut	
+rita av	av	
+rita in	in	
+rita upp	upp	
+rita ut	ut	
+riva ner	ner	
+riva upp	upp	
+ro ut	ut	
+roffa till sig	till	sig
+roffa åt sig	åt	sig
+ropa in	in	
+rulla in	in	
+rulla ner	ner	
+rulla upp	upp	
+rulla ut	ut	
+rusa in	in	
+rusa upp	upp	
+rusa ut	ut	
+rusta upp	upp	
+rusta ut	ut	
+rycka in	in	
+rycka ner	ner	
+rycka till	till	
+rycka till sig	till	sig
+rycka upp	upp	
+rycka ut	ut	
+rycka åt sig	åt	sig
+ryka in	in	
+ryka ut	ut	
+råka in	in	
+råka på	på	
+råka ut	ut	
+räcka till	till	
+räcka ut	ut	
+räkna in	in	
+räkna upp	upp	
+räkna ut	ut	
+räta upp	upp	
+räta upp sig	upp	sig
+räta ut	ut	
+räta ut sig	ut	sig
+rätta till	till	
+röja upp	upp	
+röka på	på	
+röka ut	ut	
+röra ner	ner	
+röra upp	upp	
+röra ut	ut	
+sakta in	in	
+sakta ned	ned	
+samla in	in	
+samla upp	upp	
+schamponera in	in	
+se efter	efter	
+se efter om	efter om	
+se in	in	
+se ner	ner	
+se om	om	
+se på	på	
+se sig för	för	sig
+se sig om	om	sig
+se till	till	
+se till att	till att	
+se tillbaka	tillbaka	
+se tillbaka på	tillbaka på	
+se upp	upp	
+se ut	ut	
+se över	över	
+segla upp	upp	
+segla ut	ut	
+segna ner	ner	
+separera ut	ut	
+sikta in	in	
+sikta in sig	in	sig
+simma ut	ut	
+singla ner	ner	
+sippra in	in	
+sippra ut	ut	
+sitta av	av	
+sitta kvar	kvar	
+sitta ner	ner	
+sitta åt	åt	
+sjunga med	med	
+sjunga ut	ut	
+sjunka in	in	
+sjunka ner	ner	
+ska in	in	
+ska ner	ner	
+ska upp	upp	
+ska ut	ut	
+skaka ut	ut	
+skeppa ut	ut	
+skicka in	in	
+skicka ner	ner	
+skicka tillbaka	tillbaka	
+skicka upp	upp	
+skicka ut	ut	
+skilja sig åt	åt	sig
+skilja ut	ut	
+skilja ut sig	ut	sig
+skilja åt	åt	
+skiljas åt	åt	
+skissa upp	upp	
+skita ner	ner	
+skita ner sig	ner	sig
+skita på sig	på	sig
+skitta ner	ner	
+skjuta in	in	
+skjuta ned	ned	
+skjuta ner	ner	
+skjuta upp	upp	
+skjuta ut	ut	
+skopa upp	upp	
+skotta ut	ut	
+skrida ut	ut	
+skrika ut	ut	
+skriva av	av	
+skriva in	in	
+skriva in sig	in	sig
+skriva ner	ner	
+skriva på	på	
+skriva upp	upp	
+skriva upp sig	upp	sig
+skriva ut	ut	
+skruva i	i	
+skruva in	in	
+skruva ner	ner	
+skruva sig in	in	sig
+skruva upp	upp	
+skruva ut	ut	
+skvala ut	ut	
+skynda in	in	
+skynda iväg	iväg	
+skynda ut	ut	
+skynda vidare	vidare	
+skälla ut	ut	
+skämma bort	bort	
+skämma ut	ut	
+skämma ut sig	ut	sig
+skära av	av	
+skära in	in	
+skära ned	ned	
+skära ner	ner	
+skära till	till	
+skära upp	upp	
+skära ut	ut	
+skölja av	av	
+skölja av sig	av	sig
+skölja ner	ner	
+skölja upp	upp	
+slarva bort	bort	
+slinka igenom	igenom	
+slinka in	in	
+slinka ut	ut	
+slipa till	till	
+slippa in	in	
+slippa ut	ut	
+slita till sig	till	sig
+slita upp	upp	
+slita ut	ut	
+slita ut sig	ut	sig
+slita åt sig	åt	sig
+slugga ner	ner	
+sluka upp	upp	
+slunga upp	upp	
+slunga ut	ut	
+slussa ut	ut	
+sluta med	med	
+sluta upp	upp	
+sluta upp kring	upp kring	
+slå i	i	
+slå ihop	ihop	
+slå in	in	
+slå ner	ner	
+slå på	på	
+slå sig fram	fram	sig
+slå sig in	in	sig
+slå sig ner	ner	sig
+slå sig på	på	sig
+slå sig ut	ut	sig
+slå till	till	
+slå upp	upp	
+slå ut	ut	
+släcka ner	ner	
+släcka ut	ut	
+slänga in	in	
+slänga sig in	in	sig
+slänga upp	upp	
+slänga ur sig	ur	sig
+slänga ut	ut	
+släpa in	in	
+släpa ner	ner	
+släpa sig		sig
+släpa ut	ut	
+släppa in	in	
+släppa lös	lös	
+släppa ner	ner	
+släppa sig		sig
+släppa upp	upp	
+släppa ut	ut	
+släta ut	ut	
+smita igenom	igenom	
+smita in	in	
+smita upp	upp	
+smita ut	ut	
+smita åt	åt	
+smuggla in	in	
+smuggla ut	ut	
+smula ner	ner	
+smyga in	in	
+smyga ner	ner	
+smyga sig in	in	sig
+smyga sig ner	ner	sig
+smyga sig upp	upp	sig
+smyga sig ut	ut	sig
+smyga upp	upp	
+smälta in	in	
+smälta ner	ner	
+smörja in	in	
+snabba upp	upp	
+snappa till sig	till	sig
+snappa upp	upp	
+snappa åt sig	åt	sig
+sno till sig	till	sig
+sno åt sig	åt	sig
+snorkla ner	ner	
+snorta upp	upp	
+snåla in	in	
+snärja in	in	
+snärja in sig	in	sig
+snäva in	in	
+snöra upp	upp	
+somna in	in	
+sortera upp	upp	
+sortera ut	ut	
+spara in	in	
+spara ut	ut	
+sparka upp	upp	
+sparka ut	ut	
+spela in	in	
+spela sig upp	upp	sig
+spela upp	upp	
+spela ut	ut	
+spinna in	in	
+spola av	av	
+spola ner	ner	
+spola upp	upp	
+spotta upp	upp	
+spotta ut	ut	
+spricka upp	upp	
+sprida sig ner	ner	sig
+sprida ut	ut	
+springa bort	bort	
+springa dit	dit	
+springa efter	efter	
+springa in	in	
+springa ner	ner	
+springa på	på	
+springa upp	upp	
+springa ut	ut	
+spritta upp	upp	
+spruta in	in	
+spruta ner	ner	
+spruta upp	upp	
+spruta ut	ut	
+sprätta ut	ut	
+spåra in	in	
+spåra upp	upp	
+späda ut	ut	
+spänna på sig	på	sig
+spänna ut	ut	
+spärra in	in	
+spärra upp	upp	
+spärra ut	ut	
+staga upp	upp	
+stanna in	in	
+stanna till	till	
+stanna upp	upp	
+stappla ut	ut	
+starta upp	upp	
+stega in	in	
+stega ut	ut	
+sticka in	in	
+sticka ner	ner	
+sticka upp	upp	
+sticka ut	ut	
+stiga in	in	
+stiga ner	ner	
+stiga upp	upp	
+stiga ut	ut	
+stjälpa ut	ut	
+stoppa in	in	
+stoppa ner	ner	
+stoppa upp	upp	
+storma in	in	
+strama upp	upp	
+strama upp sig	upp	sig
+strama åt	åt	
+strila in	in	
+strukturera upp	upp	
+stråla in	in	
+stråla ut	ut	
+sträcka fram	fram	
+sträcka in	in	
+sträcka sig		sig
+sträcka upp	upp	
+sträcka upp sig	upp	sig
+sträcka ut	ut	
+sträcka ut sig	ut	sig
+sträva in	in	
+strö ut	ut	
+strömma in	in	
+strömma till	till	
+strömma ut	ut	
+studsa ner	ner	
+studsa upp	upp	
+studsa ut	ut	
+stycka upp	upp	
+stycka ut	ut	
+styra in	in	
+styra ut	ut	
+styra ut sig	ut	sig
+stå på sig	på	sig
+stå upp	upp	
+stå ut	ut	
+städa upp	upp	
+städa upp i	upp i	
+ställa in	in	
+ställa in sig	in	sig
+ställa ner	ner	
+ställa sig in	in	sig
+ställa till	till	
+ställa upp	upp	
+ställa upp sig	upp	sig
+ställa ut	ut	
+stämma in	in	
+stänga av	av	
+stänga in	in	
+stänga in sig	in	sig
+stänga ut	ut	
+stödja upp	upp	
+störta in	in	
+störta ner	ner	
+störta sig in	in	sig
+störta upp	upp	
+störta ut	ut	
+stöta på	på	
+stöta till	till	
+stöta ut	ut	
+sudda ut	ut	
+suga av	av	
+suga i sig	i	sig
+suga in	in	
+suga ner	ner	
+suga till sig	till	sig
+suga upp	upp	
+suga ut	ut	
+suga åt sig	åt	sig
+supa in	in	
+supa ner	ner	
+supa ner sig	ner	sig
+svalka av	av	
+svalka ner	ner	
+svara upp	upp	
+svepa in	in	
+svepa in sig	in	sig
+svepa ner	ner	
+svepa till	till	
+svepa ut	ut	
+svinga sig upp	upp	sig
+svälja ner	ner	
+svänga in	in	
+svänga ner	ner	
+svänga upp	upp	
+svänga ut	ut	
+svärta ner	ner	
+såga upp	upp	
+säcka ner	ner	
+säcka ner sig	ner	sig
+säga till	till	
+säga upp	upp	
+säga upp sig	upp	sig
+säga ut	ut	
+säga åt	åt	
+sälja ut	ut	
+sända in	in	
+sända upp	upp	
+sända ut	ut	
+sänka ner	ner	
+sänka sig ner	ner	sig
+sära åt	åt	
+sätta in	in	
+sätta ner	ner	
+sätta på	på	
+sätta sig in	in	sig
+sätta sig ner	ner	sig
+sätta sig upp	upp	sig
+sätta tillbaka	tillbaka	
+sätta upp	upp	
+sätta ut	ut	
+sätta åt	åt	
+söka sig in	in	sig
+söka sig ner	ner	sig
+söka sig upp	upp	sig
+söka sig ut	ut	sig
+söka upp	upp	
+söla ner	ner	
+ta av	av	
+ta bort	bort	
+ta fram	fram	
+ta för sig	för	sig
+ta hem	hem	
+ta i	i	
+ta in	in	
+ta med	med	
+ta ner	ner	
+ta på	på	
+ta på sig	på	sig
+ta sig		sig
+ta sig an	an	sig
+ta sig fram	fram	sig
+ta sig för	för	sig
+ta sig före	före	sig
+ta sig igenom	igenom	sig
+ta sig in	in	sig
+ta sig ner	ner	sig
+ta sig till	till	sig
+ta sig upp	upp	sig
+ta sig ur	ur	sig
+ta sig ut	ut	sig
+ta sig över	över	sig
+ta till	till	
+ta till sig	till	sig
+ta upp	upp	
+ta ut	ut	
+ta ut sig	ut	sig
+ta åt sig	åt	sig
+tala emot	emot	
+tala in	in	
+tala om	om	
+tappa ut	ut	
+taxera upp	upp	
+teckna ner	ner	
+tippa ut	ut	
+titta fram	fram	
+titta in	in	
+titta ner	ner	
+titta på	på	
+titta tillbaka	tillbaka	
+titta upp	upp	
+titta ut	ut	
+tjuta till	till	
+tjäna in	in	
+tolka in	in	
+tona ner	ner	
+torka av	av	
+torka bort	bort	
+torka in	in	
+torka upp	upp	
+torka ut	ut	
+torna upp	upp	
+torna upp sig	upp	sig
+trampa ner	ner	
+trampa upp	upp	
+trampa ut	ut	
+trappa ner	ner	
+trappa upp	upp	
+traska på	på	
+trassla in	in	
+trassla in sig	in	sig
+trassla sig ur	ur	sig
+trilla ner	ner	
+trilla ut	ut	
+trimma in	in	
+trumpeta ut	ut	
+trycka in	in	
+trycka ner	ner	
+trycka upp	upp	
+trä in	in	
+trä upp	upp	
+träda fram	fram	
+träda in	in	
+träda ut	ut	
+träna in	in	
+träna upp	upp	
+tränga in	in	
+tränga ner	ner	
+tränga sig in	in	sig
+tränga upp	upp	
+tränga ut	ut	
+trötta ut	ut	
+trötta ut sig	ut	sig
+tumla ut	ut	
+tunna ut	ut	
+tvinga in	in	
+tvinga ner	ner	
+tvinga sig in	in	sig
+tvinga ut	ut	
+tvåla in	in	
+tycka om	om	
+tynga ner	ner	
+tysta ner	ner	
+täcka in	in	
+täcka upp	upp	
+tända upp	upp	
+tänja ut	ut	
+tänka efter	efter	
+tänka sig in	in	sig
+tänka ut	ut	
+tåga in	in	
+töa upp	upp	
+töja ut	ut	
+tömma ut	ut	
+utspela sig		sig
+uttrycka sig		sig
+utveckla sig		sig
+utvidga sig		sig
+vackla ut	ut	
+vagga in	in	
+vakna upp	upp	
+vandra upp	upp	
+vandra ut	ut	
+vara med	med	
+vara nog	nog	
+vara till	till	
+vara till sig	till	sig
+vara tillbaka	tillbaka	
+vara utan	utan	
+veckla ut	ut	
+veta om	om	
+veva ner	ner	
+veva upp	upp	
+viga in	in	
+vika in	in	
+vika upp	upp	
+vila sig		sig
+vila upp	upp	
+vila upp sig	upp	sig
+vila ut	ut	
+vila ut sig	ut	sig
+vilja in	in	
+vilja ner	ner	
+vilja upp	upp	
+vilja ut	ut	
+vilja åt	åt	
+vinka in	in	
+virvla upp	upp	
+virvla ut	ut	
+visa in	in	
+visa upp	upp	
+visa upp sig	upp	sig
+vispa ner	ner	
+vispa upp	upp	
+vispa ut	ut	
+vissla till	till	
+vissna ner	ner	
+vittna mot	mot	
+vrida upp	upp	
+vrida åt sig	åt	sig
+vräka ut	ut	
+våga sig ner	ner	sig
+våga sig ut	ut	sig
+väcka upp	upp	
+vädra ut	ut	
+väga in	in	
+väga upp	upp	
+väga över	över	
+välja in	in	
+välja ut	ut	
+välla upp	upp	
+välla ut	ut	
+välta ut	ut	
+vältra in	in	
+vända om	om	
+vända upp	upp	
+vänta in	in	
+vänta ut	ut	
+värma upp	upp	
+växa fram	fram	
+växa in	in	
+växa upp	upp	
+växa ut	ut	
+växla in	in	
+ympa in	in	
+åka av sig	av	sig
+åka bort	bort	
+åka in	in	
+åka ner	ner	
+åka på	på	
+åka upp	upp	
+åka ut	ut	
+ånga upp	upp	
+äga rum	rum	
+ärva ner	ner	
+äta upp	upp	
+äta upp sig	upp	sig
+öka ut	ut	
+öppna upp	upp	
+öppna upp för	upp för	
+ösa in	in	
+ösa ner	ner	
+öva in	in
