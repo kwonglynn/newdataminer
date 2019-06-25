@@ -87,7 +87,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ndm_db',
-        #'NAME': 'guanglin$ndm_db',
+        #'NAME': 'guanglin$NDM_db',
         'USER': 'guanglin',
         'PASSWORD': 'KGL&lxm@1503',
         'HOST': '127.0.0.1', # If failed to migrate, add 127.0.0.1 here.
