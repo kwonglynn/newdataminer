@@ -110,10 +110,11 @@ def dict_create(request):
                     result_json = lines[1].strip()
                     result_dict = json.loads(result_json)
                     word = result_dict['word']
-                    if word.endswith('*'):
-                        word = word[:-1]
 
                     try:
+                        if word.endswith('*'):
+                            word = word[:-1]
+
                         dict = Dict.objects.filter(word=word)[0]
                         if dict:
                             if ' ' in word_q:
@@ -121,11 +122,14 @@ def dict_create(request):
                             if word_q not in dict.word_forms:
                                 dict.add_form(word_q)
 
-                            result = check_exist(request, word_q)
+                            result = check_exist(request, word_q)  # Only for redirection here.
                             if result:
                                 return result
+                    except AttributeError:
+                        # No word was found.
+                        return redirect_to_list_today(request)
                     except IndexError:
-                        # For the first search!
+                        # For the first search of a word!
                         pass
 
                     # assert False
