@@ -51,6 +51,7 @@ def dict_create(word_q):
                         result_dict = json.loads(result_json)
                         word = result_dict['word']
 
+                        print(word_q, word_in, word)
                         try:
                             if word.endswith('*'):
                                 word = word[:-1]
