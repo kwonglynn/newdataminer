@@ -13,8 +13,8 @@ class Dict(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='dict')
     word_user = models.CharField(max_length=200, blank=True, null=True, default='')
 
-    pron = models.CharField(max_length=100, blank=True, null=True)
-    morf = models.CharField(max_length=100, blank=True, null=True)
+    pron = models.CharField(max_length=100, blank=True, null=True, default='')
+    morf = models.CharField(max_length=100, blank=True, null=True, default='')
     forms = models.CharField(max_length=100, blank=True, null=True, default='')
     trans = models.TextField(blank=True, null=True, help_text='For concise display in table view.')
     trans_all = models.TextField(blank=True, null=True, default='', help_text='For more detailed display in card view and detail view.')

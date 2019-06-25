@@ -52,7 +52,9 @@ def check_exist(request, word_q):
     if dicts.exists():
         # Find the word edited by the user himself
         user_dict = dicts.filter(Q(word_user__icontains=request.user.username))
-        common_dict = dicts.filter(word_user='')
+
+        word = word_q.split(';')[1]
+        common_dict = dicts.filter(~Q(word_user__icontains=word))
         if user_dict.exists():
             dict = user_dict[0]
         # Find the common word.
@@ -114,7 +116,10 @@ def dict_create(request):
                     try:
                         dict = Dict.objects.filter(word=word)[0]
                         if dict:
-                            dict.add_form(word_q)
+                            if ' ' in word_q:
+                                word_q = word_q.split()[0] + ';'
+                            if word_q not in dict.word_forms:
+                                dict.add_form(word_q)
 
                             result = check_exist(request, word_q)
                             if result:
@@ -230,7 +235,11 @@ class DictUpdateView(LoginRequiredMixin, UpdateView):
 
         word = self.object.word.strip().lower()
         self.object.word = word
-        self.object.word_forms += ';' + word + ';'
+
+        word_q = ';' + word + ';'
+        if word_q not in self.object.word_forms:
+            self.object.word_forms += ';' + word + ';'
+
         self.object.word_user = word + '_' + self.request.user.username
 
         id = re.sub(r'\s+', '_', word)

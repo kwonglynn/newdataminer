@@ -10,8 +10,7 @@
 
 <!-- <h4>Python Basics</h4> -->
 <!-- <p>Modules, functions, classes, and methods.</p> -->
-<div style="width:750px;">
-
+<div>
   <div class="d-flex justify-content-between my-2">
     <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_card" %}"><i class="fa fa-mobile" aria-hidden="true"></i> Mobile</a></div>
     <div class=""><a class="btn btn-info btn-100" href="{% url "myserver:dict_list_table" %}"><i class="fas fa-desktop"></i> PC</a></div>
@@ -45,7 +44,7 @@
     <tr class="quotehdr">
       <th>Word</th>
       <th class="w3-hide-small">Pronunciation</th>
-      <th>Type</th>
+      <th class="w3-hide-small">Type</th>
       <th class="w3-hide-small">Forms</th>
       <th>Translation</th>
       <th>Delete</th>
@@ -60,7 +59,7 @@
         {% endif %}
 
         <td class="w3-hide-small">{{ object.pron }}</td>
-        <td>{{ object.morf }}</td>
+        <td class="w3-hide-small">{{ object.morf }}</td>
         <td class="w3-hide-small">{{ object.forms }}</td>
         <td>
           {% autoescape off %}
