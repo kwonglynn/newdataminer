@@ -28,7 +28,7 @@ SECRET_KEY = ')6pif6hxj_5l8xubbwjb&7edu@ff&!v4n=eclu=brfsk*$j6h0'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '192.168.10.224', 'guanglin.ddns.net']
-
+#ALLOWED_HOSTS = ['www.superdataminer.info']
 
 # Application definition
 
@@ -87,9 +87,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ndm_db',
+        #'NAME': 'guanglin$ndm_db',
         'USER': 'guanglin',
         'PASSWORD': 'KGL&lxm@1503',
         'HOST': '127.0.0.1', # If failed to migrate, add 127.0.0.1 here.
+        #'HOST': 'guanglin.mysql.pythonanywhere-services.com',
         'PORT': '',
     }
 }
