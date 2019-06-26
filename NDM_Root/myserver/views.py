@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils import timezone
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Dict
 from .forms import DictForm
@@ -31,7 +30,6 @@ import django
 django.setup()
 
 #####
-@login_required
 def index(request):
     return render(request, "myserver/index.html")
 
@@ -65,7 +63,6 @@ def check_exist(request, word_q):
 
     return None
 
-@login_required
 def dict_create(request):
     word_q = request.GET.get('q4', '')
     word_q = word_q.strip().lower()
@@ -184,10 +181,15 @@ def dict_update_create(request, pk):
     dict1.last_name_date_label = re.sub("%s_[0-9]*;" % request.user.username, "", dict1.last_name_date_label)
     dict1.save()
 
-    # For the new word, it will replace the old word for the current user. However, it should not influence other users.
-    dict2 = Dict(word=dict1.word, added_by=dict1.added_by, word_forms=dict1.word_forms,
-                 pron=dict1.pron, morf=dict1.morf, forms=dict1.forms, trans=dict1.trans, trans_all=dict1.trans_all
-                 )
+    dict1.pk = None
+    dict2 = dict1   # Copy dict1, not necessary to give it new name, but better for clarity.
+
+    dict2.word_user = dict2.word + '_' + request.user.username
+
+    dict2.name_label = ''
+    now = datetime.datetime.now()
+    dict2.last_name_date_label = request.user.username + '_' + now.strftime("%Y%m%d") + ';'
+
     dict2.save()
 
     if 'table' in request.META.get('HTTP_REFERER'):
@@ -263,7 +265,7 @@ class DictUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
-class DictListView(LoginRequiredMixin, ListView):
+class DictListView(ListView):
     model = Dict
     paginate_by = 50
 
@@ -276,6 +278,20 @@ class DictListView(LoginRequiredMixin, ListView):
             self.template_name = 'myserver/dict_list_table.html'
         elif 'card' in self.request.path:
             self.template_name = 'myserver/dict_list_card.html'
+
+        # For display only if the user is not logged in.
+        if not self.request.user.is_authenticated:
+            self.total_today = 0
+            self.total = 2
+
+            if 'today' in self.request.path:
+                # Today's word list.
+                object_list = Dict.objects.none()   # Return an empty query set.
+            else:
+                # Total word list.
+                object_list =  Dict.objects.filter((Q(word_user='') | Q(word_user=None)) & (Q(word='du') | Q(word='jag'))).order_by('word')
+
+            return object_list
 
         # The all the user's list:
         all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username) |
@@ -305,7 +321,7 @@ class DictListView(LoginRequiredMixin, ListView):
         context["total_today"] = self.total_today
         return context
 
-class DictPracticeListView(LoginRequiredMixin, ListView):
+class DictPracticeListView(ListView):
     model = Dict
     template_name = 'myserver/dict_practice.html'
     paginate_by = 1
@@ -314,6 +330,21 @@ class DictPracticeListView(LoginRequiredMixin, ListView):
     total_today = 0
 
     def get_queryset(self):
+
+        # For display only if the user is not logged in.
+        if not self.request.user.is_authenticated:
+            self.total_today = 0
+            self.total = 2
+
+            if 'today' in self.request.path:
+                # Today's word list.
+                object_list = Dict.objects.none()   # Return an empty query set.
+            else:
+                # Total word list.
+                object_list =  Dict.objects.filter((Q(word_user='') | Q(word_user=None)) & (Q(word='du') | Q(word='jag'))).order_by('word')
+
+            return object_list
+
         # The all the user's list:
         all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username) |
                                        Q(word_user__icontains = self.request.user.username)
@@ -342,14 +373,14 @@ class DictPracticeListView(LoginRequiredMixin, ListView):
         context["total_today"] = self.total_today
         return context
 
-class DictDetailView(LoginRequiredMixin, DetailView):
+class DictDetailView(DetailView):
     model = Dict
 
 @login_required
 def remove_word(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     username = request.user.username
-    if username in object.word_user:
+    if object.word_user and (username in object.word_user):
         object.delete()
     else:
         object.remove(username)
@@ -360,7 +391,7 @@ def remove_word(request, pk):
 def remember_word(request, pk):
     object = get_object_or_404(Dict, pk=pk)
     username = request.user.username
-    if username in object.word_user:
+    if object.word_user and (username in object.word_user):
         object.delete()
     else:
         object.remove(username)
@@ -381,5 +412,6 @@ def add_to_dict(request, pk):
     path = request.META.get('HTTP_REFERER')
     if 'table' in path:
         return redirect('myserver:dict_list_table_today')
-    elif 'card' in path:
+    else:
+        # For 'card' view and other occasions.
         return redirect('myserver:dict_list_card_today')

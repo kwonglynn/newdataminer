@@ -207,7 +207,7 @@ default-character-set = utf8</pre>
          database to make it match those on Computer B.</p>
       <div class="w3-code pythonHigh notranslate">
         $ ALTER DATABASE ndm_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; <br>
-        $ mysqldump -u root -p --quick ndm_db | gzip > C:\Google\Work\MyWebsite\newdataminer\NDM_Root\transfer\ndm\ndm_db_20190619.gz <br>
+        $ mysqldump -u root -p --quick ndm_db | gzip >  C:\Google\Work\MyWebsite\newdataminer\NDM_Root\SQL\ndm\ndm_db_20190625.gz <br>
       </div>
       <p>Transfere the compressed database <em>ndm_db.gz</em> to computer B.
         On Computer B, execute:</p>
@@ -228,15 +228,14 @@ default-character-set = utf8</pre>
         $ # syntax <br>
         $ mysqldump -u user -p dbname tableName > tableName.sql <br>
         $ # local <br>
-        $ mysqldump -u root -p 'ndm_db' myserver_dict > C:\Google\Work\MyWebsite\newdataminer\NDM_Root\transfer\dict\myserver_dict_20190625.sql <br>
+        $ mysqldump -u root -p ndm_db myserver_dict > C:\Google\Work\MyWebsite\newdataminer\NDM_Root\SQL\dict\myserver_dict_20190625.sql <br>
         $ # pythonanywhere.com <br>
-        $ mysqldump -u guanglin -h guanglin.mysql.pythonanywhere-services.com -p 'guanglin$NDM_db' myserver_dict > myserver_dict_20190622.sql <br>
+        $ mysqldump -u guanglin -h guanglin.mysql.pythonanywhere-services.com -p 'guanglin$ndm_db' myserver_dict > myserver_dict_20190622.sql <br>
         $ # Note the quotes is mandatory! <br>
       </div>
       <p>Importing a table:</p>
       <div class="w3-code pythonHigh notranslate">
         $ mysql -u user -p -D dbname < tableName.sql <br>
-        $ mysql -u root -p -D ndm_db < myserver_dict.sql <br>
       </div>
       <p><strong class>Warning!</strong></p>
     </div>

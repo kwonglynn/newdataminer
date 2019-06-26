@@ -135,7 +135,8 @@ USE_TZ = False # Required for filtering of month and day!
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = STATIC_DIR
+# PythonAnyWhere
+# STATIC_ROOT = '/home/guanglin/newdataminer/NDM_Root/static'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]

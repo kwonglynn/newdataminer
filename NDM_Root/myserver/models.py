@@ -10,7 +10,6 @@ import re
 class Dict(models.Model):
     word = models.CharField(max_length=200)
     word_forms = models.CharField(max_length=200, blank=True, null=True, default='') # To store different forms of the word for search efficiency.
-    added_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Added by", related_name='dict')
     word_user = models.CharField(max_length=200, blank=True, null=True, default='')
 
     pron = models.CharField(max_length=100, blank=True, null=True, default='')
@@ -18,7 +17,6 @@ class Dict(models.Model):
     forms = models.CharField(max_length=100, blank=True, null=True, default='')
     trans = models.TextField(blank=True, null=True, help_text='For concise display in table view.')
     trans_all = models.TextField(blank=True, null=True, default='', help_text='For more detailed display in card view and detail view.')
-    # phrase = models.TextField(blank=True, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     last_date = models.DateTimeField(auto_now=True)

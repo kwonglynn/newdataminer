@@ -15,15 +15,26 @@
   {% endif %}
 
   <!-- name_label for common words, word_user for personally added words, they are mutually exclusive. -->
-  {% if user.username in object.name_label or user.username in object.word_user %}
+  {% if not user.is_authenticated %}
+    <p><a class="normal-link" href="{% url 'login' %}?next={{ request.path }}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
+  {% elif user.username in object.name_label or user.username in object.word_user %}
     <p><strong><i class="fa fa-check" aria-hidden="true"></i> Added</strong></a></p>
   {% else %}
     <p><a class="normal-link" href="{% url 'myserver:add_to_dict' pk=object.pk %}"><strong><i class="fa fa-plus" aria-hidden="true"></i> Add</a></strong></a></p>
   {% endif %}
   <div class="panel module-detail">
-    <h6>Pronunciation: {{ object.pron }}</h6>
-    <h6>Type: {{ object.morf }}</h6>
-    <h6>Forms: {{ object.forms }}</h6>
+    {% if object.pron %}
+      <h6>Pronunciation: {{ object.pron }}</h6>
+    {% endif %}
+
+    {% if object.morf %}
+      <h6>Type: {{ object.morf }}</h6>
+    {% endif %}
+
+    {% if object.forms %}
+      <h6>Forms: {{ object.forms }}</h6>
+    {% endif %}
+    
     <h6>Translation: </h6>
     <div class="panel ml-3">
       {% autoescape off %}

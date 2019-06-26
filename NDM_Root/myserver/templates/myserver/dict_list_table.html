@@ -47,7 +47,7 @@
       <th class="w3-hide-small">Type</th>
       <th class="w3-hide-small">Forms</th>
       <th>Translation</th>
-      <th>Delete</th>
+      <th>Action</th>
     </tr>
 
     {% for object in object_list %}
@@ -61,18 +61,21 @@
         <td class="w3-hide-small">{{ object.pron }}</td>
         <td class="w3-hide-small">{{ object.morf }}</td>
         <td class="w3-hide-small">{{ object.forms }}</td>
-        <td>
-          {% autoescape off %}
-            {{ object.trans }}
-          {% endautoescape %}
-        </td>
+        <td>{{ object.trans }}</td>
         <td class="td-action">
-          {% if request.user.username in object.word_user %}
-            <a href="{% url "myserver:dict_table_update" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}?next={{ request.path }}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+          {% elif request.user.username in object.word_user %}
+            <a href="{% url 'myserver:dict_table_update' pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
           {% else %}
-            <a href="{% url "myserver:dict_table_update_create" pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
+            <a href="{% url 'myserver:dict_table_update_create' pk=object.pk %}"><i class='icon-pad fas fa-edit' aria-hidden="true"></i></a>
           {% endif %}
-          <a href="{% url "myserver:remove_word" pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
+
+          {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}?next={{ request.path }}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
+          {% else %}
+            <a href="{% url 'myserver:remove_word' pk=object.pk %}"><i class="icon-pad fa fa-trash" aria-hidden="true"></i></a>
+          {% endif %}
         </td>
       </tr>
     {% endfor %}

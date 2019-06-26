@@ -11,23 +11,25 @@
 <!-- <h4>Python Basics</h4> -->
 <!-- <p>Modules, functions, classes, and methods.</p> -->
 <div class="panel ml-3">
-  {% for object in object_list %}
-    {% if user.username == 'xiaoyuer' %}
-      <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
-    {% else %}
-      <h4><a href="https://www.dict.com/swedish-english/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
-    {% endif %}
+  {% if not object_list %}
+    <h5 class="panel my-4">You haven't add new words today!</h5>
+  {% else %}
+    {% for object in object_list %}
+      {% if user.username == 'xiaoyuer' %}
+        <h4><a href="https://www.dict.com/瑞典语-汉语/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
+      {% else %}
+        <h4><a href="https://www.dict.com/swedish-english/{{object.word}}" style="padding-left:20px;font-size:1.3em;color:blue;">{{ object.word }}</a></h4>
+      {% endif %}
 
-    <div id="accordion">
-      <div class="panel">
-        <div class="card-header" id="headingOne" style="background-color:GhostWhite;">
+      <div id="accordion" class="panel">
+        <div class="card-header" id="headingOne" style="background-color:GhostWhite;padding-top:0;padding-bottom:0;">
           <h5 class="mb-0" style="margin-left:0;">
-            <div class="d-flex justify-content-between my-2">
+            <div class="d-flex justify-content-between">
               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left:0;font-size:1.15em;text-decoration: none;color:orange;">
                 <span>Show</span>
               </button>
               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left:0;font-size:1.15em;text-decoration: none;color:orange;">
-                <span class="padding-left:100px;"><i class="fas fa-book-open" ></i></span>
+                <span><i class="fas fa-book-open" ></i></span>
               </button>
             </div>
           </h5>
@@ -35,11 +37,20 @@
 
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body">
-            <h6>Pronunciation: {{ object.pron }}</h6>
-            <h6>Type: {{ object.morf }}</h6>
-            <h6>Forms: {{ object.forms }}</h6>
+            {% if object.pron %}
+              <h6>Pronunciation: {{ object.pron }}</h6>
+            {% endif %}
+
+            {% if object.morf %}
+              <h6>Type: {{ object.morf }}</h6>
+            {% endif %}
+
+            {% if object.forms %}
+              <h6>Forms: {{ object.forms }}</h6>
+            {% endif %}
+
             <h6>Translation: </h6>
-            <div class="panel ml-3">
+            <div class="ml-3">
               {% autoescape off %}
                 {{ object.trans_all }}
               {% endautoescape %}
@@ -47,9 +58,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <p><a href="{% url "myserver:remember_word" pk=object.pk %}" class="btn btn-success">Remembered</a></p>
-  {% endfor %}
+      {% if not request.user.is_authenticated %}
+        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-success">Remembered</a>
+      {% else %}
+        <a href="{% url 'myserver:remember_word' pk=object.pk %}" class="btn btn-success">Remembered</a>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 </div>
 
 <div class="panel ml-3">

@@ -11,6 +11,7 @@
         <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;">&emsp;{{ user.username }}</p></li>
       {% else %}
         <li><p class="text-dark" style="font-size:1.2em;margin-top:20px;margin-bottom:0;"><b>&emsp;<a style="text-decoration:none" href="{% url 'login' %}?next=/server/">&emsp;Log in</a></b></p></li>
+        <li><a class="toactivate" href="{% url 'myserver:dict_list_card' %}">&emsp;Swedish</a></li>
       {% endif %}
       {% if user.is_authenticated %}
         <li><a class="toactivate" href="{% url 'myserver:dict_list_card' %}">&emsp;Swedish</a></li>
