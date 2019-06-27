@@ -9,7 +9,7 @@ import re
 
 class Dict(models.Model):
     word = models.CharField(max_length=200)
-    word_forms = models.CharField(max_length=200, blank=True, null=True, default='') # To store different forms of the word for search efficiency.
+    word_forms = models.CharField(max_length=200, blank=True, null=True, default=';') # To store different forms of the word for search efficiency.
     word_user = models.CharField(max_length=200, blank=True, null=True, default='')
 
     pron = models.CharField(max_length=100, blank=True, null=True, default='')
@@ -21,8 +21,8 @@ class Dict(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     last_date = models.DateTimeField(auto_now=True)
 
-    name_label = models.TextField(blank=True, null=True, default='', help_text='Format: username1;username2; &nbsp;&nbsp;&nbsp;Example: testuser;')
-    last_name_date_label = models.TextField(blank=True, null=True, default='', help_text='Format: username1_date;username2_date; &nbsp;&nbsp;&nbsp;Example: testuser_20190622;')
+    name_label = models.TextField(blank=True, null=True, default=';', help_text='Format: username1;username2; &nbsp;&nbsp;&nbsp;Example: testuser;')
+    last_name_date_label = models.TextField(blank=True, null=True, default=';', help_text='Format: username1_date;username2_date; &nbsp;&nbsp;&nbsp;Example: testuser_20190622;')
 
     accordion_id = models.CharField(max_length=200, blank=True, null=True, default='', help_text="Format: accordion_word &nbsp;&nbsp;&nbsp;Example: accordion_jag")
     heading_id = models.CharField(max_length=200, blank=True, null=True, default='', help_text="Format: heading_word &nbsp;&nbsp;&nbsp;Example: heading_jag")
@@ -46,5 +46,5 @@ class Dict(models.Model):
         self.save()
 
     def add_form(self, word_q):
-        self.word_forms += word_q
+        self.word_forms += word_q[1:]   # Remove the preceding ';' to avoid reduncancy.
         self.save()

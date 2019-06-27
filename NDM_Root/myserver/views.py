@@ -46,18 +46,21 @@ def redirect_to_detail(request, dict):
         return HttpResponseRedirect(reverse('myserver:dict_detail_card', kwargs={'pk': dict.pk}))
 
 def check_exist(request, word_q):
-    dicts = Dict.objects.filter(Q(word_forms__icontains=word_q))
+    word = word_q.split(';')[1]
+    dicts = Dict.objects.filter(Q(word_forms__icontains=word_q) )
     if dicts.exists():
         # Find the word edited by the user himself
-        user_dict = dicts.filter(Q(word_user__icontains=request.user.username))
+        word_user = word + '_' + request.user.username
+        user_dict = dicts.filter(word_user=word_user)
 
-        word = word_q.split(';')[1]
-        common_dict = dicts.filter(~Q(word_user__icontains=word))
+        exact_dict = Dict.objects.filter(word=word)
         if user_dict.exists():
             dict = user_dict[0]
         # Find the common word.
+        elif exact_dict.exists():   # For example, under and undersköterska
+            dict = exact_dict[0]
         else:
-            dict = common_dict[0]
+            dict = dicts[0]         # For example, tycka, tyckte, tyckt
 
         return redirect_to_detail(request, dict)
 
@@ -222,10 +225,11 @@ class DictCreateView(LoginRequiredMixin, CreateView):
         self.object.collapse_id = "collaspse" + "_" + id
 
         self.object.save()
+
         if 'table' in self.request.path:
-            self.success_url = reverse_lazy('myserver:dict_detail_table', kwargs={'pk': self.object.pk})
+            self.success_url = reverse_lazy('myserver:dict_detail_table', kwargs={'pk': dict2.pk})
         if 'card' in self.request.path:
-            self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': self.object.pk})
+            self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': dict2.pk})
         return super().form_valid(form)
 
 @login_required
@@ -242,9 +246,9 @@ class DictUpdateView(LoginRequiredMixin, UpdateView):
         word = self.object.word.strip().lower()
         self.object.word = word
 
-        word_q = ';' + word + ';'
+        word_q = ';' + word + ';'  # Add two ';' to the word for exact search.
         if word_q not in self.object.word_forms:
-            self.object.word_forms += ';' + word + ';'
+            self.object.word_forms += word_q[1:]  # Remove the preceding ';' to avoid redundancy.
 
         self.object.word_user = word + '_' + self.request.user.username
 

@@ -111,7 +111,7 @@ def dict_create(word_q):
         dict.save()
         os.chdir(cwd)
 
-with open('swedish-1000-list.txt', 'r') as fi:
+with open('swedish-900-list.txt', 'r') as fi:
     word_list = fi.readlines()
 
 for word_q in word_list:

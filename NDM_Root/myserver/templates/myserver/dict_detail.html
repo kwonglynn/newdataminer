@@ -34,7 +34,7 @@
     {% if object.forms %}
       <h6>Forms: {{ object.forms }}</h6>
     {% endif %}
-    
+
     <h6>Translation: </h6>
     <div class="panel ml-3">
       {% autoescape off %}
@@ -43,9 +43,17 @@
     </div>
   </div>
   {% if 'table' in request.path %}
-    <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_table' %}"><strong>Notebook</strong></a></p>
+    {% if 'today' in request.META.HTTP_REFERER %}
+      <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_table_today' %}"><strong>Notebook</strong></a></p>
+    {% else %}
+      <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_table' %}"><strong>Notebook</strong></a></p>
+    {% endif %}
   {% elif 'card' in request.path %}
-    <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_card' %}"><strong>Notebook</strong></a></p>
+    {% if 'today' in request.META.HTTP_REFERER %}
+      <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_card_today' %}"><strong>Notebook</strong></a></p>
+    {% else %}
+      <p>Back to <a class="normal-link" href="{% url 'myserver:dict_list_card' %}"><strong>Notebook</strong></a></p>
+    {% endif %}
   {% endif %}
 </div>
 {% endblock content %}
