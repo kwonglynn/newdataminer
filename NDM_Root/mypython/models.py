@@ -6,7 +6,8 @@ from django.utils import timezone
 # Create your models here.
 
 TYPE_CHOICE = (
-    ('Python', 'Python General'),
+    ('Bash', 'Bash'),
+    ('Python', 'Python'),
     ('Django', 'Django'),
     ('Machine', 'Machine Learning'),
     ('Deep', 'Deep Learning'),

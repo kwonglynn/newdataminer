@@ -12,18 +12,10 @@
       <li><a class="toactivate" href="{% url 'mypython:conda' %}">&emsp;Conda</a></li>
       <li><a class="toactivate" href="#">&emsp;Git</a></li>
       <li>
-        <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Database</a>
+        <a class="toactivate dropdown-toggle" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Parallel job</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
-          <li><a class="toactivate" href="{% url 'mydjango:postgres' %}">PostgreSQL</a></li>
-          <li><a class="toactivate" href="#">MySQL</a></li>
-        </ul>
-      </li>
-      <li>
-        <a class="toactivate dropdown-toggle" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">&emsp;Pages</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li><a class="toactivate" href="#">Page 1</a></li>
-          <li><a class="toactivate" href="#">Page 2</a></li>
-          <li><a class="toactivate" href="#">Page 3</a></li>
+          <li><a class="toactivate" href="{% url 'mydjango:postgres' %}">multiprocessing</a></li>
+          <li><a class="toactivate" href="#">ray</a></li>
         </ul>
       </li>
       <li><a class="toactivate" href="{% url 'mypython:ddns' %}">&emsp;DynDNS</a></li>

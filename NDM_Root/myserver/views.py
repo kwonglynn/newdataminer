@@ -227,9 +227,9 @@ class DictCreateView(LoginRequiredMixin, CreateView):
         self.object.save()
 
         if 'table' in self.request.path:
-            self.success_url = reverse_lazy('myserver:dict_detail_table', kwargs={'pk': dict2.pk})
+            self.success_url = reverse_lazy('myserver:dict_detail_table', kwargs={'pk': self.object.pk})
         if 'card' in self.request.path:
-            self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': dict2.pk})
+            self.success_url = reverse_lazy('myserver:dict_detail_card', kwargs={'pk': self.object.pk})
         return super().form_valid(form)
 
 @login_required
