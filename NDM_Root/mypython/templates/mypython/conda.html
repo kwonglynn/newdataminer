@@ -195,6 +195,7 @@
 
   <div class="panel">
     <h6>2. Install scikit-learn</h6>
+    <h6>It may be better to manage everything with the default anaconda installation, but here it shows how to install with miniconda.</h6>
     <div class="w3-code pythonHigh notranslate">
       conda create -n sklearn -c conda-forge scikit-learn  <br>
       conda activate sklearn <br>
@@ -202,6 +203,7 @@
       conda install -c conda-forge pandas <br>
       pip install jupyter # Note jupyter can only be installed properly with pip!<br>
       pip install spyder # Spyder can also only be installed properly by pip!<br>
+      pip install matplotlib <br>
     </div>
   </div>
 
@@ -212,8 +214,10 @@
       conda activate keras <br>
       conda install -c conda-forge ipython <br>
       conda install -c conda-forge pandas <br>
+      pip install scikit-learn <br>
+      pip install matplotlib <br>
       pip install jupyter <br>
-      pip install spyder <br>
+      pip install spyder # Start spyder with spyder3 or spyder3.exe<br>
     </div>
   </div>
 
@@ -222,10 +226,14 @@
     <div class="w3-code pythonHigh notranslate">
       conda create -n pytorch -c pytorch pytorch <br>
       conda activate pytorch <br>
+      conda install -c pytorch scikit-learn <br>
       conda install -c pytorch ipython <br>
       conda install -c pytorch pandas <br>
+      conda install -c pytorch torchvision <br>
+      pip install matplotlib <br>
       pip install jupyter <br>
       pip install spyder <br>
+      pip install pillow # Required <br>
       # The supplementary packages should be installed from the channel as the<br>
       # main package for compatibility.<br>
     </div>
@@ -242,7 +250,7 @@
   </div>
 
   <div class="panel">
-    <h6>6. Install a plotting package.</h6>
+    <h6>6. Install a plotting package. (optional) </h6>
     <div class="w3-code pythonHigh notranslate" style="margin-bottom:100px;">
       conda create -n plot -c conda-forge matplotlib <br>
       conda activate plot <br>

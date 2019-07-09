@@ -90,7 +90,7 @@
       </div>
       <p> It is recommened to set the character set and collation for a specific database,
           because different MySQL servers may have different settings for character set and collation. <br></p>
-      <p>
+      <div class="panel">
         <strong>Note: </strong>On MySQL 8.0, the default character set is
         <strong>utf8mb4</strong>, and the default collate is <strong>utf8mb4_0900_ai_ci</strong>,
         but can also use <strong>utf8mb4_general_ci</strong>. For MySQL 5.7,
@@ -99,7 +99,12 @@
         <strong>utf8mb4_general_ci</strong> is available for <strong>utf8mb4</strong>.
         Therefore it is better to use <strong>utf8mb4_general_ci</strong> for
         both MySQL 5.7 and MySQL 8.0 if you need to transfer data between different servers.
-      </p>
+      </div>
+      <p>To set the character set for a specific column. For the support of Swedish characters,
+         we need to specify the Swedish character set.</p>
+      <div class="w3-code notranslate">
+        $ ALTER TABLE myserver_dict MODIFY word VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_swedish_ci; <br>
+      </div>
     </div>
 
     <div class="panel">

@@ -30,7 +30,7 @@
     <th>Name</th>
     <th>Type</th>
     <th>Usage</th>
-    <th>Script</th>
+    <th>Reference</th>
     {% if user.is_authenticated %}
       <th>Actions</th>
     {% endif %}
@@ -52,10 +52,11 @@
       <td>{{ object.get_type_display }}</td>
       <td>{{ object.usage }}</td>
       <td>
-        {% if  object.script %}
-          <a href="{{ object.script.url }}."><i class="fa fa-download" aria-hidden="true"></i></a>
+        {% if  object.reference %}
+          <a href="{{ object.reference }}."><i class="fas fa-link"></i></a>
         {% endif %}
       </td>
+
       {% if user.is_authenticated %}
         <td class="td-action">
           <!-- Note the syntax for checking the user authentication -->
@@ -70,6 +71,7 @@
           {% endif %}
         </td>
       {% endif %}
+
     </tr>
   {% endfor %}
 </table>
