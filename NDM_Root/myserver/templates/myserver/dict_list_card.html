@@ -40,6 +40,12 @@
 
   {% if 'today' in request.path %}
     <p>Word not found? <a href="{% url 'myserver:dict_card_add' %}">Add now</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
+  {% else %}
+    <ul class="list-inline ml-3 pl-1 mb-0 pb-0">
+      {% for letter in letters %}
+        <li class="list-inline-item"><a href="{% url 'myserver:dict_list_card' %}{{ letter }}">{{ letter }}</a></li>
+      {% endfor %}
+    </ul>
   {% endif %}
 
   {% for object in object_list %}
@@ -76,7 +82,7 @@
            {% if object.forms %}
              <h6>Forms: {{ object.forms }}</h6>
            {% endif %}
-           
+
            <h6>Translation: </h6>
            <div class="panel ml-3">
              {% autoescape off %}

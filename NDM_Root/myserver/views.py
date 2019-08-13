@@ -29,6 +29,9 @@ import django
 # Import settings
 django.setup()
 
+# return a string of A-Z
+import string
+
 #####
 def index(request):
     return render(request, "myserver/index.html")
@@ -275,6 +278,7 @@ class DictListView(ListView):
 
     total = 0
     total_today = 0
+    letters = []
 
     def get_queryset(self):
 
@@ -300,8 +304,18 @@ class DictListView(ListView):
         # The all the user's list:
         all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username) |
                                        Q(word_user__icontains = self.request.user.username)
-        ).order_by('word')
+                                      ).order_by('word')
+
         self.total = all_list.count()
+
+        # Generate a list of A-Z plus Ä, Å, and Ö.
+        letters = list(string.ascii_uppercase + 'ÄÅÖ')
+        self.letters = letters # For display in the template
+        for letter in letters:
+            if letter in self.request.path:
+                letter = letter.lower()
+                all_list = all_list.filter(Q(word__startswith = letter))
+                break
 
         # For today's list of user:
         now = datetime.datetime.now()
@@ -323,6 +337,7 @@ class DictListView(ListView):
         context = super().get_context_data(**kwargs)
         context["total"] = self.total
         context["total_today"] = self.total_today
+        context["letters"] = self.letters
         return context
 
 class DictPracticeListView(ListView):
@@ -353,6 +368,7 @@ class DictPracticeListView(ListView):
         all_list = Dict.objects.filter(Q(name_label__icontains = self.request.user.username) |
                                        Q(word_user__icontains = self.request.user.username)
                                        ).order_by('word')
+
         self.total = all_list.count()
 
         # For today's list of user:

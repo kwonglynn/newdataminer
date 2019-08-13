@@ -19,9 +19,9 @@
   <div class="panel module-detail">
     <p><a href="{{ object.reference }}">Reference</a></p>
     <h6>Description:</h6>
-    <pre>
-{{ object.description }}
-    </pre>
+    <div>
+      {{ object.description|safe }}
+    </div>
     <h6>Parameters:</h6>
     <pre>
 {{ object.parameters }}

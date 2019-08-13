@@ -89,7 +89,7 @@ nav a:focus {
 #sidebar {
     width: 200px;
     position: fixed;
-    top: 62px;
+    top: 60px;
     left: 0;
     height: 100vh;
     z-index: 999;

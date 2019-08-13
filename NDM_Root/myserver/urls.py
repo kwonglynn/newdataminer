@@ -1,5 +1,6 @@
 from django.urls import path, include
 from myserver import views
+import string
 
 # User in url template tag: eg. {% url 'mydjango:index' %}.
 app_name = 'myserver'
@@ -27,3 +28,9 @@ urlpatterns = [
     path('swedish/<int:pk>/remember/', views.remember_word, name='remember_word'),
     path('swedish/<int:pk>/add/', views.add_to_dict, name='add_to_dict'),
 ]
+
+# Generate a list of A-Z plus Ä, Å, and Ö.
+letters = list(string.ascii_uppercase + 'ÄÅÖ')
+for letter in letters:
+    urlpatterns.append(path('swedish/table/%s' % letter, views.DictListView.as_view(), name='dict_list_table_%s' % letter))
+    urlpatterns.append(path('swedish/card/%s' % letter, views.DictListView.as_view(), name='dict_list_card_%s' % letter))

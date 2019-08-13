@@ -38,6 +38,12 @@
   </form>
   {% if 'today' in request.path %}
     <p>Word not found? <a href="{% url 'myserver:dict_table_add' %}">Add now</a>, or <a href="{% url 'myhome:contact' %}">contact me</a>.</p>
+  {% else %}
+    <ul class="list-inline ml-3 pl-1 mb-0 pb-0">
+      {% for letter in letters %}
+        <li class="list-inline-item"><a href="{% url 'myserver:dict_list_card' %}{{ letter }}">{{ letter }}</a></li>
+      {% endfor %}
+    </ul>
   {% endif %}
 
   <table class="module-list w-100" id="myTable">
